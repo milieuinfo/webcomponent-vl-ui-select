@@ -1,0 +1,203 @@
+<html>
+<head>
+  <title>vl-select voorbeeld</title>
+</head>
+
+<script type="module" src="../vl-select.src.js"></script>
+
+<style>
+  body {
+    padding: 1.5rem !important;
+  }
+
+  div:not(:first-child) {
+    margin-bottom: 3rem;
+  }
+
+  .vl-title--h1 {
+    font-size: 4.8rem;
+    font-family: flanders-serif, serif;
+    font-weight: 300;
+    margin-bottom: 6rem;
+    line-height: 1.2;
+  }
+
+  .vl-title--h3 {
+    font-size: 2.4rem;
+    font-family: flanders-serif, serif;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+</style>
+
+<body>
+<h1 class="vl-title--h1">vl-select demo</h1>
+
+<h3 class="vl-title--h3">Select</h3>
+<div>
+  <select is="vl-select">
+    <option value="België">België</option>
+    <option value="Duitsland">Duitsland</option>
+    <option value="Frankrijk">Frankrijk</option>
+  </select>
+</div>
+
+<h3 class="vl-title--h3">Select block</h3>
+<div>
+  <select is="vl-select" block>
+    <option value="België">België</option>
+    <option value="Duitsland">Duitsland</option>
+    <option value="Frankrijk">Frankrijk</option>
+  </select>
+</div>
+
+<h3 class="vl-title--h3">Select error</h3>
+<div>
+  <select is="vl-select" error>
+    <option value="België">België</option>
+    <option value="Duitsland">Duitsland</option>
+    <option value="Frankrijk">Frankrijk</option>
+  </select>
+</div>
+
+<h3 class="vl-title--h3">Select succes</h3>
+<div>
+  <select is="vl-select" success>
+    <option value="België">België</option>
+    <option value="Duitsland">Duitsland</option>
+    <option value="Frankrijk">Frankrijk</option>
+  </select>
+</div>
+
+<h3 class="vl-title--h3">Select met search</h3>
+<div>
+  <select is="vl-select"
+          tabindex="0"
+          data-vl-select
+          data-vl-select-search-empty-text="Geen resultaten gevonden">
+    <optgroup label="Landen">
+      <option value="België">België</option>
+      <option value="Duitsland">Duitsland</option>
+      <option value="Frankrijk">Frankrijk</option>
+    </optgroup>
+    <optgroup label="Steden">
+      <option value="Brugge">Brugge</option>
+      <option value="Brussel">Brussel</option>
+      <option value="Gent">Gent</option>
+    </optgroup>
+  </select>
+</div>
+
+<h3 class="vl-title--h3">Select zonder search</h3>
+<div>
+  <select is="vl-select"
+          tabindex="0"
+          data-vl-select
+          data-vl-select-search="false">
+    <optgroup label="Landen">
+      <option value="België">België</option>
+      <option value="Duitsland">Duitsland</option>
+      <option value="Frankrijk">Frankrijk</option>
+    </optgroup>
+    <optgroup label="Steden">
+      <option value="Brugge">Brugge</option>
+      <option value="Brussel">Brussel</option>
+      <option value="Gent">Gent</option>
+    </optgroup>
+  </select>
+</div>
+
+<h3 class="vl-title--h3">Select deletable</h3>
+<div>
+  <select is="vl-select"
+          tabindex="0"
+          data-vl-select-deletable
+          data-vl-select
+          data-vl-select-search="false">
+    <optgroup label="Landen">
+      <option value="België">België</option>
+      <option value="Duitsland">Duitsland</option>
+      <option value="Frankrijk">Frankrijk</option>
+    </optgroup>
+    <optgroup label="Steden">
+      <option value="Brugge">Brugge</option>
+      <option value="Brussel">Brussel</option>
+      <option value="Gent">Gent</option>
+    </optgroup>
+
+  </select>
+</div>
+
+<h3 class="vl-title--h3">Select dynamische data</h3>
+<div>
+  <select id="vl-select-dynamisch"
+          is="vl-select"
+          data-vl-select-deletable>
+    <option placeholder>Selecteer item</option>
+  </select>
+
+  <button onclick="laadDynamisch()" type="button">Activeer dynamische data</button>
+
+  <script type="text/javascript">
+    function laadDynamisch() {
+      document.getElementById('vl-select-dynamisch').dress({
+        callbackFn: (select) => {
+          return [
+            {value: 'One', label: 'Label One', disabled: true},
+            {value: 'Two', label: 'Label Two', selected: true},
+            {value: 'Three', label: 'Label Three'},
+          ];
+        }
+      });
+    }
+  </script>
+</div>
+
+<h3 class="vl-title--h3">Select methoden</h3>
+<div>
+  <select id="vl-select-methoden"
+          is="vl-select"
+          data-vl-select-deletable>
+    <option value="België">België</option>
+    <option value="Duitsland">Duitsland</option>
+    <option value="Frankrijk">Frankrijk</option>
+  </select>
+
+  <button onclick="methodSelectDress()" type="button">dress()</button>
+  <button onclick="methodSelectUndress()" type="button">undress()</button>
+  <button onclick="methodSelectEnable()" type="button">enable()</button>
+  <button onclick="methodSelectDisable()" type="button">disable()</button>
+  <button onclick="methodSelectSetValueByChoice()" type="button">setValueByChoice('Duitsland')
+  </button>
+  <button onclick="methodSelectRemoveActive()" type="button">removeActive()</button>
+
+  <script type="text/javascript">
+    function methodSelectDress() {
+      document.getElementById('vl-select-methoden').dress();
+    }
+
+    function methodSelectUndress() {
+      document.getElementById('vl-select-methoden').undress();
+    }
+
+    function methodSelectEnable() {
+      document.getElementById('vl-select-methoden').enable();
+    }
+
+    function methodSelectDisable() {
+      document.getElementById('vl-select-methoden').disable();
+    }
+
+    function methodSelectSetValueByChoice() {
+      document.getElementById('vl-select-methoden').setValueByChoice('Duitsland');
+    }
+
+    function methodSelectRemoveActive() {
+      document.getElementById('vl-select-methoden').removeActive();
+    }
+  </script>
+</div>
+
+</body>
+</html>

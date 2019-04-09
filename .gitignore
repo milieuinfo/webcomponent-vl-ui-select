@@ -1,2 +1,6 @@
 .sass-cache/
 *.css.map
+*.iml
+.idea/
+vl-select.js
+node_modules/
