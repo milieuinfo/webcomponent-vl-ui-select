@@ -23,12 +23,16 @@ import {NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
 })();
 
 /**
- * `vl-select``
+ * `vl-select`
  * Gebruik de select component om gebruikers toe te laten een selectie te maken
  * uit een lijst met voorgedefinieerde opties. Het is aangeraden om enkel deze
  * component te gebruiken als er 5 of meer opties zijn. Bij minder opties, kan
  * er gebruik gemaakt worden van de radio component.
+ * De component is `dressed` indien `dress()` werd aangeroepen of
+ * geinitialiseerd met attribuut `data-vl-select`, waarmee de `Choices` config
+ * wordt gezet.
  *
+ * @see https://www.npmjs.com/package/choices.js
  * @demo demo/vl-select.html
  */
 export class VlSelect extends NativeVlElement(HTMLSelectElement) {
@@ -70,7 +74,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 
   /**
-   * Initialiseer de `Choices` config
+   * Initialiseer de `Choices` config.
    *
    * @see https://www.npmjs.com/package/choices.js
    * @param params object with callbackFn: function(select) with return value the items for `setChoices`
@@ -82,7 +86,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 
   /**
-   * Vernietigt de `Choices` instantie van deze component
+   * Vernietigt de `Choices` instantie van deze component. De component moet `dressed` zijn.
    *
    * @see https://www.npmjs.com/package/choices.js
    */
@@ -93,28 +97,28 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 
   /**
-   * Activeer de component
+   * Activeer de component. De component moet `dressed` zijn.
    */
   enable() {
     vl.select.enable(this);
   }
 
   /**
-   * Deactiveer de component
+   * Deactiveer de component. De component moet `dressed` zijn.
    */
   disable() {
     vl.select.disable(this);
   }
 
   /**
-   * Verwijder de actieve geselecteerde optie
+   * Verwijder de actieve geselecteerde optie. De component moet `dressed` zijn.
    */
   removeActive() {
     vl.select.removeActive(this);
   }
 
   /**
-   * Zet de actieve optie door een waarde
+   * Zet de actieve optie door een waarde. De component moet `dressed` zijn.
    *
    * @param value de gekozen waarde om actief te zijn voor deze component
    */
