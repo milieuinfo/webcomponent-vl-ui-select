@@ -65,6 +65,14 @@
       assert(window.vl.select.dress.calledWith(field));
     });
 
+    test('de dress methode callt vl.select.dress niet als dressed attribuut al gezet is', () => {
+      field.setAttribute('data-vl-select-dressed', 'true');
+
+      field.dress();
+
+      assert(window.vl.select.dress.notCalled);
+    });
+
     test('de dress methode met params callt vl.select.dress met params', () => {
       let params = {callbackFn: () => {}};
 
@@ -73,7 +81,15 @@
       assert(window.vl.select.dress.calledWith(field, params));
     });
 
-    test('de undress methode callt vl.select.undress met de choices instantie', () => {
+    test('de undress methode callt vl.select.undress niet als dressed atribuut niet is gezet', () => {
+      field.undress();
+
+      assert(window.vl.select.undress.notCalled);
+    });
+
+    test('de undress methode callt vl.select.undress met de choices instantie enkel als dressed atribuut is gezet', () => {
+      field.setAttribute('data-vl-select-dressed', 'true');
+
       field.undress();
 
       assert(window.vl.select.undress.calledWith(choices));

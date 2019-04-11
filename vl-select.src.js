@@ -45,6 +45,14 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     return 'vl-select--';
   }
 
+  get _dressed() {
+    return !!this.getAttribute(VlSelect._dressedAttributeName);
+  }
+
+  static get _dressedAttributeName() {
+    return 'data-vl-select-dressed';
+  }
+
   /**
    * Geef de `Choices` instantie
    *
@@ -68,7 +76,9 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @param params object with callbackFn: function(select) with return value the items for `setChoices`
    */
   dress(params) {
-    vl.select.dress(this, params);
+    if (!this._dressed) {
+      vl.select.dress(this, params);
+    }
   }
 
   /**
@@ -77,7 +87,9 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @see https://www.npmjs.com/package/choices.js
    */
   undress() {
-    vl.select.undress(this.choices);
+    if (this._dressed) {
+      vl.select.undress(this.choices);
+    }
   }
 
   /**
