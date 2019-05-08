@@ -22,19 +22,19 @@ import {NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
   }
 })();
 
-/**
- * `vl-select`
- * Gebruik de select component om gebruikers toe te laten een selectie te maken
- * uit een lijst met voorgedefinieerde opties. Het is aangeraden om enkel deze
- * component te gebruiken als er 5 of meer opties zijn. Bij minder opties, kan
- * er gebruik gemaakt worden van de radio component.
- * De component is `dressed` indien `dress()` werd aangeroepen of
- * geinitialiseerd met attribuut `data-vl-select`, waarmee de `Choices` config
- * wordt gezet.
- *
- * @see https://www.npmjs.com/package/choices.js
- * @demo demo/vl-select.html
+ /**
+ * VlSelect
+ * @class
+ * @classdesc Gebruik de select component om gebruikers toe te laten een selectie te maken uit een lijst met voorgedefinieerde opties. Het is aangeraden om enkel deze component te gebruiken als er 5 of meer opties zijn. Bij minder opties, kan er gebruik gemaakt worden van de radio component. <a href="demo/vl-select.html">Demo</a>.
+ * 
+ * @extends NativeVlElement
+ * 
+ * @property {boolean} block - Attribuut wordt gebruikt om ervoor te zorgen dat de textarea getoond wordt als een block element en bijgevolg de breedte van de parent zal aannemen.
+ * @property {boolean} error - Attribuut wordt gebruikt om aan te duiden dat het select element verplicht is of ongeldige tekst bevat.
+ * @property {boolean} success - Attribuut wordt gebruikt om aan te duiden dat het select element correct werd ingevuld.
+ * @property {boolean} disabled - Attribuut wordt gebruikt om te voorkomen dat de gebruiker iets kan kiezen uit het select element.
  */
+
 export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
   static get _observedChildClassAttributes() {
@@ -49,6 +49,10 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     return 'vl-select--';
   }
 
+  get _stylePath() {
+    return '../style.css';
+  }
+
   get _dressed() {
     return !!this.getAttribute(VlSelect._dressedAttributeName);
   }
@@ -58,7 +62,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 
   /**
-   * Geef de `Choices` instantie
+   * Geef de `Choices` instantie.
    *
    * @see https://www.npmjs.com/package/choices.js
    * @returns {Choices} de `Choices` instantie of `null` als de component nog niet geinitialiseerd is door `dress()`
@@ -86,7 +90,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 
   /**
-   * Vernietigt de `Choices` instantie van deze component. De component moet `dressed` zijn.
+   * Vernietigt de `Choices` instantie van deze component.
    *
    * @see https://www.npmjs.com/package/choices.js
    */
@@ -97,28 +101,28 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 
   /**
-   * Activeer de component. De component moet `dressed` zijn.
+   * Activeer de component.
    */
   enable() {
     vl.select.enable(this);
   }
 
   /**
-   * Deactiveer de component. De component moet `dressed` zijn.
+   * Deactiveer de component.
    */
   disable() {
     vl.select.disable(this);
   }
 
   /**
-   * Verwijder de actieve geselecteerde optie. De component moet `dressed` zijn.
+   * Verwijder de actieve geselecteerde optie.
    */
   removeActive() {
     vl.select.removeActive(this);
   }
 
   /**
-   * Zet de actieve optie door een waarde. De component moet `dressed` zijn.
+   * Zet de actieve optie door een waarde.
    *
    * @param value de gekozen waarde om actief te zijn voor deze component
    */
