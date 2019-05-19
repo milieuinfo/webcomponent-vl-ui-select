@@ -1,6 +1,6 @@
 {
   "name": "vl-ui-select",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "De \"select\" UI component van Webuniversum Vlaanderen als Web Component",
   "main": "vl-select.js",
   "scripts": {
