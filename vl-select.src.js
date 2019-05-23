@@ -1,15 +1,11 @@
 import { NativeVlElement } from '/node_modules/vl-ui-core/vl-core.js';
 
 (() => {
-  loadScript('util.js',
-      '../node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
-        loadScript('core.js',
-            '../node_modules/@govflanders/vl-ui-core/dist/js/core.min.js',
-            () => {
-              loadScript('select.js',
-                  '../node_modules/@govflanders/vl-ui-select/dist/js/select.js');
-            });
-      });
+  loadScript('util.js', '../node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
+    loadScript('core.js', '../node_modules/@govflanders/vl-ui-core/dist/js/core.min.js', () => {
+      loadScript('select.js', '../dist/select.js');
+    });
+  });
 
   function loadScript(id, src, onload) {
     if (!document.head.querySelector('#' + id)) {
@@ -47,6 +43,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
   connectedCallback() {
     this.classList.add('vl-select');
+    this.dress();
   }
 
   get _classPrefix() {
@@ -98,7 +95,12 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    */
   dress(params) {
     if (!this._dressed) {
-      vl.select.dress(this, params);
+      (async() => {
+        while(!window.vl || !window.vl.select) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        vl.select.dress(this, params);
+      })();
     }
   }
 
