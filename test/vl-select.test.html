@@ -130,6 +130,18 @@
       field.choices = data;
       assert(choices.setChoices.calledWith(data, 'value', 'label', true));
     });
+
+    test('bij het toevoegen van een select element aan de DOM zal de dress functie aangeroepen worden zodat de select functionaliteit geactiveerd wordt', (done) => {
+      window.vl = {
+        select: {
+          dress: () => {
+            done();
+          }
+        }
+      };
+      const newSelect = document.createElement('vl-select');
+      document.body.appendChild(newSelect);
+    });
   });
 </script>
 </body>

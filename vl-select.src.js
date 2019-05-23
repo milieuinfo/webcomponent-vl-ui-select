@@ -95,7 +95,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    */
   dress(params) {
     if (!this._dressed) {
-      (async() => {
+      (async () => {
         while(!window.vl || !window.vl.select) {
           await new Promise(resolve => setTimeout(resolve, 100));
         }
