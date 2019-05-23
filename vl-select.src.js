@@ -65,7 +65,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   /**
    * Zet de mogelijkheden die gekozen kunnen worden.
    * 
-   * @param {Object[]]} choices met value en label attribuut
+   * @param {Object[]} choices met value en label attribuut
    */
   set choices(choices) {
     this._choices.setChoices(choices, 'value', 'label', true);
