@@ -127,7 +127,8 @@
           }
         }
       };
-      const newSelect = document.createElement('vl-select');
+      const newSelect = document.createElement('select', {is: 'vl-select'});
+      newSelect.setAttribute('data-vl-select', '');
       document.body.appendChild(newSelect);
     });
   });
