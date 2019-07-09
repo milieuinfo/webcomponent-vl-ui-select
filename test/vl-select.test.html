@@ -26,15 +26,13 @@
         setChoices: sinon.spy()
       };
       window.vl = {
-        change : sinon.fake(),
         select: {
           dress: sinon.fake(),
           undress: sinon.fake(),
           enable: sinon.fake(),
           disable: sinon.fake(),
           removeActive: sinon.fake(),
-          setValueByChoice: sinon.fake(),
-          setValue: sinon.fake()
+          setValueByChoice: sinon.fake()
         },
         util: {
           each: (instances, callback) => {
@@ -132,14 +130,6 @@
       const newSelect = document.createElement('select', {is: 'vl-select'});
       newSelect.setAttribute('data-vl-select', '');
       document.body.appendChild(newSelect);
-    });
-
-    test('de value dynamisch zetten, heeft "change" event tot gevolg', () => {
-      field.addEventListener('change', window.vl.change);
-      field.value = 'test value';
-      assert(window.vl.change.calledOnce);
-      assert(window.vl.select.setValue.calledOnce);
-      field.removeEventListener('change', window.vl.change);
     });
   });
 </script>
