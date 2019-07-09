@@ -77,6 +77,11 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     this._choices.setChoices(choices, 'value', 'label', true);
   }
 
+  set value(value) {
+    vl.select.setValue(this, value);
+    this.dispatchEvent(new Event('change'))
+  }
+
   /**
    * Geef de `Choices` instantie.
    *
