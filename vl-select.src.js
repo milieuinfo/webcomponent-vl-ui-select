@@ -53,13 +53,32 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     return 'data-vl-select-dressed';
   }
 
+  /**
+   * Wanneer het attribuut 'data-vl-select-dressed' verandert, wilt dit niet
+   * zeggen dat de code die de component dressed of undressed al uitgevoerd is.
+   * De enigste manier om hiervan zeker te zijn, is om te zoeken op een div met
+   * class 'js-vl-select'. Het toevoegen en verwijderen van deze div gebeurt
+   * asynchroon, vandaar de async / await lus.
+   *
+   * @private
+   */
   _data_vl_select_dressedChangedCallback(oldValue, newValue) {
     if (newValue != null) {
-      this.__wrap();
-      this.__refreshClassAttributes();
+      (async () => {
+        while (!this._jsVlSelect) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        this.__wrap();
+        this.__refreshClassAttributes();
+      })();
     } else {
-      this.__unwrap();
-      this.__refreshClassAttributes();
+      (async () => {
+        while (this._jsVlSelect) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        this.__unwrap();
+        this.__refreshClassAttributes();
+      })();
     }
   }
 
@@ -219,15 +238,13 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 }
 
 (() => {
-  loadScript('util.js',
-      '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
-        loadScript('core.js',
-            '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js', () => {
-              loadScript('select.js', '../dist/select.js', () => {
-                define('vl-select', VlSelect, {extends: 'select'});
-              });
-            });
+  loadScript('util.js', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
+    loadScript('core.js', '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js', () => {
+      loadScript('select.js', '../dist/select.js', () => {
+        define('vl-select', VlSelect, {extends: 'select'});
       });
+    });
+  });
 
   function loadScript(id, src, onload) {
     if (!document.head.querySelector('#' + id)) {
