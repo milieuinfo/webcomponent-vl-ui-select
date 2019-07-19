@@ -1,22 +1,4 @@
-import {NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
-
-(() => {
-  loadScript('util.js', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
-        loadScript('core.js', '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js', () => {
-              loadScript('select.js', '../dist/select.js');
-            });
-      });
-
-  function loadScript(id, src, onload) {
-    if (!document.head.querySelector('#' + id)) {
-      let script = document.createElement('script');
-      script.setAttribute('id', id);
-      script.setAttribute('src', src);
-      script.onload = onload;
-      document.head.appendChild(script);
-    }
-  }
-})();
+import {define, NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
 
 /**
  * VlSelect
@@ -34,7 +16,6 @@ import {NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
  * @property {boolean} data-vl-select-search - Attribuut om de zoek functionaliteit te activeren of deactiveren.
  * @property {boolean} data-vl-select-deletable - Attribuut om te activeren of deactiveren dat het geselecteerde kan verwijderd worden.
  */
-
 export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
   static get _observedChildClassAttributes() {
@@ -74,21 +55,11 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
   _data_vl_select_dressedChangedCallback(oldValue, newValue) {
     if (newValue != null) {
-      (async () => {
-        while (!this._jsVlSelect) {
-          await new Promise(resolve => setTimeout(resolve, 100));
-        }
-        this.__wrap();
-        this.__refreshClassAttributes();
-      })();
+      this.__wrap();
+      this.__refreshClassAttributes();
     } else {
-      (async () => {
-        while (this._jsVlSelect) {
-          await new Promise(resolve => setTimeout(resolve, 100));
-        }
-        this.__unwrap();
-        this.__refreshClassAttributes();
-      })();
+      this.__unwrap();
+      this.__refreshClassAttributes();
     }
   }
 
@@ -123,7 +94,9 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   __unwrap() {
     const wrapper = this.parentNode;
     const parent = wrapper.parentNode;
-    while (wrapper.firstChild) parent.insertBefore(wrapper.firstChild, wrapper);
+    while (wrapper.firstChild) {
+      parent.insertBefore(wrapper.firstChild, wrapper);
+    }
     parent.removeChild(wrapper);
   }
 
@@ -194,15 +167,9 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @param params object with callbackFn: function(select) with return value the items for `setChoices`
    */
   dress(params) {
-    (async () => {
-      while (!window.vl || !window.vl.select) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-
-      if (!this._dressed) {
-        vl.select.dress(this, params);
-      }
-    })();
+    if (!this._dressed) {
+      vl.select.dress(this, params);
+    }
   }
 
   /**
@@ -251,4 +218,24 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 }
 
-customElements.define('vl-select', VlSelect, {extends: 'select'});
+(() => {
+  loadScript('util.js',
+      '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js', () => {
+        loadScript('core.js',
+            '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js', () => {
+              loadScript('select.js', '../dist/select.js', () => {
+                define('vl-select', VlSelect, {extends: 'select'});
+              });
+            });
+      });
+
+  function loadScript(id, src, onload) {
+    if (!document.head.querySelector('#' + id)) {
+      let script = document.createElement('script');
+      script.setAttribute('id', id);
+      script.setAttribute('src', src);
+      script.onload = onload;
+      document.head.appendChild(script);
+    }
+  }
+})();

@@ -19,8 +19,16 @@
   suite('vl-select', () => {
     let field, choices;
 
-    setup(() => {
+    setup((done) => {
+      customElements.whenDefined('vl-select').then(() => {
+        done();
+      });
+
       field = fixture('vl-select-fixture');
+
+      // daar de vl.select.dress functie uitgemockt wordt, moet dit ook uitgemockt worden.
+      field._data_vl_select_dressedChangedCallback = sinon.fake();
+
       choices = {
         element: field,
         setChoices: sinon.spy()
@@ -71,6 +79,11 @@
       field.setAttribute('data-vl-select-dressed', 'true');
       field.dress();
       assert(window.vl.select.dress.notCalled);
+    });
+
+    test('data-vl-select-dressed attribuut triggert wrapping', () => {
+      field.setAttribute('data-vl-select-dressed', 'true');
+      assert(field._data_vl_select_dressedChangedCallback.called);
     });
 
     test('de dress methode met params callt vl.select.dress met params', () => {
