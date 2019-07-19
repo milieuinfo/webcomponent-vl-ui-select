@@ -2947,22 +2947,21 @@
           var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
           var config = {},
               originalOptions = select.querySelectorAll('option');
-          select.setAttribute(sDressedAtt, true); // Build select config
-  
+
           config = _prepareChoisesConfig(select);
           config = Object.assign(this.globalConfig, config);
   
           this._buildSelect(select, config, params, originalOptions);
+
+          //change melden aan AIV -> UIG-169
+          select.setAttribute(sDressedAtt, true); // Build select config
         }
       }, {
         key: "undress",
         value: function undress(selectInstance) {
           var selectId = selectInstance.element.id,
               selectEl;
-          selectInstance.element.removeAttribute(sDressedAtt);
-          selectInstance.element.removeAttribute(sMultiDressedAtt); // Destroy is not working correctly, initial state will not be correctly reset
-          // https://github.com/jshjohnson/Choices/issues/298
-  
+
           selectInstance.destroy();
           selectEl = document.getElementById(selectId);
           vl.util.each(selectInstance.originalOptions, function (option) {
@@ -2970,6 +2969,11 @@
           }); // Reset select to first value
   
           selectEl.selectedIndex = 0;
+
+          //change melden aan AIV -> UIG-169
+          selectInstance.element.removeAttribute(sDressedAtt);
+          selectInstance.element.removeAttribute(sMultiDressedAtt); // Destroy is not working correctly, initial state will not be correctly reset
+          // https://github.com/jshjohnson/Choices/issues/298
         }
       }, {
         key: "dressAll",
