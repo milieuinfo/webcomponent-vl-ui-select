@@ -3011,10 +3011,11 @@
       return Select;
     }();
 
-    if (!('select' in vl)) {
-      vl.select = new Select();
-      vl.select.dressAll();
-    }
+    //change melden aan AIV -> UIG-169
+    // if (!('select' in vl)) {
+    //   vl.select = new Select();
+    //   vl.select.dressAll();
+    // }
 
     return Select;
 
