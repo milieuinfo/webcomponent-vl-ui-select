@@ -380,9 +380,12 @@
     <select id="vl-select-methoden"
       is="vl-select"
       data-vl-select-deletable>
+      <option placeholder value="">Kies een land</option>
       <option value="België">België</option>
       <option value="Duitsland">Duitsland</option>
       <option value="Frankrijk">Frankrijk</option>
+      <option value="Nederland">Nederland</option>
+      <option value="Italië">Italië</option>
     </select>
 
     <button onclick="methodSelectDress()" type="button">dress()</button>
@@ -391,6 +394,7 @@
     <button onclick="methodSelectDisable()" type="button">disable()</button>
     <button onclick="methodSelectSetValueByChoice()" type="button">setValueByChoice('Duitsland')</button>
     <button onclick="methodSelectRemoveActive()" type="button">removeActive()</button>
+    <button onclick="methodSelectClearInput()" type="button">clearInput()</button>
 
     <script type="text/javascript">
       function methodSelectDress() {
@@ -415,6 +419,10 @@
 
       function methodSelectRemoveActive() {
         document.getElementById('vl-select-methoden').removeActive();
+      }
+
+      function methodSelectClearInput() {
+        document.getElementById('vl-select-methoden').setValueByChoice('');
       }
     </script>
   </div>

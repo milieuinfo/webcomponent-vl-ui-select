@@ -250,10 +250,10 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     return promise;
   };
 
-  const awaitUntil = (condtion) => {
+  const awaitUntil = (condition) => {
     return new Promise((resolve, reject) => {
       (async () => {
-        while (!condtion()) {
+        while (!condition()) {
           await new Promise(r => setTimeout(r, 50));
         }
         resolve();
