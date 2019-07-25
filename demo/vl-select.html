@@ -4,14 +4,16 @@
   <title>vl-select voorbeeld</title>
   <meta charset="UTF-8">
   <script type="module" src="demo.js"></script>
-  <script type="module" src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script type="module"
+          src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   <script type="module" src="../vl-select.src.js"></script>
 </head>
 
 <body>
 <h1 class="vl-title--h1">vl-select demo</h1>
 <p>
-    <a href="https://overheid.vlaanderen.be/webuniversum/v3/documentation/forms/vl-ui-select">Meer voorbeelden en documentatie</a>.
+  <a href="https://overheid.vlaanderen.be/webuniversum/v3/documentation/forms/vl-ui-select">Meer
+    voorbeelden en documentatie</a>.
 </p>
 
 <div>
@@ -26,11 +28,11 @@
     </code>
   </pre>
   <div class="demo">
-      <select is="vl-select">
-        <option value="België">België</option>
-        <option value="Duitsland">Duitsland</option>
-        <option value="Frankrijk">Frankrijk</option>
-      </select>
+    <select is="vl-select">
+      <option value="België">België</option>
+      <option value="Duitsland">Duitsland</option>
+      <option value="Frankrijk">Frankrijk</option>
+    </select>
   </div>
 </div>
 
@@ -137,9 +139,9 @@
   </pre>
   <div class="demo">
     <select is="vl-select"
-          tabindex="0"
-          data-vl-select
-          data-vl-select-search-empty-text="Geen resultaten gevonden">
+            tabindex="0"
+            data-vl-select
+            data-vl-select-search-empty-text="Geen resultaten gevonden">
       <optgroup label="Landen">
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
@@ -177,9 +179,9 @@
   </pre>
   <div class="demo">
     <select is="vl-select" id="select-zonder-search"
-          tabindex="0"
-          data-vl-select
-          data-vl-select-search="false">
+            tabindex="0"
+            data-vl-select
+            data-vl-select-search="false">
       <optgroup label="Landen">
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
@@ -218,10 +220,10 @@
   </pre>
   <div class="demo">
     <select is="vl-select"
-      tabindex="0"
-      data-vl-select
-      data-vl-select-search="false"
-      disabled>
+            tabindex="0"
+            data-vl-select
+            data-vl-select-search="false"
+            disabled>
       <optgroup label="Landen">
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
@@ -260,10 +262,10 @@
   </pre>
   <div class="demo">
     <select is="vl-select"
-      tabindex="0"
-      data-vl-select-deletable
-      data-vl-select
-      data-vl-select-search="false">
+            tabindex="0"
+            data-vl-select-deletable
+            data-vl-select
+            data-vl-select-search="false">
       <optgroup label="Landen">
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
@@ -307,8 +309,8 @@
   </pre>
   <div class="demo">
     <select id="vl-select-dynamisch"
-      is="vl-select"
-      data-vl-select-deletable>
+            is="vl-select"
+            data-vl-select-deletable>
       <option placeholder>Selecteer item</option>
     </select>
 
@@ -333,53 +335,97 @@
 <div>
   <h2>Select methoden</h2>
   <pre>
-    <code class="line-numbers language-markup">
-      &lt;select id="vl-select-methoden"
-        is="vl-select"
-        data-vl-select-deletable&gt;
-        &lt;option value="België"&gt;België&lt;/option&gt;
-        &lt;option value="Duitsland"&gt;Duitsland&lt;/option&gt;
-        &lt;option value="Frankrijk"&gt;Frankrijk&lt;/option&gt;
-      &lt;/select&gt;
-  
-      &lt;button onclick="methodSelectDress()" type="button"&gt;dress()&lt;/button&gt;
-      &lt;button onclick="methodSelectUndress()" type="button"&gt;undress()&lt;/button&gt;
-      &lt;button onclick="methodSelectEnable()" type="button"&gt;enable()&lt;/button&gt;
-      &lt;button onclick="methodSelectDisable()" type="button"&gt;disable()&lt;/button&gt;
-      &lt;button onclick="methodSelectSetValueByChoice()" type="button"&gt;setValueByChoice('Duitsland')&lt;/button&gt;
-      &lt;button onclick="methodSelectRemoveActive()" type="button"&gt;removeActive()&lt;/button&gt;
-  
-      &lt;script type="text/javascript"&gt;
-        function methodSelectDress() {
-          document.getElementById('vl-select-methoden').dress();
-        }
-  
-        function methodSelectUndress() {
-          document.getElementById('vl-select-methoden').undress();
-        }
-  
-        function methodSelectEnable() {
-          document.getElementById('vl-select-methoden').enable();
-        }
-  
-        function methodSelectDisable() {
-          document.getElementById('vl-select-methoden').disable();
-        }
-  
-        function methodSelectSetValueByChoice() {
-          document.getElementById('vl-select-methoden').setValueByChoice('Duitsland');
-        }
-  
-        function methodSelectRemoveActive() {
-          document.getElementById('vl-select-methoden').removeActive();
-        }
-      &lt;/script&gt;
-    </code>
+    <code class="line-numbers language-markup">&lt;script type=&quot;text/javascript&quot;&gt;
+      const select = () =&gt; {
+        return document.getElementById('vl-select-methoden');
+      };
+
+      const methodSelectDress = () =&gt; {
+        select().dress();
+      };
+
+      const methodSelectUndress = () =&gt; {
+        select().undress();
+      };
+
+      const methodSelectEnable = () =&gt; {
+        select().enable();
+      };
+
+      const methodSelectDisable = () =&gt; {
+        select().disable();
+      };
+
+      const methodSelectSetValueByChoice = () =&gt; {
+        select().setValueByChoice('Duitsland');
+      };
+
+      const methodSelectRemoveActive = () =&gt; {
+        select().removeActive();
+      };
+
+      const methodSelectPlaceholder = () =&gt; {
+        select().setValueByChoice('');
+      };
+    &lt;/script&gt;
+
+    &lt;select id=&quot;vl-select-methoden&quot;
+      is=&quot;vl-select&quot;
+      data-vl-select-deletable&gt;
+      &lt;option placeholder value=&quot;&quot;&gt;Kies een land&lt;/option&gt;
+      &lt;option value=&quot;Belgi&euml;&quot;&gt;Belgi&euml;&lt;/option&gt;
+      &lt;option value=&quot;Duitsland&quot;&gt;Duitsland&lt;/option&gt;
+      &lt;option value=&quot;Frankrijk&quot;&gt;Frankrijk&lt;/option&gt;
+      &lt;option value=&quot;Nederland&quot;&gt;Nederland&lt;/option&gt;
+      &lt;option value=&quot;Itali&euml;&quot;&gt;Itali&euml;&lt;/option&gt;
+    &lt;/select&gt;
+
+    &lt;button onclick=&quot;methodSelectDress()&quot; type=&quot;button&quot;&gt;dress()&lt;/button&gt;
+    &lt;button onclick=&quot;methodSelectUndress()&quot; type=&quot;button&quot;&gt;undress()&lt;/button&gt;
+    &lt;button onclick=&quot;methodSelectEnable()&quot; type=&quot;button&quot;&gt;enable()&lt;/button&gt;
+    &lt;button onclick=&quot;methodSelectDisable()&quot; type=&quot;button&quot;&gt;disable()&lt;/button&gt;
+    &lt;button onclick=&quot;methodSelectSetValueByChoice()&quot; type=&quot;button&quot;&gt;setValueByChoice('Duitsland')&lt;/button&gt;
+    &lt;button onclick=&quot;methodSelectRemoveActive()&quot; type=&quot;button&quot;&gt;removeActive()&lt;/button&gt;
+    &lt;button onclick=&quot;methodSelectPlaceholder()&quot; type=&quot;button&quot;&gt;setValueByChoice('')&lt;/button&gt;</code>
   </pre>
   <div class="demo">
+    <script type="text/javascript">
+      const select = () => {
+        return document.getElementById('vl-select-methoden');
+      };
+
+      const methodSelectDress = () => {
+        select().dress();
+      };
+
+      const methodSelectUndress = () => {
+        select().undress();
+      };
+
+      const methodSelectEnable = () => {
+        select().enable();
+      };
+
+      const methodSelectDisable = () => {
+        select().disable();
+      };
+
+      const methodSelectSetValueByChoice = () => {
+        select().setValueByChoice('Duitsland');
+      };
+
+      const methodSelectRemoveActive = () => {
+        select().removeActive();
+      };
+
+      const methodSelectPlaceholder = () => {
+        select().setValueByChoice('');
+      };
+    </script>
+
     <select id="vl-select-methoden"
-      is="vl-select"
-      data-vl-select-deletable>
+            is="vl-select"
+            data-vl-select-deletable>
       <option placeholder value="">Kies een land</option>
       <option value="België">België</option>
       <option value="Duitsland">Duitsland</option>
@@ -394,37 +440,7 @@
     <button onclick="methodSelectDisable()" type="button">disable()</button>
     <button onclick="methodSelectSetValueByChoice()" type="button">setValueByChoice('Duitsland')</button>
     <button onclick="methodSelectRemoveActive()" type="button">removeActive()</button>
-    <button onclick="methodSelectClearInput()" type="button">clearInput()</button>
-
-    <script type="text/javascript">
-      function methodSelectDress() {
-        document.getElementById('vl-select-methoden').dress();
-      }
-
-      function methodSelectUndress() {
-        document.getElementById('vl-select-methoden').undress();
-      }
-
-      function methodSelectEnable() {
-        document.getElementById('vl-select-methoden').enable();
-      }
-
-      function methodSelectDisable() {
-        document.getElementById('vl-select-methoden').disable();
-      }
-
-      function methodSelectSetValueByChoice() {
-        document.getElementById('vl-select-methoden').setValueByChoice('Duitsland');
-      }
-
-      function methodSelectRemoveActive() {
-        document.getElementById('vl-select-methoden').removeActive();
-      }
-
-      function methodSelectClearInput() {
-        document.getElementById('vl-select-methoden').setValueByChoice('');
-      }
-    </script>
+    <button onclick="methodSelectPlaceholder()" type="button">setValueByChoice('')</button>
   </div>
 </div>
 </body>
