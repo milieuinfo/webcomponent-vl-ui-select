@@ -3006,6 +3006,24 @@
 
           this.selectInstances = [];
         }
+      },{
+        key: "showDropdown",
+        value: function showDropdown(select) {
+          vl.util.each(this.selectInstances, function (instance) {
+            if (instance.element === select) {
+              instance.showDropdown();
+            }
+          });
+        }
+      },{
+        key: "hideDropdown",
+        value: function hideDropdown(select) {
+          vl.util.each(this.selectInstances, function (instance) {
+            if (instance.element === select) {
+              instance.hideDropdown();
+            }
+          });
+        }
       }]);
 
       return Select;

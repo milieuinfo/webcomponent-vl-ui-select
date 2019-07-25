@@ -222,6 +222,21 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   setValueByChoice(value) {
     vl.select.setValueByChoice(this, value);
   }
+
+  /**
+   * Toon de dropdown met de mogelijke keuzes.
+   */
+  showDropdown() {
+    vl.select.showDropdown(this);
+
+  }
+
+  /**
+   * Verberg de dropdown met de mogelijke keuzes.
+   */
+  hideDropdown() {
+    vl.select.hideDropdown(this);
+  }
 }
 
 (() => {

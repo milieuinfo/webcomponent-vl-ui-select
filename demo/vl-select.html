@@ -340,38 +340,46 @@
         return document.getElementById('vl-select-methoden');
       };
 
-      const methodSelectDress = () =&gt; {
+      const dress = () =&gt; {
         select().dress();
       };
 
-      const methodSelectUndress = () =&gt; {
+      const undress = () =&gt; {
         select().undress();
       };
 
-      const methodSelectEnable = () =&gt; {
+      const enable = () =&gt; {
         select().enable();
       };
 
-      const methodSelectDisable = () =&gt; {
+      const disable = () =&gt; {
         select().disable();
       };
 
-      const methodSelectSetValueByChoice = () =&gt; {
+      const setValueByChoice = () =&gt; {
         select().setValueByChoice('Duitsland');
       };
 
-      const methodSelectRemoveActive = () =&gt; {
+      const removeActive = () =&gt; {
         select().removeActive();
       };
 
-      const methodSelectPlaceholder = () =&gt; {
+      const setPlaceholderValue = () =&gt; {
         select().setValueByChoice('');
+      };
+
+      const showDropdown = () =&gt; {
+        select().showDropdown();
+      };
+
+      const hideDropdown = () =&gt; {
+        select().hideDropdown();
       };
     &lt;/script&gt;
 
     &lt;select id=&quot;vl-select-methoden&quot;
-      is=&quot;vl-select&quot;
-      data-vl-select-deletable&gt;
+            is=&quot;vl-select&quot;
+            data-vl-select-deletable&gt;
       &lt;option placeholder value=&quot;&quot;&gt;Kies een land&lt;/option&gt;
       &lt;option value=&quot;Belgi&euml;&quot;&gt;Belgi&euml;&lt;/option&gt;
       &lt;option value=&quot;Duitsland&quot;&gt;Duitsland&lt;/option&gt;
@@ -380,13 +388,15 @@
       &lt;option value=&quot;Itali&euml;&quot;&gt;Itali&euml;&lt;/option&gt;
     &lt;/select&gt;
 
-    &lt;button onclick=&quot;methodSelectDress()&quot; type=&quot;button&quot;&gt;dress()&lt;/button&gt;
-    &lt;button onclick=&quot;methodSelectUndress()&quot; type=&quot;button&quot;&gt;undress()&lt;/button&gt;
-    &lt;button onclick=&quot;methodSelectEnable()&quot; type=&quot;button&quot;&gt;enable()&lt;/button&gt;
-    &lt;button onclick=&quot;methodSelectDisable()&quot; type=&quot;button&quot;&gt;disable()&lt;/button&gt;
-    &lt;button onclick=&quot;methodSelectSetValueByChoice()&quot; type=&quot;button&quot;&gt;setValueByChoice('Duitsland')&lt;/button&gt;
-    &lt;button onclick=&quot;methodSelectRemoveActive()&quot; type=&quot;button&quot;&gt;removeActive()&lt;/button&gt;
-    &lt;button onclick=&quot;methodSelectPlaceholder()&quot; type=&quot;button&quot;&gt;setValueByChoice('')&lt;/button&gt;</code>
+    &lt;button onclick=&quot;dress()&quot; type=&quot;button&quot;&gt;dress()&lt;/button&gt;
+    &lt;button onclick=&quot;undress()&quot; type=&quot;button&quot;&gt;undress()&lt;/button&gt;
+    &lt;button onclick=&quot;enable()&quot; type=&quot;button&quot;&gt;enable()&lt;/button&gt;
+    &lt;button onclick=&quot;disable()&quot; type=&quot;button&quot;&gt;disable()&lt;/button&gt;
+    &lt;button onclick=&quot;setValueByChoice()&quot; type=&quot;button&quot;&gt;setValueByChoice('Duitsland')&lt;/button&gt;
+    &lt;button onclick=&quot;removeActive()&quot; type=&quot;button&quot;&gt;removeActive()&lt;/button&gt;
+    &lt;button onclick=&quot;setPlaceholderValue()&quot; type=&quot;button&quot;&gt;setValueByChoice('')&lt;/button&gt;
+    &lt;button onclick=&quot;showDropdown()&quot; type=&quot;button&quot;&gt;showDropdown()&lt;/button&gt;
+    &lt;button onclick=&quot;hideDropdown()&quot; type=&quot;button&quot;&gt;hideDropdown()&lt;/button&gt;</code>
   </pre>
   <div class="demo">
     <script type="text/javascript">
@@ -394,32 +404,40 @@
         return document.getElementById('vl-select-methoden');
       };
 
-      const methodSelectDress = () => {
+      const dress = () => {
         select().dress();
       };
 
-      const methodSelectUndress = () => {
+      const undress = () => {
         select().undress();
       };
 
-      const methodSelectEnable = () => {
+      const enable = () => {
         select().enable();
       };
 
-      const methodSelectDisable = () => {
+      const disable = () => {
         select().disable();
       };
 
-      const methodSelectSetValueByChoice = () => {
+      const setValueByChoice = () => {
         select().setValueByChoice('Duitsland');
       };
 
-      const methodSelectRemoveActive = () => {
+      const removeActive = () => {
         select().removeActive();
       };
 
-      const methodSelectPlaceholder = () => {
+      const setPlaceholderValue = () => {
         select().setValueByChoice('');
+      };
+
+      const showDropdown = () => {
+        select().showDropdown();
+      };
+
+      const hideDropdown = () => {
+        select().hideDropdown();
       };
     </script>
 
@@ -434,13 +452,15 @@
       <option value="Italië">Italië</option>
     </select>
 
-    <button onclick="methodSelectDress()" type="button">dress()</button>
-    <button onclick="methodSelectUndress()" type="button">undress()</button>
-    <button onclick="methodSelectEnable()" type="button">enable()</button>
-    <button onclick="methodSelectDisable()" type="button">disable()</button>
-    <button onclick="methodSelectSetValueByChoice()" type="button">setValueByChoice('Duitsland')</button>
-    <button onclick="methodSelectRemoveActive()" type="button">removeActive()</button>
-    <button onclick="methodSelectPlaceholder()" type="button">setValueByChoice('')</button>
+    <button onclick="dress()" type="button">dress()</button>
+    <button onclick="undress()" type="button">undress()</button>
+    <button onclick="enable()" type="button">enable()</button>
+    <button onclick="disable()" type="button">disable()</button>
+    <button onclick="setValueByChoice()" type="button">setValueByChoice('Duitsland')</button>
+    <button onclick="removeActive()" type="button">removeActive()</button>
+    <button onclick="setPlaceholderValue()" type="button">setValueByChoice('')</button>
+    <button onclick="showDropdown()" type="button">showDropdown()</button>
+    <button onclick="hideDropdown()" type="button">hideDropdown()</button>
   </div>
 </div>
 </body>
