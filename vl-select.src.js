@@ -140,6 +140,15 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 
   /**
+   * Zet sorteer functie voor de mogelijke keuzes.
+   *
+   * @param {function(T, T)} bi-functie die de mogelijke keuzes sorteert.
+   */
+  set sortFilter(fn) {
+    this._choices.config.sortFilter = fn;
+  }
+
+  /**
    * Geef de `Choices` instantie.
    *
    * @see https://www.npmjs.com/package/choices.js
