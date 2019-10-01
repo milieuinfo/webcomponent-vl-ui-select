@@ -1,12 +1,12 @@
 import {define, NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
 
-/**
+ /**
  * VlSelect
  * @class
  * @classdesc Gebruik de select component om gebruikers toe te laten een selectie te maken uit een lijst met voorgedefinieerde opties. Het is aangeraden om enkel deze component te gebruiken als er 5 of meer opties zijn. Bij minder opties, kan er gebruik gemaakt worden van de radio component. <a href="demo/vl-select.html">Demo</a>.
  *
  * @extends NativeVlElement
- *
+ * 
  * @property {boolean} block - Attribuut wordt gebruikt om ervoor te zorgen dat de textarea getoond wordt als een block element en bijgevolg de breedte van de parent zal aannemen.
  * @property {boolean} error - Attribuut wordt gebruikt om aan te duiden dat het select element verplicht is of ongeldige tekst bevat.
  * @property {boolean} success - Attribuut wordt gebruikt om aan te duiden dat het select element correct werd ingevuld.
@@ -15,7 +15,12 @@ import {define, NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
  * @property {boolean} data-vl-select-search-empty-text - Attribuut bepaalt de tekst die getoond wordt wanneer er geen resultaten gevonden zijn.
  * @property {boolean} data-vl-select-search - Attribuut om de zoek functionaliteit te activeren of deactiveren.
  * @property {boolean} data-vl-select-deletable - Attribuut om te activeren of deactiveren dat het geselecteerde kan verwijderd worden.
+ *
+ * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/releases/latest|Release notes}
+ * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
+ * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-select.html|Demo}
  */
+
 export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
   static get _observedChildClassAttributes() {
@@ -132,7 +137,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
   /**
    * Zet de mogelijkheden die gekozen kunnen worden.
-   *
+   * 
    * @param {Object[]} choices met value en label attribuut
    */
   set choices(choices) {
@@ -180,9 +185,15 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @param params object with callbackFn: function(select) with return value the items for `setChoices`
    */
   dress(params) {
-    if (!this._dressed) {
-      vl.select.dress(this, params);
-    }
+    (async () => {
+      while(!window.vl || !window.vl.select) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      
+      if (!this._dressed) {
+        vl.select.dress(this, params);
+      }
+    })();
   }
 
   /**
@@ -194,10 +205,8 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     if (this._dressed) {
       try {
         vl.select.undress(this._choices);
-      } catch (exception) {
-        console.error(
-            "er liep iets fout bij de undress functie, controleer dat het vl-select element een id bevat! Foutmelding: "
-            + exception);
+      } catch(exception) {
+        console.error("er liep iets fout bij de undress functie, controleer dat het vl-select element een id bevat! Foutmelding: " + exception);
       }
     }
   }
