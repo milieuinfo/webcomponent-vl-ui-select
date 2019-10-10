@@ -1,6 +1,6 @@
 {
   "name": "vl-ui-select",
-  "version": "1.1.11",
+  "version": "1.1.13",
   "description": "De \"select\" UI component van Webuniversum Vlaanderen als Web Component",
   "main": "vl-select.js",
   "scripts": {
@@ -46,6 +46,7 @@
     "sinon": "7.5.0",
     "uglify-es": "github:mishoo/UglifyJS2#harmony",
     "vl-ui-util": "^2.0.8",
+    "vl-ui-button": "^1.1.12",
     "wct-browser-legacy": "1.0.2",
     "web-component-tester": "6.9.2"
   },
