@@ -1,4 +1,11 @@
-import {define, NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
+import {awaitScript, awaitUntil, define, NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
+
+Promise.all([
+  awaitScript('util', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js'),
+  awaitScript('core', '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js'),
+  awaitScript('select', '../dist/select.js'),
+  awaitUntil(() => window.vl && window.vl.select)]
+).then(() => define('vl-select', VlSelect, {extends: 'select'}));
 
  /**
  * VlSelect
@@ -20,7 +27,6 @@ import {define, NativeVlElement} from '/node_modules/vl-ui-core/vl-core.js';
  * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
  * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-select.html|Demo}
  */
-
 export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
   static get _observedChildClassAttributes() {
@@ -58,10 +64,6 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     return 'data-vl-select-dressed';
   }
 
-  /**
-   *
-   * @private
-   */
   _data_vl_select_dressedChangedCallback(oldValue, newValue) {
     if (newValue != null) {
       this.__wrap();
@@ -147,7 +149,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   /**
    * Zet sorteer functie voor de mogelijke keuzes.
    *
-   * @param {function(T, T)} bi-functie die de mogelijke keuzes sorteert.
+   * @param {function(T, T)} fn bi-functie die de mogelijke keuzes sorteert.
    */
   set sortFilter(fn) {
     this._choices.config.sortFilter = fn;
@@ -157,7 +159,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * Geef de `Choices` instantie.
    *
    * @see https://www.npmjs.com/package/choices.js
-   * @returns {Choices} de `Choices` instantie of `null` als de component nog niet geinitialiseerd is door `dress()`
+   * @returns {Choices} de `Choices` instantie of `null` als de component nog niet geïnitialiseerd is door `dress()`
    */
   get _choices() {
     let choices = null;
@@ -170,7 +172,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 
   /**
-   * Geef de 'js-vl-select' wrapper terug dat door de dress functie gegeneert
+   * Geef de 'js-vl-select' wrapper terug dat door de dress functie wordt gegenereerd
    * wordt.
    * @return {null|*|Element} geeft 'js-vl-select' div terug of 'null' als de component nog niet geinitialiseerd is door 'dress()'
    */
@@ -185,15 +187,9 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @param params object with callbackFn: function(select) with return value the items for `setChoices`
    */
   dress(params) {
-    (async () => {
-      while(!window.vl || !window.vl.select) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-      }
-      
-      if (!this._dressed) {
-        vl.select.dress(this, params);
-      }
-    })();
+    if (!this._dressed) {
+      vl.select.dress(this, params);
+    }
   }
 
   /**
@@ -246,7 +242,6 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    */
   showDropdown() {
     vl.select.showDropdown(this);
-
   }
 
   /**
@@ -256,50 +251,3 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     vl.select.hideDropdown(this);
   }
 }
-
-(() => {
-
-  // cfr https://www.html5rocks.com/en/tutorials/speed/script-loading/
-  // download as fast as possible in the provided order
-
-  const awaitScript = (id, src) => {
-    if (document.head.querySelector('#' + id)) {
-      console.log(`script with id '${id}' is already loaded`);
-      return Promise.resolve();
-    }
-
-    let script = document.createElement('script');
-    script.id = id;
-    script.src = src;
-    script.async = false;
-
-    const promise = new Promise((resolve, reject) => {
-      script.onload = () => {
-        resolve();
-      };
-    });
-
-    document.head.appendChild(script);
-    return promise;
-  };
-
-  const awaitUntil = (condition) => {
-    return new Promise((resolve, reject) => {
-      (async () => {
-        while (!condition()) {
-          await new Promise(r => setTimeout(r, 50));
-        }
-        resolve();
-      })();
-    });
-  };
-
-  Promise.all([
-    awaitScript('util', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js'),
-    awaitScript('core', '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js'),
-    awaitScript('select', '../dist/select.js'),
-    awaitUntil(() => window.vl && window.vl.select)]
-  ).then(() => {
-    define('vl-select', VlSelect, {extends: 'select'});
-  });
-})();

@@ -1,8 +1,8 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
-    (global.select = factory());
-  }(this, (function () { 'use strict';
+  global.select = factory();
+}(typeof self !== 'undefined' ? self : this, function () { 'use strict';
 
     function _typeof(obj) {
       if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -3006,7 +3006,7 @@
 
           this.selectInstances = [];
         }
-      },{
+      }, {
         key: "showDropdown",
         value: function showDropdown(select) {
           vl.util.each(this.selectInstances, function (instance) {
@@ -3015,7 +3015,7 @@
             }
           });
         }
-      },{
+      }, {
         key: "hideDropdown",
         value: function hideDropdown(select) {
           vl.util.each(this.selectInstances, function (instance) {
@@ -3037,5 +3037,5 @@
 
     return Select;
 
-  })));
+}));
   
