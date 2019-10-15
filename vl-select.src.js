@@ -29,12 +29,12 @@ Promise.all([
  */
 export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
-  static get _observedChildClassAttributes() {
-    return ['block', 'error', 'success', 'disabled'];
+  static get _observedAttributes() {
+    return ['error', 'success'];
   }
 
-  static get _observedAttributes() {
-    return ['data-vl-select-dressed'];
+  static get _observedChildClassAttributes() {
+    return ['block', 'disabled'];
   }
 
   connectedCallback() {
@@ -64,31 +64,34 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     return 'data-vl-select-dressed';
   }
 
-  _data_vl_select_dressedChangedCallback(oldValue, newValue) {
-    if (newValue != null) {
-      this.__wrap();
-      this.__refreshClassAttributes();
+  _successChangedCallback(oldValue, newValue) {
+    this.__stateChangedCallback(newValue, 'success');
+  }
+
+  _errorChangedCallback(oldValue, newValue) {
+    this.__stateChangedCallback(newValue, 'error');
+  }
+
+  __stateChangedCallback(newValue, type) {
+    if (newValue != undefined) {
+      (async () => {
+        if (this._dataVlSelectAttribute != undefined) {
+          while (!this._dressed) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
+          this.__wrap();
+          this._wrapperElement.parentNode.classList.add('vl-select--' + type);
+        } else {
+          this.classList.add('vl-select--' + type);
+        }
+      })();
     } else {
-      this.__unwrap();
-      this.__refreshClassAttributes();
+      if (this._dataVlSelectAttribute != undefined) {
+        this.__unwrap();
+      } else {
+        this.classList.remove('vl-select--' + type);
+      }
     }
-  }
-
-  __refreshClassAttributes() {
-    this.getAttributeNames()
-    .filter(attrName => this.__isClassAttribute(attrName))
-    .forEach(attrName => this.__refreshClassAttribute(attrName));
-  }
-
-  __isClassAttribute(attrName) {
-    return VlSelect._observedChildClassAttributes.includes(attrName);
-  }
-
-  __refreshClassAttribute(attrName) {
-    this.classList.remove(this._classPrefix + attrName);
-    const originalValue = this.getAttribute(attrName);
-    this.removeAttribute(attrName);
-    this.setAttribute(attrName, originalValue)
   }
 
   /**
@@ -98,17 +101,15 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    */
   __wrap() {
     const wrapper = document.createElement('div');
-    this._jsVlSelect.parentNode.insertBefore(wrapper, this._jsVlSelect);
-    wrapper.appendChild(this._jsVlSelect);
+    this._wrapperElement.parentNode.insertBefore(wrapper, this._wrapperElement);
+    wrapper.appendChild(this._wrapperElement);
   }
 
   __unwrap() {
-    const wrapper = this.parentNode;
+    const wrapper = this._wrapperElement;
     const parent = wrapper.parentNode;
-    while (wrapper.firstChild) {
-      parent.insertBefore(wrapper.firstChild, wrapper);
-    }
-    parent.removeChild(wrapper);
+    parent.parentNode.insertBefore(wrapper, parent);
+    parent.remove();
   }
 
   /**
@@ -132,7 +133,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    */
   __lookupElement(element) {
     if (this._dressed) {
-      return this._jsVlSelect.parentElement;
+      return this._wrapperElement.parentElement;
     }
     return element;
   }
@@ -176,7 +177,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * wordt.
    * @return {null|*|Element} geeft 'js-vl-select' div terug of 'null' als de component nog niet geinitialiseerd is door 'dress()'
    */
-  get _jsVlSelect() {
+  get _wrapperElement() {
     return this._element.closest('.js-vl-select');
   }
 
