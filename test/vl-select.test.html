@@ -24,7 +24,8 @@
 
       choices = {
         element: field,
-        setChoices: sinon.spy()
+        setChoices: sinon.spy(),
+        config: {}
       };
       window.vl = {
         select: {
@@ -121,7 +122,7 @@
     });
 
     test('de hideDropdown methode callt vl.select.hideDropdown', () => {
-      field.showDropdown();
+      field.hideDropdown();
       assert(window.vl.select.hideDropdown.calledWith(field));
     });
 
@@ -137,7 +138,7 @@
     test('het zetten van de sortFilter zorgt er voor de choices config aangepast worden met een sortFilter', () => {
       const sortFn = (item1, item2) => item1.id > item2.id;
       field.sortFilter = sortFn;
-      assert.equals(choices.config.sortFilter, sortFn);
+      assert.equal(choices.config.sortFilter, sortFn);
     });
 
     test('bij het toevoegen van een select element aan de DOM zal de dress functie aangeroepen worden zodat de select functionaliteit geactiveerd wordt', (done) => {
