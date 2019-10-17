@@ -1,9 +1,9 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
-    (global.select = factory());
-  }(this, (function () { 'use strict';
-  
+  global.select = factory();
+}(typeof self !== 'undefined' ? self : this, function () { 'use strict';
+
     function _typeof(obj) {
       if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
         _typeof = function (obj) {
@@ -14,16 +14,16 @@
           return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
         };
       }
-  
+
       return _typeof(obj);
     }
-  
+
     function _classCallCheck(instance, Constructor) {
       if (!(instance instanceof Constructor)) {
         throw new TypeError("Cannot call a class as a function");
       }
     }
-  
+
     function _defineProperties(target, props) {
       for (var i = 0; i < props.length; i++) {
         var descriptor = props[i];
@@ -33,19 +33,19 @@
         Object.defineProperty(target, descriptor.key, descriptor);
       }
     }
-  
+
     function _createClass(Constructor, protoProps, staticProps) {
       if (protoProps) _defineProperties(Constructor.prototype, protoProps);
       if (staticProps) _defineProperties(Constructor, staticProps);
       return Constructor;
     }
-  
+
     var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-  
+
     function unwrapExports (x) {
         return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
     }
-  
+
     function createCommonjsModule(fn, module) {
         return module = { exports: {} }, fn(module, module.exports), module.exports;
     }
@@ -53,7 +53,7 @@
     function activeElement(element) {
       return element.shadowRoot ? activeElement(element.shadowRoot.activeElement) : element;
     }
-  
+
     var choices_min = createCommonjsModule(function (module, exports) {
       /*! choices.js v3.0.3 | (c) 2018 Josh Johnson | https://github.com/jshjohnson/Choices#readme */
       !function (e, t) {
@@ -69,19 +69,19 @@
             };
             return e[n].call(s.exports, s, s.exports, t), s.loaded = !0, s.exports;
           }
-  
+
           var i = {};
           return t.m = e, t.c = i, t.p = "/assets/scripts/dist/", t(0);
         }([function (e, t, i) {
           e.exports = i(1);
         }, function (e, t, i) {
-  
+
           function n(e) {
             return e && e.__esModule ? e : {
               default: e
             };
           }
-  
+
           function s(e, t, i) {
             return t in e ? Object.defineProperty(e, t, {
               value: i,
@@ -90,23 +90,23 @@
               writable: !0
             }) : e[t] = i, e;
           }
-  
+
           function o(e) {
             if (Array.isArray(e)) {
               for (var t = 0, i = Array(e.length); t < e.length; t++) {
                 i[t] = e[t];
               }
-  
+
               return i;
             }
-  
+
             return Array.from(e);
           }
-  
+
           function r(e, t) {
             if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
           }
-  
+
           var a = function () {
             function e(e, t) {
               for (var i = 0; i < t.length; i++) {
@@ -114,7 +114,7 @@
                 n.enumerable = n.enumerable || !1, n.configurable = !0, "value" in n && (n.writable = !0), Object.defineProperty(e, n.key, n);
               }
             }
-  
+
             return function (t, i, n) {
               return i && e(t.prototype, i), n && e(t, n), t;
             };
@@ -127,14 +127,14 @@
               f = n(d),
               p = i(31),
               v = i(32);
-  
+
           i(33);
-  
+
           var m = function () {
             function e() {
               var t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "[data-choice]",
                   i = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
-  
+
               if (r(this, e), (0, v.isType)("String", t)) {
                 var n = document.querySelectorAll(t);
                 if (n.length > 1) for (var s = 1; s < n.length; s++) {
@@ -142,7 +142,7 @@
                   new e(o, i);
                 }
               }
-  
+
               var a = {
                 silent: !1,
                 items: [],
@@ -225,13 +225,13 @@
               var c = "classList" in document.documentElement;
               c || this.config.silent || console.error("Choices: Your browser doesn't support Choices");
               var l = (0, v.isElement)(this.passedElement) && this.isValidElementType;
-  
+
               if (l) {
                 if ("active" === this.passedElement.getAttribute("data-choice")) return;
                 this.init();
               } else this.config.silent || console.error("Incompatible input passed");
             }
-  
+
             return a(e, [{
               key: "init",
               value: function value() {
@@ -259,10 +259,10 @@
                   var i = t.filter(function (t) {
                     return n.isSelectOneElement ? t.groupId === e.id : t.groupId === e.id && !t.selected;
                   });
-  
+
                   if (i.length >= 1) {
                     var o = n._getTemplate("choiceGroup", e);
-  
+
                     s.appendChild(o), n.renderChoices(i, s, !0);
                   }
                 }), s;
@@ -280,15 +280,15 @@
                     h = this.isSearching ? v.sortByScore : this.config.sortFilter,
                     u = function u(e) {
                   var t = "auto" !== a || i.isSelectOneElement || !e.selected;
-  
+
                   if (t) {
                     var n = i._getTemplate("choice", e);
-  
+
                     s.appendChild(n);
                   }
                 },
                     d = e;
-  
+
                 "auto" !== a || this.isSelectOneElement || (d = e.filter(function (e) {
                   return !e.selected;
                 }));
@@ -304,11 +304,11 @@
                 var g = d.length,
                     y = [].concat(o(p), o(m));
                 this.isSearching ? g = c : l > 0 && !n && (g = l);
-  
+
                 for (var b = 0; b < g; b++) {
                   y[b] && u(y[b]);
                 }
-  
+
                 return s;
               }
             }, {
@@ -317,7 +317,7 @@
                 var t = this,
                     i = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : null,
                     n = i || document.createDocumentFragment();
-  
+
                 if (this.config.shouldSortItems && !this.isSelectOneElement && e.sort(this.config.sortFilter), this.isTextElement) {
                   var s = this.store.getItemsReducedToValues(e),
                       o = s.join(this.config.delimiter);
@@ -326,14 +326,14 @@
                   var r = document.createDocumentFragment();
                   e.forEach(function (e) {
                     var i = t._getTemplate("option", e);
-  
+
                     r.appendChild(i);
                   }), this.passedElement.innerHTML = "", this.passedElement.appendChild(r);
                 }
-  
+
                 return e.forEach(function (e) {
                   var i = t._getTemplate("item", e);
-  
+
                   n.appendChild(i);
                 }), n;
               }
@@ -346,26 +346,26 @@
                         t = this.store.getChoicesFilteredByActive(),
                         i = document.createDocumentFragment();
                     this.choiceList.innerHTML = "", this.config.resetScrollPosition && (this.choiceList.scrollTop = 0), e.length >= 1 && this.isSearching !== !0 ? i = this.renderGroups(e, t, i) : t.length >= 1 && (i = this.renderChoices(t, i));
-  
+
                     var n = this.store.getItemsFilteredByActive(),
                         s = this._canAddItem(n, this.input.value);
-  
+
                     if (i.childNodes && i.childNodes.length > 0) s.response ? (this.choiceList.appendChild(i), this._highlightChoice()) : this.choiceList.appendChild(this._getTemplate("notice", s.notice));else {
                       var o = void 0,
                           r = void 0;
                       this.isSearching ? (r = (0, v.isType)("Function", this.config.noResultsText) ? this.config.noResultsText() : this.config.noResultsText, o = this._getTemplate("notice", r, "no-results")) : (r = (0, v.isType)("Function", this.config.noChoicesText) ? this.config.noChoicesText() : this.config.noChoicesText, o = this._getTemplate("notice", r, "no-choices")), this.choiceList.appendChild(o);
                     }
                   }
-  
+
                   if (this.currentState.items !== this.prevState.items) {
                     var a = this.store.getItemsFilteredByActive();
-  
+
                     if (this.itemList.innerHTML = "", a && a) {
                       var c = this.renderItems(a);
                       c.childNodes && this.itemList.appendChild(c);
                     }
                   }
-  
+
                   this.prevState = this.currentState;
                 }
               }
@@ -494,30 +494,30 @@
               key: "setValue",
               value: function value(e) {
                 var t = this;
-  
+
                 if (this.initialised === !0) {
                   var i = [].concat(o(e)),
                       n = function n(e) {
                     var i = (0, v.getType)(e);
-  
+
                     if ("Object" === i) {
                       if (!e.value) return;
                       t.isTextElement ? t._addItem(e.value, e.label, e.id, void 0, e.customProperties, e.placeholder) : t._addChoice(e.value, e.label, !0, !1, -1, e.customProperties, e.placeholder);
                     } else "String" === i && (t.isTextElement ? t._addItem(e) : t._addChoice(e, e, !0, !1, -1, null));
                   };
-  
+
                   i.length > 1 ? i.forEach(function (e) {
                     n(e);
                   }) : n(i[0]);
                 }
-  
+
                 return this;
               }
             }, {
               key: "setValueByChoice",
               value: function value(e) {
                 var t = this;
-  
+
                 if (!this.isTextElement) {
                   var i = this.store.getChoices(),
                       n = (0, v.isType)("Array", e) ? e : [e];
@@ -528,7 +528,7 @@
                     n ? n.selected ? t.config.silent || console.warn("Attempting to select choice already selected") : t._addItem(n.value, n.label, n.id, n.groupId, n.customProperties, n.placeholder, n.keyCode) : t.config.silent || console.warn("Attempting to select choice that does not exist");
                   });
                 }
-  
+
                 return this;
               }
             }, {
@@ -536,14 +536,14 @@
               value: function value(e, t, i) {
                 var n = this,
                     s = arguments.length > 3 && void 0 !== arguments[3] && arguments[3];
-  
+
                 if (this.initialised === !0 && this.isSelectElement) {
                   if (!(0, v.isType)("Array", e) || !t) return this;
                   s && this._clearChoices(), this._setLoading(!0), e && e.length && (this.containerOuter.classList.remove(this.config.classNames.loadingState), e.forEach(function (e) {
                     e.choices ? n._addGroup(e, e.id || null, t, i) : n._addChoice(e[t], e[i], e.selected, e.disabled, void 0, e.customProperties, e.placeholder);
                   })), this._setLoading(!1);
                 }
-  
+
                 return this;
               }
             }, {
@@ -564,7 +564,7 @@
                   var e = this.containerOuter.classList.contains(this.config.classNames.disabledState);
                   e && (this._addEventListeners(), this.passedElement.removeAttribute("disabled"), this.input.removeAttribute("disabled"), this.containerOuter.classList.remove(this.config.classNames.disabledState), this.containerOuter.removeAttribute("aria-disabled"), this.isSelectOneElement && this.containerOuter.setAttribute("tabindex", "0"));
                 }
-  
+
                 return this;
               }
             }, {
@@ -575,7 +575,7 @@
                   var e = !this.containerOuter.classList.contains(this.config.classNames.disabledState);
                   e && (this._removeEventListeners(), this.passedElement.setAttribute("disabled", ""), this.input.setAttribute("disabled", ""), this.containerOuter.classList.add(this.config.classNames.disabledState), this.containerOuter.setAttribute("aria-disabled", "true"), this.isSelectOneElement && this.containerOuter.setAttribute("tabindex", "-1"));
                 }
-  
+
                 return this;
               }
             }, {
@@ -615,7 +615,7 @@
               value: function value(e, t) {
                 var i = this,
                     n = arguments.length > 2 && void 0 !== arguments[2] && arguments[2];
-  
+
                 if (e && t && this.config.removeItems && !this.isSelectOneElement) {
                   var s = t.getAttribute("data-id");
                   e.forEach(function (e) {
@@ -631,15 +631,15 @@
                       n = this.store.getChoiceById(i),
                       s = e[0] && e[0].keyCode ? e[0].keyCode : null,
                       o = this.dropdown.classList.contains(this.config.classNames.activeState);
-  
+
                   if (n.keyCode = s, (0, v.triggerEvent)(this.passedElement, "choice", {
                     choice: n
                   }), n && !n.selected && !n.disabled) {
                     var r = this._canAddItem(e, n.value);
-  
+
                     r.response && (this._addItem(n.value, n.label, n.id, n.groupId, n.customProperties, n.placeholder, n.keyCode), this._triggerChange(n.value));
                   }
-  
+
                   this.clearInput(), o && this.isSelectOneElement && (this.hideDropdown(), this.containerOuter.focus());
                 }
               }
@@ -685,7 +685,7 @@
                     s && (0, v.isType)("Array", s) && s.length ? (e._handleLoadingState(!1), e._setLoading(!0), s.forEach(function (t) {
                       if (t.choices) {
                         var s = t.id || null;
-  
+
                         e._addGroup(t, s, i, n);
                       } else e._addChoice(t[i], t[n], t.selected, t.disabled, void 0, t.customProperties, t.placeholder);
                     }), e._setLoading(!1), e.isSelectOneElement && e._selectPlaceholderChoice()) : e._handleLoadingState(!1), e.containerOuter.removeAttribute("aria-busy");
@@ -697,7 +697,7 @@
               value: function value(e) {
                 var t = (0, v.isType)("String", e) ? e.trim() : e,
                     i = (0, v.isType)("String", this.currentValue) ? this.currentValue.trim() : this.currentValue;
-  
+
                 if (t.length >= 1 && t !== i + " ") {
                   var n = this.store.getSearchableChoices(),
                       s = t,
@@ -709,7 +709,7 @@
                       c = a.search(s);
                   return this.currentValue = t, this.highlightPosition = 0, this.isSearching = !0, this.store.dispatch((0, p.filterChoices)(c)), c.length;
                 }
-  
+
                 return 0;
               }
             }, {
@@ -749,7 +749,7 @@
               value: function value(e) {
                 var t,
                     i = this;
-  
+
                 if (e.target === this.input || this.containerOuter.contains(e.target)) {
                   var n = e.target,
                       o = this.store.getItemsFilteredByActive(),
@@ -768,7 +768,7 @@
                       b = 34,
                       E = e.ctrlKey || e.metaKey;
                   this.isTextElement || !/[a-zA-Z0-9-_ ]/.test(l) || a || this.showDropdown(!0), this.canSearch = this.config.searchEnabled;
-  
+
                   var _ = function _() {
                     E && c && (i.canSearch = !1, i.config.removeItems && !i.input.value && i.input === activeElement(document.activeElement) && i.highlightAll());
                   },
@@ -776,10 +776,10 @@
                     if (i.isTextElement && n.value) {
                       var t = i.input.value,
                           s = i._canAddItem(o, t);
-  
+
                       s.response && (a && i.hideDropdown(), i._addItem(t), i._triggerChange(t), i.clearInput());
                     }
-  
+
                     if (n.hasAttribute("data-button") && (i._handleButtonAction(o, n), e.preventDefault()), a) {
                       e.preventDefault();
                       var r = i.dropdown.querySelector("." + i.config.classNames.highlightedState);
@@ -806,7 +806,7 @@
                     !r || e.target.value || i.isSelectOneElement || (i._handleBackspace(o), e.preventDefault());
                   },
                       C = (t = {}, s(t, f, _), s(t, d, S), s(t, p, I), s(t, m, w), s(t, y, w), s(t, g, w), s(t, b, w), s(t, u, T), s(t, h, T), t);
-  
+
                   C[e.keyCode] && C[e.keyCode]();
                 }
               }
@@ -817,17 +817,17 @@
                   var t = this.input.value,
                       i = this.store.getItemsFilteredByActive(),
                       n = this._canAddItem(i, t);
-  
+
                   if (this.isTextElement) {
                     var s = this.dropdown.classList.contains(this.config.classNames.activeState);
-  
+
                     if (t) {
                       if (n.notice) {
                         var o = this._getTemplate("notice", n.notice);
-  
+
                         this.dropdown.innerHTML = o.outerHTML;
                       }
-  
+
                       n.response === !0 ? s || this.showDropdown() : !n.notice && s && this.hideDropdown();
                     } else s && this.hideDropdown();
                   } else {
@@ -835,7 +835,7 @@
                         a = 8;
                     e.keyCode !== r && e.keyCode !== a || e.target.value ? this.canSearch && n.response && this._handleSearch(this.input.value) : !this.isTextElement && this.isSearching && (this.isSearching = !1, this.store.dispatch((0, p.activateChoices)(!0)));
                   }
-  
+
                   this.canSearch = this.config.searchEnabled;
                 }
               }
@@ -860,7 +860,7 @@
               key: "_onMouseDown",
               value: function value(e) {
                 var t = e.target;
-  
+
                 if (t === this.choiceList && this.isIe11 && (this.isScrollingOnIe = !0), this.containerOuter.contains(t) && t !== this.input) {
                   var i = void 0,
                       n = this.store.getItemsFilteredByActive(),
@@ -896,7 +896,7 @@
               value: function value(e) {
                 var t = this,
                     i = e.target;
-  
+
                 if (this.containerOuter.contains(i)) {
                   var n = this.dropdown.classList.contains(this.config.classNames.activeState),
                       s = {
@@ -918,7 +918,7 @@
               value: function value(e) {
                 var t = this,
                     i = e.target;
-  
+
                 if (this.containerOuter.contains(i) && !this.isScrollingOnIe) {
                   var n = this.store.getItemsFilteredByActive(),
                       s = this.dropdown.classList.contains(this.config.classNames.activeState),
@@ -951,7 +951,7 @@
               key: "_scrollToChoice",
               value: function value(e, t) {
                 var i = this;
-  
+
                 if (e) {
                   var n = this.choiceList.offsetHeight,
                       s = e.offsetHeight,
@@ -968,7 +968,7 @@
                       e(i, a, t);
                     });
                   };
-  
+
                   requestAnimationFrame(function (e) {
                     c(e, a, t);
                   });
@@ -981,7 +981,7 @@
                     t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : null,
                     i = Array.from(this.dropdown.querySelectorAll("[data-choice-selectable]")),
                     n = t;
-  
+
                 if (i && i.length) {
                   var s = Array.from(this.dropdown.querySelectorAll("." + this.config.classNames.highlightedState));
                   s.forEach(function (t) {
@@ -1049,7 +1049,7 @@
                     o = arguments.length > 5 && void 0 !== arguments[5] ? arguments[5] : null,
                     r = arguments.length > 6 && void 0 !== arguments[6] && arguments[6],
                     a = arguments.length > 7 && void 0 !== arguments[7] ? arguments[7] : null;
-  
+
                 if ("undefined" != typeof e && null !== e) {
                   var c = this.store.getChoices(),
                       l = t || e,
@@ -1074,7 +1074,7 @@
                     a = !!e.disabled && e.disabled;
                 o ? (this.store.dispatch((0, p.addGroup)(e.label, r, !0, a)), o.forEach(function (e) {
                   var t = e.disabled || e.parentNode && e.parentNode.disabled;
-  
+
                   i._addChoice(e[n], (0, v.isType)("Object", e) ? e[s] : e.innerHTML, e.selected, t, r, e.customProperties, e.placeholder);
                 })) : this.store.dispatch((0, p.addGroup)(e.label, e.id, !1, e.disabled));
               }
@@ -1082,11 +1082,11 @@
               key: "_getTemplate",
               value: function value(e) {
                 if (!e) return null;
-  
+
                 for (var t = this.config.templates, i = arguments.length, n = Array(i > 1 ? i - 1 : 0), s = 1; s < i; s++) {
                   n[s - 1] = arguments[s];
                 }
-  
+
                 return t[e].apply(t, n);
               }
             }, {
@@ -1112,12 +1112,12 @@
                   item: function item(i) {
                     var n,
                         o = (0, u.default)(t.item, (n = {}, s(n, t.highlightedState, i.highlighted), s(n, t.itemSelectable, !i.highlighted), s(n, t.placeholder, i.placeholder), n));
-  
+
                     if (e.config.removeItemButton) {
                       var r;
                       return o = (0, u.default)(t.item, (r = {}, s(r, t.highlightedState, i.highlighted), s(r, t.itemSelectable, !i.disabled), s(r, t.placeholder, i.placeholder), r)), (0, v.strToEl)('\n            <div\n              class="' + o + '"\n              data-item\n              data-id="' + i.id + '"\n              data-value="' + i.value + '"\n              data-deletable\n              ' + (i.active ? 'aria-selected="true"' : "") + "\n              " + (i.disabled ? 'aria-disabled="true"' : "") + "\n              >\n              " + i.label + '<!--\n           --><button\n                type="button"\n                class="' + t.button + '"\n                data-button\n                aria-label="Remove item: \'' + i.value + "'\"\n                >\n                Remove item\n              </button>\n            </div>\n          ");
                     }
-  
+
                     return (0, v.strToEl)('\n          <div\n            class="' + o + '"\n            data-item\n            data-id="' + i.id + '"\n            data-value="' + i.value + '"\n            ' + (i.active ? 'aria-selected="true"' : "") + "\n            " + (i.disabled ? 'aria-disabled="true"' : "") + "\n            >\n            " + i.label + "\n          </div>\n        ");
                   },
                   choiceList: function choiceList() {
@@ -1170,10 +1170,10 @@
                     o = this._getTemplate("choiceList"),
                     r = this._getTemplate("input"),
                     a = this._getTemplate("dropdown");
-  
+
                 this.containerOuter = i, this.containerInner = n, this.input = r, this.choiceList = o, this.itemList = s, this.dropdown = a, this.passedElement.classList.add(this.config.classNames.input, this.config.classNames.hiddenState), this.passedElement.tabIndex = "-1";
                 var c = this.passedElement.getAttribute("style");
-  
+
                 if (Boolean(c) && this.passedElement.setAttribute("data-choice-orig-style", c), this.passedElement.setAttribute("style", "display:none;"), this.passedElement.setAttribute("aria-hidden", "true"), this.passedElement.setAttribute("data-choice", "active"), (0, v.wrap)(this.passedElement, n), (0, v.wrap)(n, i), this.isSelectOneElement ? r.placeholder = this.config.searchPlaceholderValue || "" : this.placeholder && (r.placeholder = this.placeholder, r.style.width = (0, v.getWidthOfInput)(r)), this.config.addItems || this.disable(), i.appendChild(n), i.appendChild(a), n.appendChild(s), this.isTextElement || a.appendChild(o), this.isSelectMultipleElement || this.isTextElement ? n.appendChild(r) : this.canSearch && a.insertBefore(r, a.firstChild), this.isSelectElement) {
                   var l = Array.from(this.passedElement.getElementsByTagName("OPTGROUP"));
                   if (this.highlightPosition = 0, this.isSearching = !1, this._setLoading(!0), l && l.length) l.forEach(function (t) {
@@ -1197,46 +1197,46 @@
                     d.forEach(function (t, i) {
                       if (e.isSelectOneElement) {
                         var n = f || !f && i > 0;
-  
+
                         e._addChoice(t.value, t.label, !n || t.selected, !!n && t.disabled, void 0, t.customProperties, t.placeholder);
                       } else e._addChoice(t.value, t.label, t.selected, t.disabled, void 0, t.customProperties, t.placeholder);
                     });
                   }
-  
+
                   this._setLoading(!1);
                 } else this.isTextElement && this.presetItems.forEach(function (t) {
                   var i = (0, v.getType)(t);
-  
+
                   if ("Object" === i) {
                     if (!t.value) return;
-  
+
                     e._addItem(t.value, t.label, t.id, void 0, t.customProperties, t.placeholder);
                   } else "String" === i && e._addItem(t);
                 });
               }
             }]), e;
           }();
-  
+
           e.exports = m;
         }, function (e, t, i) {
           !function (t) {
-  
+
             function i() {
               console.log.apply(console, arguments);
             }
-  
+
             function n(e, t) {
               var i;
               this.list = e, this.options = t = t || {};
-  
+
               for (i in a) {
                 a.hasOwnProperty(i) && ("boolean" == typeof a[i] ? this.options[i] = i in t ? t[i] : a[i] : this.options[i] = t[i] || a[i]);
               }
             }
-  
+
             function s(e, t, i) {
               var n, r, a, c, l, h;
-  
+
               if (t) {
                 if (a = t.indexOf("."), a !== -1 ? (n = t.slice(0, a), r = t.slice(a + 1)) : n = t, c = e[n], null !== c && void 0 !== c) if (r || "string" != typeof c && "number" != typeof c) {
                   if (o(c)) for (l = 0, h = c.length; l < h; l++) {
@@ -1244,18 +1244,18 @@
                   } else r && s(c, r, i);
                 } else i.push(c);
               } else i.push(e);
-  
+
               return i;
             }
-  
+
             function o(e) {
               return "[object Array]" === Object.prototype.toString.call(e);
             }
-  
+
             function r(e, t) {
               t = t || {}, this.options = t, this.options.location = t.location || r.defaultOptions.location, this.options.distance = "distance" in t ? t.distance : r.defaultOptions.distance, this.options.threshold = "threshold" in t ? t.threshold : r.defaultOptions.threshold, this.options.maxPatternLength = t.maxPatternLength || r.defaultOptions.maxPatternLength, this.pattern = t.caseSensitive ? e : e.toLowerCase(), this.patternLen = e.length, this.patternLen <= this.options.maxPatternLength && (this.matchmask = 1 << this.patternLen - 1, this.patternAlphabet = this._calculatePatternAlphabet());
             }
-  
+
             var a = {
               id: null,
               caseSensitive: !1,
@@ -1278,9 +1278,9 @@
               return this.list = e, e;
             }, n.prototype.search = function (e) {
               this.options.verbose && i("\nSearch term:", e, "\n"), this.pattern = e, this.results = [], this.resultMap = {}, this._keyMap = null, this._prepareSearchers(), this._startSearch(), this._computeScore(), this._sort();
-  
+
               var t = this._format();
-  
+
               return t;
             }, n.prototype._prepareSearchers = function () {
               var e = this.options,
@@ -1317,7 +1317,7 @@
                   } else this._keyMap[e] = {
                     weight: 1
                   };
-  
+
                   this._analyze(e, o(h, e, []), h, i);
                 }
               }
@@ -1339,11 +1339,11 @@
                   E,
                   _ = this.options,
                   S = !1;
-  
+
               if (void 0 !== t && null !== t) {
                 a = [];
                 var I = 0;
-  
+
                 if ("string" == typeof t) {
                   if (r = t.split(_.tokenSeparator), _.verbose && i("---------\nKey:", e), this.options.tokenize) {
                     for (b = 0; b < this.tokenSearchers.length; b++) {
@@ -1352,17 +1352,17 @@
                         var w = {};
                         m.isMatch ? (w[v] = m.score, S = !0, g = !0, a.push(m.score)) : (w[v] = 1, this.options.matchAllTokens || a.push(1)), p.push(w);
                       }
-  
+
                       g && I++, _.verbose && i("Token scores:", p);
                     }
-  
+
                     for (l = a[0], u = a.length, b = 1; b < u; b++) {
                       l += a[b];
                     }
-  
+
                     l /= u, _.verbose && i("Token score average:", l);
                   }
-  
+
                   d = this.fullSeacher.search(t), _.verbose && i("Full text score:", d.score), h = d.score, void 0 !== l && (h = (h + l) / 2), _.verbose && i("Score average:", h), y = !this.options.tokenize || !this.options.matchAllTokens || I >= this.tokenSearchers.length, _.verbose && i("Check Matches", y), (S || d.isMatch) && y && (c = this.resultMap[s], c ? c.output.push({
                     key: e,
                     score: h,
@@ -1391,12 +1391,12 @@
                   l,
                   h = this._keyMap,
                   u = this.results;
-  
+
               for (this.options.verbose && i("\n\nComputing score:\n"), e = 0; e < u.length; e++) {
                 for (n = 0, s = u[e].output, o = s.length, c = 1, t = 0; t < o; t++) {
                   r = s[t].score, a = h ? h[s[t].key].weight : 1, l = r * a, 1 !== a ? c = Math.min(c, l) : (n += l, s[t].nScore = l);
                 }
-  
+
                 1 === c ? u[e].score = n / o : u[e].score = c, this.options.verbose && i(u[e]);
               }
             }, n.prototype._sort = function () {
@@ -1412,7 +1412,7 @@
                   a = [],
                   c = this.results,
                   l = o.include;
-  
+
               for (o.verbose && i("\n\nOutput:\n\n", c), n = o.id ? function (e) {
                 c[e].item = r(c[e].item, o.id, [])[0];
               } : function () {}, s = function s(e) {
@@ -1422,7 +1422,7 @@
                     s,
                     o,
                     r = c[e];
-  
+
                 if (l.length > 0) {
                   if (t = {
                     item: r.item
@@ -1433,12 +1433,12 @@
                   }
                   l.indexOf("score") !== -1 && (t.score = c[e].score);
                 } else t = r.item;
-  
+
                 return t;
               }, e = 0, t = c.length; e < t; e++) {
                 n(e), a.push(s(e));
               }
-  
+
               return a;
             }, r.defaultOptions = {
               location: 0,
@@ -1448,15 +1448,15 @@
             }, r.prototype._calculatePatternAlphabet = function () {
               var e = {},
                   t = 0;
-  
+
               for (t = 0; t < this.patternLen; t++) {
                 e[this.pattern.charAt(t)] = 0;
               }
-  
+
               for (t = 0; t < this.patternLen; t++) {
                 e[this.pattern.charAt(t)] |= 1 << this.pattern.length - t - 1;
               }
-  
+
               return e;
             }, r.prototype._bitapScore = function (e, t) {
               var i = e / this.patternLen,
@@ -1487,13 +1487,13 @@
                   S,
                   I,
                   w = this.options;
-  
+
               if (e = w.caseSensitive ? e : e.toLowerCase(), this.pattern === e) return {
                 isMatch: !0,
                 score: 0,
                 matchedIndices: [[0, e.length - 1]]
               };
-  
+
               if (this.patternLen > w.maxPatternLength) {
                 if (y = e.match(new RegExp(this.pattern.replace(w.tokenSeparator, "|"))), b = !!y) for (_ = [], t = 0, S = y.length; t < S; t++) {
                   I = y[t], _.push([e.indexOf(I), I.length - 1]);
@@ -1504,27 +1504,27 @@
                   matchedIndices: _
                 };
               }
-  
+
               for (s = w.findAllMatches, o = w.location, n = e.length, r = w.threshold, a = e.indexOf(this.pattern, o), E = [], t = 0; t < n; t++) {
                 E[t] = 0;
               }
-  
+
               for (a != -1 && (r = Math.min(this._bitapScore(0, a), r), a = e.lastIndexOf(this.pattern, o + this.patternLen), a != -1 && (r = Math.min(this._bitapScore(0, a), r))), a = -1, m = 1, g = [], h = this.patternLen + n, t = 0; t < this.patternLen; t++) {
                 for (c = 0, l = h; c < l;) {
                   this._bitapScore(t, o + l) <= r ? c = l : h = l, l = Math.floor((h - c) / 2 + c);
                 }
-  
+
                 for (h = l, u = Math.max(1, o - l + 1), d = s ? n : Math.min(o + l, n) + this.patternLen, f = Array(d + 2), f[d + 1] = (1 << t) - 1, i = d; i >= u; i--) {
                   if (v = this.patternAlphabet[e.charAt(i - 1)], v && (E[i - 1] = 1), f[i] = (f[i + 1] << 1 | 1) & v, 0 !== t && (f[i] |= (p[i + 1] | p[i]) << 1 | 1 | p[i + 1]), f[i] & this.matchmask && (m = this._bitapScore(t, i - 1), m <= r)) {
                     if (r = m, a = i - 1, g.push(a), a <= o) break;
                     u = Math.max(1, 2 * o - a);
                   }
                 }
-  
+
                 if (this._bitapScore(t + 1, o) > r) break;
                 p = f;
               }
-  
+
               return _ = this._getMatchedIndices(E), {
                 isMatch: a >= 0,
                 score: 0 === m ? .001 : m,
@@ -1534,63 +1534,63 @@
               for (var t, i = [], n = -1, s = -1, o = 0, r = e.length; o < r; o++) {
                 t = e[o], t && n === -1 ? n = o : t || n === -1 || (s = o - 1, s - n + 1 >= this.options.minMatchCharLength && i.push([n, s]), n = -1);
               }
-  
+
               return e[o - 1] && o - 1 - n + 1 >= this.options.minMatchCharLength && i.push([n, o - 1]), i;
             }, e.exports = n;
           }(this);
         }, function (e, t, i) {
           var n, s;
           !function () {
-  
+
             function i() {
               for (var e = [], t = 0; t < arguments.length; t++) {
                 var n = arguments[t];
-  
+
                 if (n) {
                   var s = _typeof(n);
-  
+
                   if ("string" === s || "number" === s) e.push(n);else if (Array.isArray(n)) e.push(i.apply(null, n));else if ("object" === s) for (var r in n) {
                     o.call(n, r) && n[r] && e.push(r);
                   }
                 }
               }
-  
+
               return e.join(" ");
             }
-  
+
             var o = {}.hasOwnProperty;
             "undefined" != typeof e && e.exports ? e.exports = i : (n = [], s = function () {
               return i;
             }.apply(t, n), !(void 0 !== s && (e.exports = s)));
           }();
         }, function (e, t, i) {
-  
+
           function n(e) {
             return e && e.__esModule ? e : {
               default: e
             };
           }
-  
+
           function s(e) {
             if (Array.isArray(e)) {
               for (var t = 0, i = Array(e.length); t < e.length; t++) {
                 i[t] = e[t];
               }
-  
+
               return i;
             }
-  
+
             return Array.from(e);
           }
-  
+
           function o(e, t) {
             if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function");
           }
-  
+
           Object.defineProperty(t, "__esModule", {
             value: !0
           });
-  
+
           var r = function () {
             function e(e, t) {
               for (var i = 0; i < t.length; i++) {
@@ -1598,7 +1598,7 @@
                 n.enumerable = n.enumerable || !1, n.configurable = !0, "value" in n && (n.writable = !0), Object.defineProperty(e, n.key, n);
               }
             }
-  
+
             return function (t, i, n) {
               return i && e(t.prototype, i), n && e(t, n), t;
             };
@@ -1610,7 +1610,7 @@
             function e() {
               o(this, e), this.store = (0, a.createStore)(l.default, window.devToolsExtension ? window.devToolsExtension() : void 0);
             }
-  
+
             return r(e, [{
               key: "getState",
               value: function value() {
@@ -1698,7 +1698,7 @@
                   });
                   return i;
                 }
-  
+
                 return !1;
               }
             }, {
@@ -1741,16 +1741,16 @@
               }
             }]), e;
           }();
-  
+
           t.default = h, e.exports = h;
         }, function (e, t, i) {
-  
+
           function n(e) {
             return e && e.__esModule ? e : {
               default: e
             };
           }
-  
+
           t.__esModule = !0, t.compose = t.applyMiddleware = t.bindActionCreators = t.combineReducers = t.createStore = void 0;
           var s = i(6),
               o = n(s),
@@ -1766,22 +1766,22 @@
           n(p);
           t.createStore = o.default, t.combineReducers = a.default, t.bindActionCreators = l.default, t.applyMiddleware = u.default, t.compose = f.default;
         }, function (e, t, i) {
-  
+
           function n(e) {
             return e && e.__esModule ? e : {
               default: e
             };
           }
-  
+
           function s(e, t, i) {
             function n() {
               g === m && (g = m.slice());
             }
-  
+
             function o() {
               return v;
             }
-  
+
             function a(e) {
               if ("function" != typeof e) throw new Error("Expected listener to be a function.");
               var t = !0;
@@ -1793,33 +1793,33 @@
                 }
               };
             }
-  
+
             function h(e) {
               if (!(0, r.default)(e)) throw new Error("Actions must be plain objects. Use custom middleware for async actions.");
               if ("undefined" == typeof e.type) throw new Error('Actions may not have an undefined "type" property. Have you misspelled a constant?');
               if (y) throw new Error("Reducers may not dispatch actions.");
-  
+
               try {
                 y = !0, v = p(v, e);
               } finally {
                 y = !1;
               }
-  
+
               for (var t = m = g, i = 0; i < t.length; i++) {
                 var n = t[i];
                 n();
               }
-  
+
               return e;
             }
-  
+
             function u(e) {
               if ("function" != typeof e) throw new Error("Expected the nextReducer to be a function.");
               p = e, h({
                 type: l.INIT
               });
             }
-  
+
             function d() {
               var e,
                   t = a;
@@ -1828,7 +1828,7 @@
                   function i() {
                     e.next && e.next(o());
                   }
-  
+
                   if ("object" != _typeof(e)) throw new TypeError("Expected the observer to be an object.");
                   i();
                   var n = t(i);
@@ -1840,14 +1840,14 @@
                 return this;
               }, e;
             }
-  
+
             var f;
-  
+
             if ("function" == typeof t && "undefined" == typeof i && (i = t, t = void 0), "undefined" != typeof i) {
               if ("function" != typeof i) throw new Error("Expected the enhancer to be a function.");
               return i(s)(e, t);
             }
-  
+
             if ("function" != typeof e) throw new Error("Expected the reducer to be a function.");
             var p = e,
                 v = t,
@@ -1863,7 +1863,7 @@
               replaceReducer: u
             }, f[c.default] = d, f;
           }
-  
+
           t.__esModule = !0, t.ActionTypes = void 0, t.default = s;
           var o = i(7),
               r = n(o),
@@ -1880,7 +1880,7 @@
             var i = u.call(t, "constructor") && t.constructor;
             return "function" == typeof i && i instanceof i && h.call(i) == d;
           }
-  
+
           var s = i(8),
               o = i(14),
               r = i(16),
@@ -1895,7 +1895,7 @@
           function n(e) {
             return null == e ? void 0 === e ? c : a : l && l in Object(e) ? o(e) : r(e);
           }
-  
+
           var s = i(9),
               o = i(12),
               r = i(13),
@@ -1923,15 +1923,15 @@
           function n(e) {
             var t = r.call(e, c),
                 i = e[c];
-  
+
             try {
               e[c] = void 0;
             } catch (e) {}
-  
+
             var s = a.call(e);
             return t ? e[c] = i : delete e[c], s;
           }
-  
+
           var s = i(9),
               o = Object.prototype,
               r = o.hasOwnProperty,
@@ -1942,7 +1942,7 @@
           function i(e) {
             return s.call(e);
           }
-  
+
           var n = Object.prototype,
               s = n.toString;
           e.exports = i;
@@ -1956,25 +1956,25 @@
               return e(t(i));
             };
           }
-  
+
           e.exports = i;
         }, function (e, t) {
           function i(e) {
             return null != e && "object" == _typeof(e);
           }
-  
+
           e.exports = i;
         }, function (e, t, i) {
           e.exports = i(18);
         }, function (e, t, i) {
           (function (e, n) {
-  
+
             function s(e) {
               return e && e.__esModule ? e : {
                 default: e
               };
             }
-  
+
             Object.defineProperty(t, "__esModule", {
               value: !0
             });
@@ -1992,30 +1992,30 @@
             return e.webpackPolyfill || (e.deprecate = function () {}, e.paths = [], e.children = [], e.webpackPolyfill = 1), e;
           };
         }, function (e, t) {
-  
+
           function i(e) {
             var t,
                 i = e.Symbol;
             return "function" == typeof i ? i.observable ? t = i.observable : (t = i("observable"), i.observable = t) : t = "@@observable", t;
           }
-  
+
           Object.defineProperty(t, "__esModule", {
             value: !0
           }), t.default = i;
         }, function (e, t, i) {
-  
+
           function n(e) {
             return e && e.__esModule ? e : {
               default: e
             };
           }
-  
+
           function s(e, t) {
             var i = t && t.type,
                 n = i && '"' + i.toString() + '"' || "an action";
             return "Given action " + n + ', reducer "' + e + '" returned undefined. To ignore an action, you must explicitly return the previous state. If you want this reducer to hold no value, you can return null instead of undefined.';
           }
-  
+
           function o(e) {
             Object.keys(e).forEach(function (t) {
               var i = e[t],
@@ -2029,96 +2029,96 @@
               })) throw new Error('Reducer "' + t + '" returned undefined when probed with a random type. ' + ("Don't try to handle " + a.ActionTypes.INIT + ' or other actions in "redux/*" ') + "namespace. They are considered private. Instead, you must return the current state for any unknown actions, unless it is undefined, in which case you must return the initial state, regardless of the action type. The initial state may not be undefined, but can be null.");
             });
           }
-  
+
           function r(e) {
             for (var t = Object.keys(e), i = {}, n = 0; n < t.length; n++) {
               var r = t[n];
               "function" == typeof e[r] && (i[r] = e[r]);
             }
-  
+
             var a = Object.keys(i),
                 c = void 0;
-  
+
             try {
               o(i);
             } catch (e) {
               c = e;
             }
-  
+
             return function () {
               var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {},
                   t = arguments[1];
               if (c) throw c;
-  
+
               for (var n = !1, o = {}, r = 0; r < a.length; r++) {
                 var l = a[r],
                     h = i[l],
                     u = e[l],
                     d = h(u, t);
-  
+
                 if ("undefined" == typeof d) {
                   var f = s(l, t);
                   throw new Error(f);
                 }
-  
+
                 o[l] = d, n = n || d !== u;
               }
-  
+
               return n ? o : e;
             };
           }
-  
+
           t.__esModule = !0, t.default = r;
           var a = i(6),
               c = i(7),
               l = (n(c), i(22));
           n(l);
         }, function (e, t) {
-  
+
           function i(e) {
             "undefined" != typeof console && "function" == typeof console.error && console.error(e);
-  
+
             try {
               throw new Error(e);
             } catch (e) {}
           }
-  
+
           t.__esModule = !0, t.default = i;
         }, function (e, t) {
-  
+
           function i(e, t) {
             return function () {
               return t(e.apply(void 0, arguments));
             };
           }
-  
+
           function n(e, t) {
             if ("function" == typeof e) return i(e, t);
             if ("object" != _typeof(e) || null === e) throw new Error("bindActionCreators expected an object or a function, instead received " + (null === e ? "null" : _typeof(e)) + '. Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');
-  
+
             for (var n = Object.keys(e), s = {}, o = 0; o < n.length; o++) {
               var r = n[o],
                   a = e[r];
               "function" == typeof a && (s[r] = i(a, t));
             }
-  
+
             return s;
           }
-  
+
           t.__esModule = !0, t.default = n;
         }, function (e, t, i) {
-  
+
           function n(e) {
             return e && e.__esModule ? e : {
               default: e
             };
           }
-  
+
           function s() {
             for (var e = arguments.length, t = Array(e), i = 0; i < e; i++) {
               t[i] = arguments[i];
             }
-  
+
             return function (e) {
               return function (i, n, s) {
                 var r = e(i, n, s),
@@ -2138,31 +2138,31 @@
               };
             };
           }
-  
+
           t.__esModule = !0;
-  
+
           var o = Object.assign || function (e) {
             for (var t = 1; t < arguments.length; t++) {
               var i = arguments[t];
-  
+
               for (var n in i) {
                 Object.prototype.hasOwnProperty.call(i, n) && (e[n] = i[n]);
               }
             }
-  
+
             return e;
           };
-  
+
           t.default = s;
           var r = i(25),
               a = n(r);
         }, function (e, t) {
-  
+
           function i() {
             for (var e = arguments.length, t = Array(e), i = 0; i < e; i++) {
               t[i] = arguments[i];
             }
-  
+
             return 0 === t.length ? function (e) {
               return e;
             } : 1 === t.length ? t[0] : t.reduce(function (e, t) {
@@ -2171,20 +2171,20 @@
               };
             });
           }
-  
+
           t.__esModule = !0, t.default = i;
         }, function (e, t, i) {
-  
+
           function n(e) {
             return e && e.__esModule ? e : {
               default: e
             };
           }
-  
+
           Object.defineProperty(t, "__esModule", {
             value: !0
           });
-  
+
           var s = i(5),
               o = i(27),
               r = n(o),
@@ -2204,30 +2204,30 @@
             var i = e;
             return "CLEAR_ALL" === t.type && (i = void 0), f(i, t);
           };
-  
+
           t.default = p;
         }, function (e, t) {
-  
+
           function i(e) {
             if (Array.isArray(e)) {
               for (var t = 0, i = Array(e.length); t < e.length; t++) {
                 i[t] = e[t];
               }
-  
+
               return i;
             }
-  
+
             return Array.from(e);
           }
-  
+
           Object.defineProperty(t, "__esModule", {
             value: !0
           });
-  
+
           var n = function n() {
             var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [],
                 t = arguments[1];
-  
+
             switch (t.type) {
               case "ADD_ITEM":
                 var n = [].concat(i(e), [{
@@ -2245,45 +2245,45 @@
                 return n.map(function (e) {
                   return e.highlighted && (e.highlighted = !1), e;
                 });
-  
+
               case "REMOVE_ITEM":
                 return e.map(function (e) {
                   return e.id === t.id && (e.active = !1), e;
                 });
-  
+
               case "HIGHLIGHT_ITEM":
                 return e.map(function (e) {
                   return e.id === t.id && (e.highlighted = t.highlighted), e;
                 });
-  
+
               default:
                 return e;
             }
           };
-  
+
           t.default = n;
         }, function (e, t) {
-  
+
           function i(e) {
             if (Array.isArray(e)) {
               for (var t = 0, i = Array(e.length); t < e.length; t++) {
                 i[t] = e[t];
               }
-  
+
               return i;
             }
-  
+
             return Array.from(e);
           }
-  
+
           Object.defineProperty(t, "__esModule", {
             value: !0
           });
-  
+
           var n = function n() {
             var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [],
                 t = arguments[1];
-  
+
             switch (t.type) {
               case "ADD_GROUP":
                 return [].concat(i(e), [{
@@ -2292,38 +2292,38 @@
                   active: t.active,
                   disabled: t.disabled
                 }]);
-  
+
               case "CLEAR_CHOICES":
                 return e.groups = [];
-  
+
               default:
                 return e;
             }
           };
-  
+
           t.default = n;
         }, function (e, t) {
-  
+
           function i(e) {
             if (Array.isArray(e)) {
               for (var t = 0, i = Array(e.length); t < e.length; t++) {
                 i[t] = e[t];
               }
-  
+
               return i;
             }
-  
+
             return Array.from(e);
           }
-  
+
           Object.defineProperty(t, "__esModule", {
             value: !0
           });
-  
+
           var n = function n() {
             var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [],
                 t = arguments[1];
-  
+
             switch (t.type) {
               case "ADD_CHOICE":
                 return [].concat(i(e), [{
@@ -2340,7 +2340,7 @@
                   placeholder: t.placeholder || !1,
                   keyCode: null
                 }]);
-  
+
               case "ADD_ITEM":
                 var n = e;
                 return t.activateOptions && (n = e.map(function (e) {
@@ -2348,12 +2348,12 @@
                 })), t.choiceId > -1 && (n = e.map(function (e) {
                   return e.id === parseInt(t.choiceId, 10) && (e.selected = !0), e;
                 })), n;
-  
+
               case "REMOVE_ITEM":
                 return t.choiceId > -1 ? e.map(function (e) {
                   return e.id === parseInt(t.choiceId, 10) && (e.selected = !1), e;
                 }) : e;
-  
+
               case "FILTER_CHOICES":
                 var s = t.results,
                     o = e.map(function (e) {
@@ -2362,47 +2362,47 @@
                   }), e;
                 });
                 return o;
-  
+
               case "ACTIVATE_CHOICES":
                 return e.map(function (e) {
                   return e.active = t.active, e;
                 });
-  
+
               case "CLEAR_CHOICES":
                 return e.choices = [];
-  
+
               default:
                 return e;
             }
           };
-  
+
           t.default = n;
         }, function (e, t) {
-  
+
           Object.defineProperty(t, "__esModule", {
             value: !0
           });
-  
+
           var i = function i() {
             var e = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : {
               loading: !1
             },
                 t = arguments[1];
-  
+
             switch (t.type) {
               case "LOADING":
                 return {
                   loading: t.isLoading
                 };
-  
+
               default:
                 return e;
             }
           };
-  
+
           t.default = i;
         }, function (e, t) {
-  
+
           Object.defineProperty(t, "__esModule", {
             value: !0
           });
@@ -2477,11 +2477,11 @@
             };
           };
         }, function (e, t) {
-  
+
           Object.defineProperty(t, "__esModule", {
             value: !0
           });
-  
+
           var i = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
             return _typeof(e);
           } : function (e) {
@@ -2496,7 +2496,7 @@
               var n = a(0, 36);
               t += n.toString(36);
             }
-  
+
             return t;
           }),
               s = (t.generateId = function (e, t) {
@@ -2522,7 +2522,7 @@
               var r = arguments[s];
               o("Object", r) && n(r);
             }
-  
+
             return t;
           }, t.whichTransitionEvent = function () {
             var e,
@@ -2533,7 +2533,7 @@
               MozTransition: "transitionend",
               WebkitTransition: "webkitTransitionEnd"
             };
-  
+
             for (e in i) {
               if (void 0 !== t.style[e]) return i[e];
             }
@@ -2546,7 +2546,7 @@
               MozAnimation: "animationend",
               WebkitAnimation: "webkitAnimationEnd"
             };
-  
+
             for (e in i) {
               if (void 0 !== t.style[e]) return i[e];
             }
@@ -2560,13 +2560,13 @@
                 if ("[" === s && e.hasAttribute(t.substr(1, t.length - 1))) break;
                 if (e.tagName.toLowerCase() === t) break;
               }
-  
+
               if (i) {
                 var o = i.charAt(0);
                 "." === o && e.classList.contains(i.substr(1)) && n.push(e), "#" === o && e.id === i.substr(1) && n.push(e), "[" === o && e.hasAttribute(i.substr(1, i.length - 1)) && n.push(e), e.tagName.toLowerCase() === i && n.push(e);
               } else n.push(e);
             }
-  
+
             return 0 === n.length ? null : n;
           }, t.wrap = function (e, t) {
             return t = t || document.createElement("div"), e.nextSibling ? e.parentNode.insertBefore(t, e.nextSibling) : e.parentNode.appendChild(t), t.appendChild(e);
@@ -2574,19 +2574,19 @@
             for (var t = [], i = e.parentNode.firstChild; i; i = i.nextSibling) {
               1 === i.nodeType && i !== e && t.push(i);
             }
-  
+
             return t;
           }, t.findAncestor = function (e, t) {
             for (; (e = e.parentElement) && !e.classList.contains(t);) {
             }
-  
+
             return e;
           }, t.findAncestorByAttrName = function (e, t) {
             for (var i = e; i;) {
               if (i.hasAttribute(t)) return i;
               i = i.parentElement;
             }
-  
+
             return null;
           }, t.debounce = function (e, t, i) {
             var n;
@@ -2597,7 +2597,7 @@
                 n = null, i || e.apply(s, o);
               },
                   a = i && !n;
-  
+
               clearTimeout(n), n = setTimeout(r, t), a && e.apply(s, o);
             };
           }, t.getElemDistance = function (e) {
@@ -2611,7 +2611,7 @@
             return i > 1 && (i = 1), i > 0 && (i = 0), Math.max(e.offsetHeight * i);
           }, t.getAdjacentEl = function (e, t) {
             var i = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : 1;
-  
+
             if (e && t) {
               var n = e.parentNode.parentNode,
                   s = Array.from(n.querySelectorAll(t)),
@@ -2625,7 +2625,7 @@
             return this.getScrollPosition(t) > this.getElemDistance(e) + this.getElementOffset(e, i);
           }, t.isScrolledIntoView = function (e, t) {
             var i = arguments.length > 2 && void 0 !== arguments[2] ? arguments[2] : 1;
-  
+
             if (e) {
               var n = void 0;
               return n = i > 0 ? t.scrollTop + t.offsetHeight >= e.offsetTop + e.offsetHeight : e.offsetTop >= t.scrollTop;
@@ -2638,7 +2638,7 @@
                 n = function n() {
               e.classList.remove(t), e.removeEventListener(i, n, !1);
             };
-  
+
             e.classList.add(t), e.addEventListener(i, n, !1);
           }, t.getRandomNumber = function (e, t) {
             return Math.floor(Math.random() * (t - e) + e);
@@ -2648,30 +2648,30 @@
             return function (t) {
               var i = t.trim(),
                   n = void 0;
-  
+
               for (e.innerHTML = i, n = e.children[0]; e.firstChild;) {
                 e.removeChild(e.firstChild);
               }
-  
+
               return n;
             };
           }();
-  
+
           t.getWidthOfInput = function (e) {
             var t = e.value || e.placeholder,
                 i = e.offsetWidth;
-  
+
             if (t) {
               var n = c("<span>" + t + "</span>");
-  
+
               if (n.style.position = "absolute", n.style.padding = "0", n.style.top = "-9999px", n.style.left = "-9999px", n.style.width = "auto", n.style.whiteSpace = "pre", document.body.contains(e) && window.getComputedStyle) {
                 var s = window.getComputedStyle(e);
                 s && (n.style.fontSize = s.fontSize, n.style.fontFamily = s.fontFamily, n.style.fontWeight = s.fontWeight, n.style.fontStyle = s.fontStyle, n.style.letterSpacing = s.letterSpacing, n.style.textTransform = s.textTransform, n.style.padding = s.padding);
               }
-  
+
               document.body.appendChild(n), t && n.offsetWidth !== e.offsetWidth && (i = n.offsetWidth + 4), document.body.removeChild(n);
             }
-  
+
             return i + "px";
           }, t.sortByAlpha = function (e, t) {
             var i = (e.label || e.value).toLowerCase(),
@@ -2689,7 +2689,7 @@
             return e.dispatchEvent(n);
           };
         }, function (e, t) {
-  
+
           !function () {
             function e(e, t) {
               t = t || {
@@ -2700,7 +2700,7 @@
               var i = document.createEvent("CustomEvent");
               return i.initCustomEvent(e, t.bubbles, t.cancelable, t.detail), i;
             }
-  
+
             Array.from || (Array.from = function () {
               var e = Object.prototype.toString,
                   t = function t(_t) {
@@ -2715,29 +2715,29 @@
                 var t = i(e);
                 return Math.min(Math.max(t, 0), n);
               };
-  
+
               return function (e) {
                 var i = this,
                     n = Object(e);
                 if (null == e) throw new TypeError("Array.from requires an array-like object - not null or undefined");
                 var o,
                     r = arguments.length > 1 ? arguments[1] : void 0;
-  
+
                 if ("undefined" != typeof r) {
                   if (!t(r)) throw new TypeError("Array.from: when provided, the second argument must be a function");
                   arguments.length > 2 && (o = arguments[2]);
                 }
-  
+
                 for (var a, c = s(n.length), l = t(i) ? Object(new i(c)) : new Array(c), h = 0; h < c;) {
                   a = n[h], r ? l[h] = "undefined" == typeof o ? r(a, h) : r.call(o, a, h) : l[h] = a, h += 1;
                 }
-  
+
                 return l.length = c, l;
               };
             }()), Array.prototype.find || (Array.prototype.find = function (e) {
               if (null == this) throw new TypeError("Array.prototype.find called on null or undefined");
               if ("function" != typeof e) throw new TypeError("predicate must be a function");
-  
+
               for (var t, i = Object(this), n = i.length >>> 0, s = arguments[1], o = 0; o < n; o++) {
                 if (t = i[o], e.call(s, t, o, i)) return t;
               }
@@ -2748,7 +2748,7 @@
     });
     var Choices = unwrapExports(choices_min);
     var choices_min_1 = choices_min.Choices;
-  
+
     var sClass = "".concat(vl.ns, "select"),
         sClassJs = "js-".concat(sClass),
         sSelectorAtt = "data-".concat(vl.ns, "select"),
@@ -2775,7 +2775,7 @@
         sSearchAtt = "".concat(sSelectorAtt, "-search"),
         sdeletableAtt = "".concat(sSelectorAtt, "-deletable"),
         sSearchEmptyAtt = "".concat(sSelectorAtt, "-search-empty-text");
-  
+
     var _prepareChoisesConfig = function _prepareChoisesConfig(element) {
       var obj = {},
           searchEnabled = true,
@@ -2783,22 +2783,22 @@
           searchPlaceholderValue = vl.i18n.t('select.search_placeholder_value'),
           placeholderValue = vl.i18n.t('select.placeholder_value'),
           disabled = false; // Select has search - default behavior
-  
+
       if (element.hasAttribute(sSearchAtt)) {
         searchEnabled = element.getAttribute(sSearchAtt) === 'true';
       } // Select is disabled
-  
-  
+
+
       disabled = element.disabled; // Select has empty-search-text attribute
-  
+
       if (element.hasAttribute(sSearchEmptyAtt)) {
         obj.noResultsText = element.getAttribute(sSearchEmptyAtt);
       }
-  
+
       if (element.hasAttribute(sMultiSelectorAtt) || element.hasAttribute(sdeletableAtt)) {
         removeItemButton = true;
       }
-  
+
       obj.searchEnabled = searchEnabled;
       obj.removeItemButton = removeItemButton;
       obj.searchPlaceholderValue = searchPlaceholderValue;
@@ -2806,13 +2806,13 @@
       obj.disabled = disabled;
       return obj;
     };
-  
+
     var Select =
     /*#__PURE__*/
     function () {
       function Select() {
         _classCallCheck(this, Select);
-  
+
         this.selectInstances = [];
         this.globalConfig = {
           removeItemButton: false,
@@ -2841,19 +2841,19 @@
           callbackOnCreateTemplates: this._createTemplates
         };
       }
-  
+
       _createClass(Select, [{
         key: "_createTemplates",
         value: function _createTemplates(template) {
           var _this = this;
-  
+
           var classNames = this.config.classNames;
           return {
             itemList: function itemList() {
               if (_this.passedElement.type === 'select-one') {
                 return template("\n            <div class=\"".concat(classNames.input, "\"></div>\n          "));
               }
-  
+
               return template("\n          <div class=\"".concat(classNames.input, " ").concat(classNames.listItems, "\"></div>"));
             },
             item: function item(data) {
@@ -2862,7 +2862,7 @@
               if (_this.config.removeItemButton) {
                 return template("\n              <div class=\"".concat(classNames.item, "\n                ").concat(data.highlighted ? classNames.highlightedState : '', "\n                ").concat(data.disabled ? '' : classNames.itemSelectable, "\n                ").concat(_this.passedElement.type === 'select-one' ? '' : pillClass, "\n                ").concat(data.placeholder ? classNames.placeholder : '', "\"\n                data-item data-id=\"").concat(data.id, "\"\n                data-value=\"").concat(data.value, "\"\n                ").concat(data.active ? 'aria-selected="true"' : '', "\n                ").concat(data.disabled ? 'aria-disabled="true"' : 'data-deletable', ">\n                <span>").concat(data.label, "</span>\n                <button class=\"").concat(pillCloseClass, "\" data-button>\n                  <span class=\"vl-u-visually-hidden\">Remove item</span>\n                </button>\n              </div>\n            "));
               }
-  
+
               return template("\n          <div class=\"".concat(classNames.item, "\n            ").concat(data.highlighted ? classNames.highlightedState : classNames.itemSelectable, "\n            ").concat(data.placeholder ? classNames.placeholder : '', "\"\n            data-item data-id=\"").concat(data.id, "\"\n            data-value=\"").concat(data.value, "\"\n            ").concat(data.active ? 'aria-selected="true"' : '', "\n            ").concat(data.disabled ? 'aria-disabled="true"' : '', ">\n            ").concat(data.label, "\n          </div>\n          "));
             },
             input: function input() {
@@ -2875,17 +2875,17 @@
         value: function _buildSelect(select, config, params, originalOptions) {
           var choice = new Choices(select, config),
               items = [];
-  
+
           if (vl.util.exists(params.callbackFn)) {
             items = params.callbackFn(select);
-  
+
             this._callback(choice, items);
           }
-  
+
           if (config.disabled) {
             choice.disable();
           }
-  
+
           choice.originalOptions = originalOptions;
           this.selectInstances.push(choice);
         }
@@ -2905,7 +2905,7 @@
               // instance.removeActiveItems();
               // Dirty-ish fix, trigger click on working button
               var closeButton = instance.containerOuter.querySelector(".".concat(pillCloseClass));
-  
+
               if (vl.util.exists(closeButton)) {
                 vl.util.triggerEvent(closeButton, 'click');
               } else {
@@ -2947,35 +2947,43 @@
           var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
           var config = {},
               originalOptions = select.querySelectorAll('option');
-          select.setAttribute(sDressedAtt, true); // Build select config
-  
+
           config = _prepareChoisesConfig(select);
           config = Object.assign(this.globalConfig, config);
-  
+
           this._buildSelect(select, config, params, originalOptions);
+
+          //change melden aan AIV -> UIG-169
+          setTimeout(function() {
+            select.setAttribute(sDressedAtt, true); // Build select config
+          }, 0);
         }
       }, {
         key: "undress",
         value: function undress(selectInstance) {
           var selectId = selectInstance.element.id,
               selectEl;
-          selectInstance.element.removeAttribute(sDressedAtt);
-          selectInstance.element.removeAttribute(sMultiDressedAtt); // Destroy is not working correctly, initial state will not be correctly reset
-          // https://github.com/jshjohnson/Choices/issues/298
-  
+
           selectInstance.destroy();
           selectEl = document.getElementById(selectId);
           vl.util.each(selectInstance.originalOptions, function (option) {
             selectEl.appendChild(option);
           }); // Reset select to first value
-  
+
           selectEl.selectedIndex = 0;
+
+          //change melden aan AIV -> UIG-169
+          setTimeout(function() {
+            selectInstance.element.removeAttribute(sDressedAtt);
+            selectInstance.element.removeAttribute(sMultiDressedAtt); // Destroy is not working correctly, initial state will not be correctly reset
+          }, 0);
+          // https://github.com/jshjohnson/Choices/issues/298
         }
       }, {
         key: "dressAll",
         value: function dressAll() {
           var _this2 = this;
-  
+
           var selectFields = document.querySelectorAll("[".concat(sSelectorAtt, "]:not([").concat(sDressedAtt, "]):not([data-").concat(vl.ns, "js-dress=\"false\"])")),
               multiSelectFields = document.querySelectorAll("[".concat(sMultiSelectorAtt, "]:not([").concat(sMultiDressedAtt, "]):not([data-").concat(vl.ns, "js-dress=\"false\"])"));
           vl.util.each(selectFields, function (select) {
@@ -2989,26 +2997,45 @@
         key: "undressAll",
         value: function undressAll() {
           var _this3 = this;
-  
+
           if (vl.util.exists(this.selectInstances)) {
             vl.util.each(this.selectInstances, function (selectInstance) {
               _this3.undress(selectInstance);
             });
           }
-  
+
           this.selectInstances = [];
         }
+      }, {
+        key: "showDropdown",
+        value: function showDropdown(select) {
+          vl.util.each(this.selectInstances, function (instance) {
+            if (instance.element === select) {
+              instance.showDropdown();
+            }
+          });
+        }
+      }, {
+        key: "hideDropdown",
+        value: function hideDropdown(select) {
+          vl.util.each(this.selectInstances, function (instance) {
+            if (instance.element === select) {
+              instance.hideDropdown();
+            }
+          });
+        }
       }]);
-  
+
       return Select;
     }();
-  
+
     if (!('select' in vl)) {
       vl.select = new Select();
-      vl.select.dressAll();
+      //change melden aan AIV -> UIG-169
+      //vl.select.dressAll();
     }
-  
+
     return Select;
-  
-  })));
+
+}));
   
