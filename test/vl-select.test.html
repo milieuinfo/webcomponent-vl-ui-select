@@ -21,9 +21,11 @@
 
     setup((done) => {
       field = fixture('vl-select-fixture');
+
       choices = {
         element: field,
-        setChoices: sinon.spy()
+        setChoices: sinon.spy(),
+        config: {}
       };
       window.vl = {
         select: {
@@ -32,7 +34,9 @@
           enable: sinon.fake(),
           disable: sinon.fake(),
           removeActive: sinon.fake(),
-          setValueByChoice: sinon.fake()
+          setValueByChoice: sinon.fake(),
+          showDropdown: sinon.fake(),
+          hideDropdown: sinon.fake()
         },
         util: {
           each: (instances, callback) => {
@@ -112,6 +116,16 @@
       assert(window.vl.select.setValueByChoice.calledWith(field, 'test123'));
     });
 
+    test('de showDropdown methode callt vl.select.showDropdown', () => {
+      field.showDropdown();
+      assert(window.vl.select.showDropdown.calledWith(field));
+    });
+
+    test('de hideDropdown methode callt vl.select.hideDropdown', () => {
+      field.hideDropdown();
+      assert(window.vl.select.hideDropdown.calledWith(field));
+    });
+
     test('de mogelijkheden kunnen achteraf nog bepaald worden', () => {
       const data = [{
         value: 'test value',
@@ -119,6 +133,12 @@
       }];
       field.choices = data;
       assert(choices.setChoices.calledWith(data, 'value', 'label', true));
+    });
+
+    test('het zetten van de sortFilter zorgt er voor de choices config aangepast worden met een sortFilter', () => {
+      const sortFn = (item1, item2) => item1.id > item2.id;
+      field.sortFilter = sortFn;
+      assert.equal(choices.config.sortFilter, sortFn);
     });
 
     test('bij het toevoegen van een select element aan de DOM zal de dress functie aangeroepen worden zodat de select functionaliteit geactiveerd wordt', (done) => {
