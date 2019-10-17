@@ -127,16 +127,16 @@
         &lt;option value=&quot;Duitsland&quot;&gt;Duitsland&lt;/option&gt;
         &lt;option value=&quot;Frankrijk&quot;&gt;Frankrijk&lt;/option&gt;
       &lt;/select&gt;
-      
-      &lt;button is=&quot;vl-button&quot; onclick=&quot;toggleAttribute(&apos;vl-select-dressed-state&apos;, &apos;success&apos;)&quot; type=&quot;button&quot;&gt;toggle success&lt;/button&gt;
-  
+
+      &lt;button is=&quot;vl-button&quot; onclick=&quot;toggleAttribute()&quot; type=&quot;button&quot;&gt;toggle success&lt;/button&gt;
+
       &lt;script type=&quot;text/javascript&quot;&gt;
-        function toggleAttribute(id, name) {
-          const element = document.getElementById(id);
-          if (!element.hasAttribute(name)) {
-            element.setAttribute(name, &apos;&apos;);
+        function toggleSuccess() {
+          const element = document.getElementById(&apos;vl-select-dressed-state&apos;);
+          if (!element.hasAttribute(&apos;success&apos;)) {
+            element.setAttribute(&apos;success&apos;, &apos;&apos;);
           } else {
-            element.removeAttribute(name);
+            element.removeAttribute(&apos;success&apos;);
           }
         }
       &lt;/script&gt;
@@ -149,15 +149,15 @@
       <option value="Frankrijk">Frankrijk</option>
     </select>
 
-    <button is="vl-button" onclick="toggleAttribute('vl-select-dressed-state', 'success')" type="button">toggle success</button>
+    <button is="vl-button" onclick="toggleSuccess()" type="button">toggle success</button>
 
     <script type="text/javascript">
-      function toggleAttribute(id, name) {
-        const element = document.getElementById(id);
-        if (!element.hasAttribute(name)) {
-          element.setAttribute(name, '');
+      function toggleSuccess() {
+        const element = document.getElementById('vl-select-dressed-state');
+        if (!element.hasAttribute('success')) {
+          element.setAttribute('success', '');
         } else {
-          element.removeAttribute(name);
+          element.removeAttribute('success');
         }
       }
     </script>
