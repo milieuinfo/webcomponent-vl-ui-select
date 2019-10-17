@@ -39,10 +39,6 @@
       document.getElementById(id).removeActive();
     };
 
-    demo.scripts.setPlaceholderValue = (id) => {
-      document.getElementById(id).setValueByChoice('');
-    };
-
     demo.scripts.showDropdown = (id) => {
       document.getElementById(id).showDropdown();
     };
@@ -428,7 +424,6 @@
     &lt;button is=&quot;vl-button&quot; onclick=&quot;disable()&quot; type=&quot;button&quot;&gt;disable()&lt;/button&gt;
     &lt;button is=&quot;vl-button&quot; onclick=&quot;setValueByChoice()&quot; type=&quot;button&quot;&gt;setValueByChoice('Duitsland')&lt;/button&gt;
     &lt;button is=&quot;vl-button&quot; onclick=&quot;removeActive()&quot; type=&quot;button&quot;&gt;removeActive()&lt;/button&gt;
-    &lt;button is=&quot;vl-button&quot; onclick=&quot;setPlaceholderValue()&quot; type=&quot;button&quot;&gt;setValueByChoice('')&lt;/button&gt;
     &lt;button is=&quot;vl-button&quot; onclick=&quot;showDropdown()&quot; type=&quot;button&quot;&gt;showDropdown()&lt;/button&gt;
     &lt;button is=&quot;vl-button&quot; onclick=&quot;hideDropdown()&quot; type=&quot;button&quot;&gt;hideDropdown()&lt;/button&gt;</code>
   </pre>
@@ -450,7 +445,6 @@
     <button is="vl-button" onclick="demo.scripts.disable('vl-select-methoden')" type="button">disable</button>
     <button is="vl-button" onclick="demo.scripts.setValueByChoice('vl-select-methoden')" type="button">kies Duitsland</button>
     <button is="vl-button" onclick="demo.scripts.removeActive('vl-select-methoden')" type="button">verwijder selectie</button>
-    <button is="vl-button" onclick="demo.scripts.setPlaceholderValue('vl-select-methoden')" type="button">setValueByChoice('')</button>
     <button is="vl-button" onclick="demo.scripts.showDropdown('vl-select-methoden')" type="button">show dropdown</button>
     <button is="vl-button" onclick="demo.scripts.hideDropdown('vl-select-methoden')" type="button">hide dropdown</button>
   </div>
