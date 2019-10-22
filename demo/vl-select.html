@@ -431,34 +431,56 @@
     <h2>Select in combinatie met upload in modal</h2>
     <pre>
       <code class="line-numbers language-markup">
-        
+        &lt;vl-modal id="modal-4" data-title="Modal 4" closable not-cancellable&gt;
+          &lt;span slot="content"&gt;
+            &lt;form&gt;
+              &lt;div is="vl-form-grid" is-stacked&gt;
+                &lt;div is="vl-form-column" size="12"&gt;
+                  &lt;select id="vl-select-methoden" is="vl-select" data-vl-select&gt;
+                      &lt;option placeholder value=""&gt;Kies een land&lt;/option&gt;
+                      &lt;option value="België"&gt;België&lt;/option&gt;
+                      &lt;option value="Duitsland"&gt;Duitsland&lt;/option&gt;
+                      &lt;option value="Frankrijk"&gt;Frankrijk&lt;/option&gt;
+                      &lt;option value="Nederland"&gt;Nederland&lt;/option&gt;
+                      &lt;option value="Italië"&gt;Italië&lt;/option&gt;
+                    &lt;/select&gt;
+                &lt;/div&gt;
+                &lt;div is="vl-form-column" size="12"&gt;
+                  &lt;vl-upload url="http://example.com" input-name="files" autoprocess="true"&gt;&lt;/vl-upload&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/form&gt;
+          &lt;/span&gt;
+          &lt;button is="vl-button" slot="button"&gt;Andere actie&lt;/button&gt;
+        &lt;/vl-modal&gt;
       </code>
     </pre>
     <div class="demo">
       <button is="vl-button" data-vl-modal-open="modal-4">Open</button>
       <vl-modal id="modal-4" data-title="Modal 4" closable not-cancellable>
-          <span slot="content">
-            <form>
-              <div is="vl-form-grid" is-stacked>
-                <div is="vl-form-column" size="12">
-                  <select id="vl-select-methoden" is="vl-select" data-vl-select>
-                      <option placeholder value="">Kies een land</option>
-                      <option value="België">België</option>
-                      <option value="Duitsland">Duitsland</option>
-                      <option value="Frankrijk">Frankrijk</option>
-                      <option value="Nederland">Nederland</option>
-                      <option value="Italië">Italië</option>
-                    </select>
-                </div>
-                <div is="vl-form-column" size="12">
-                  <vl-upload url="http://example.com" input-name="files" autoprocess="true"></vl-upload>
-                </div>
+        <span slot="content">
+          <form>
+            <div is="vl-form-grid" is-stacked>
+              <div is="vl-form-column" size="12">
+                <select id="vl-select-methoden" is="vl-select" data-vl-select>
+                    <option placeholder value="">Kies een land</option>
+                    <option value="België">België</option>
+                    <option value="Duitsland">Duitsland</option>
+                    <option value="Frankrijk">Frankrijk</option>
+                    <option value="Nederland">Nederland</option>
+                    <option value="Italië">Italië</option>
+                  </select>
               </div>
-            </form>
-          </span>
-          <button is="vl-button" slot="button">Andere actie</button>
+              <div is="vl-form-column" size="12">
+                <vl-upload url="http://example.com" input-name="files" autoprocess="true"></vl-upload>
+              </div>
+            </div>
+          </form>
+        </span>
+        <button is="vl-button" slot="button">Andere actie</button>
       </vl-modal>
     </div>
+  </div>
 </div>
 </body>
 </html>
