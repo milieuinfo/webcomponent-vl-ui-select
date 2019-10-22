@@ -28,7 +28,6 @@ Promise.all([
  * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-select.html|Demo}
  */
 export class VlSelect extends NativeVlElement(HTMLSelectElement) {
-
   static get _observedAttributes() {
     return ['error', 'success'];
   }

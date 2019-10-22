@@ -2904,7 +2904,7 @@
               // Should be:
               // instance.removeActiveItems();
               // Dirty-ish fix, trigger click on working button
-              var closeButton = instance.containerOuter.querySelector(".".concat(pillCloseClass));
+              var closeButton = instance.containerOuter && instance.containerOuter.querySelector(".".concat(pillCloseClass));
 
               if (vl.util.exists(closeButton)) {
                 vl.util.triggerEvent(closeButton, 'click');
