@@ -1,8 +1,8 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.select = factory());
-}(this, (function () { 'use strict';
+global.select = factory();
+}(typeof self !== 'undefined' ? self : this, function () { 'use strict';
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
@@ -2904,7 +2904,7 @@
             // Should be:
             // instance.removeActiveItems();
             // Dirty-ish fix, trigger click on working button
-            var closeButton = instance.containerOuter.querySelector(".".concat(pillCloseClass));
+            var closeButton = instance.containerOuter && instance.containerOuter.querySelector(".".concat(pillCloseClass));
 
             if (vl.util.exists(closeButton)) {
               vl.util.triggerEvent(closeButton, 'click');
@@ -2972,12 +2972,12 @@
 
         selectEl.selectedIndex = 0;
 
-          //change melden aan AIV -> UIG-169
-          setTimeout(function() {
-            selectInstance.element.removeAttribute(sDressedAtt);
-            selectInstance.element.removeAttribute(sMultiDressedAtt); // Destroy is not working correctly, initial state will not be correctly reset
-          }, 0);
-          // https://github.com/jshjohnson/Choices/issues/298
+        //change melden aan AIV -> UIG-169
+        setTimeout(function() {
+          selectInstance.element.removeAttribute(sDressedAtt);
+          selectInstance.element.removeAttribute(sMultiDressedAtt); // Destroy is not working correctly, initial state will not be correctly reset
+        }, 0);
+        // https://github.com/jshjohnson/Choices/issues/298
       }
     }, {
       key: "dressAll",
@@ -3037,4 +3037,4 @@
 
   return Select;
 
-})));
+}));
