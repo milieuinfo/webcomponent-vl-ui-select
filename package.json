@@ -46,10 +46,10 @@
     "sinon": "7.5.0",
     "uglify-es": "github:mishoo/UglifyJS2#harmony",
     "vl-ui-button": "^1.1.12",
-    "vl-ui-util": "^2.0.9",
+    "vl-ui-form-grid": "^1.0.12",
     "vl-ui-modal": "^1.0.12",
     "vl-ui-upload": "^1.0.2",
-    "vl-ui-form-grid": "^1.0.12",
+    "vl-ui-util": "^2.0.11",
     "wct-browser-legacy": "1.0.2",
     "web-component-tester": "6.9.2"
   },
