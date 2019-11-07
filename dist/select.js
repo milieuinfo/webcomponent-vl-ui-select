@@ -2953,10 +2953,7 @@ global.select = factory();
 
         this._buildSelect(select, config, params, originalOptions);
 
-        //change melden aan AIV -> UIG-169
-        setTimeout(function() {
-          select.setAttribute(sDressedAtt, true); // Build select config
-        }, 0);
+        select.setAttribute(sDressedAtt, true); // Build select config
       }
     }, {
       key: "undress",
@@ -2972,12 +2969,8 @@ global.select = factory();
 
         selectEl.selectedIndex = 0;
 
-        //change melden aan AIV -> UIG-169
-        setTimeout(function() {
-          selectInstance.element.removeAttribute(sDressedAtt);
-          selectInstance.element.removeAttribute(sMultiDressedAtt); // Destroy is not working correctly, initial state will not be correctly reset
-        }, 0);
-        // https://github.com/jshjohnson/Choices/issues/298
+        selectInstance.element.removeAttribute(sDressedAtt);
+        selectInstance.element.removeAttribute(sMultiDressedAtt); // Destroy is not working correctly, initial state will not be correctly reset
       }
     }, {
       key: "dressAll",

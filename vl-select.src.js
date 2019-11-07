@@ -162,13 +162,9 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @returns {Choices} de `Choices` instantie of `null` als de component nog niet geïnitialiseerd is door `dress()`
    */
   get _choices() {
-    let choices = null;
-    vl.util.each(vl.select.selectInstances, instance => {
-      if (instance.element === this) {
-        choices = instance;
-      }
+    return vl.select.selectInstances.find((instance) => {
+      return instance.element === this;
     });
-    return choices;
   }
 
   /**
@@ -187,9 +183,11 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @param params object with callbackFn: function(select) with return value the items for `setChoices`
    */
   dress(params) {
-    if (!this._dressed) {
-      vl.select.dress(this, params);
-    }
+    setTimeout(() => {
+      if (!this._dressed) {
+        vl.select.dress(this, params);
+      }
+    });
   }
 
   /**
