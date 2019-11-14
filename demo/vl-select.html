@@ -193,7 +193,7 @@
       &lt;select is=&quot;vl-select&quot; tabindex=&quot;0&quot; data-vl-select data-vl-select-search-empty-text=&quot;Geen resultaten gevonden&quot;&gt;
         &lt;optgroup label=&quot;Landen&quot;&gt;
           &lt;option value=&quot;België&quot;&gt;België&lt;/option&gt;
-          &lt;option value=&quot;Duitsland&quot;&gt;Duitsland&lt;/option&gt;
+          &lt;option value=&quot;Duitsland&quot; selected&gt;Duitsland&lt;/option&gt;
           &lt;option value=&quot;Frankrijk&quot;&gt;Frankrijk&lt;/option&gt;
         &lt;/optgroup&gt;
         &lt;optgroup label=&quot;Steden&quot;&gt;
@@ -208,7 +208,7 @@
       <select is="vl-select" tabindex="0" data-vl-select data-vl-select-search-empty-text="Geen resultaten gevonden">
         <optgroup label="Landen">
           <option value="België">België</option>
-          <option value="Duitsland">Duitsland</option>
+          <option value="Duitsland" selected>Duitsland</option>
           <option value="Frankrijk">Frankrijk</option>
         </optgroup>
         <optgroup label="Steden">
@@ -337,9 +337,9 @@
           document.getElementById('vl-select-dynamisch').dress({
             callbackFn: (select) =&gt; {
               return [
-                {value: 'One', label: 'Label One', disabled: true},
-                {value: 'Two', label: 'Label Two', selected: true},
-                {value: 'Three', label: 'Label Three'},
+                {value: 'One', label: 'Label one', disabled: true},
+                {value: 'Two', label: 'Label two', selected: true},
+                {value: 'Three', label: 'Label three'},
               ];
             }
           });
@@ -359,9 +359,9 @@
           document.getElementById('vl-select-dynamisch').dress({
             callbackFn: (select) => {
               return [
-                { value: 'One', label: 'Label One', disabled: true },
-                { value: 'Two', label: 'Label Two', selected: true },
-                { value: 'Three', label: 'Label Three' },
+                { value: 'One', label: 'Label one', disabled: true },
+                { value: 'Two', label: 'Label two', selected: true },
+                { value: 'Three', label: 'Label three' },
               ];
             }
           });
@@ -375,7 +375,7 @@
     <pre>
     <code class="line-numbers language-markup">
       &lt;script type=&quot;text/javascript&quot;&gt;
-      &lt;select id=&quotvl-dress-undress-methode&quot; is=&quot;vl-select&quot;&gt;
+      &lt;select id=&quotvl-select-dress-undress-methode&quot; is=&quot;vl-select&quot;&gt;
         &lt;option placeholder value=&quot;&quot;&gt;Kies een land&lt;/option&gt;
         &lt;option value=&quot;Belgi&euml;&quot;&gt;Belgi&euml;&lt;/option&gt;
         &lt;option value=&quot;Duitsland&quot;&gt;Duitsland&lt;/option&gt;
@@ -384,12 +384,12 @@
         &lt;option value=&quot;Itali&euml;&quot;&gt;Itali&euml;&lt;/option&gt;
       &lt;/select&gt;
 
-      &lt;button is=&quot;vl-button&quot; onclick=&quot;document.getElementById(&apos;vl-dress-undress-methode&apos;).dress()&quot; type=&quot;button&quot;&gt;Dress&lt;/button&gt;
-      &lt;button is=&quot;vl-button&quot; onclick=&quot;document.getElementById(&apos;vl-dress-undress-methode&apos;).undress()&quot; type=&quot;button&quot;&gt;Undress&lt;/button&gt;
+      &lt;button is=&quot;vl-button&quot; onclick=&quot;document.getElementById(&apos;vl-select-dress-undress-methode&apos;).dress()&quot; type=&quot;button&quot;&gt;Dress&lt;/button&gt;
+      &lt;button is=&quot;vl-button&quot; onclick=&quot;document.getElementById(&apos;vl-select-dress-undress-methode&apos;).undress()&quot; type=&quot;button&quot;&gt;Undress&lt;/button&gt;
     </code>
   </pre>
     <div class="demo">
-      <select id="vl-dress-undress-methode" is="vl-select">
+      <select id="vl-select-dress-undress-methode" is="vl-select">
         <option placeholder value="">Kies een land</option>
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
@@ -398,9 +398,9 @@
         <option value="Italië">Italië</option>
       </select>
 
-      <button is="vl-button" onclick="document.getElementById('vl-dress-undress-methode').dress()"
+      <button is="vl-button" onclick="document.getElementById('vl-select-dress-undress-methode').dress()"
         type="button">Dress</button>
-      <button is="vl-button" onclick="document.getElementById('vl-dress-undress-methode').undress()"
+      <button is="vl-button" onclick="document.getElementById('vl-select-dress-undress-methode').undress()"
         type="button">Undress</button>
     </div>
   </div>
@@ -410,7 +410,7 @@
     <pre>
     <code class="line-numbers language-markup">
       &lt;script type=&quot;text/javascript&quot;&gt;
-      &lt;select id=&quot;vl-enable-disable-methode&quot; data-vl-select; is=&quot;vl-select&quot; data-vl-select&gt;
+      &lt;select id=&quot;vl-select-enable-disable-methode&quot; data-vl-select; is=&quot;vl-select&quot; data-vl-select&gt;
         &lt;option placeholder value=&quot;&quot;&gt;Kies een land&lt;/option&gt;
         &lt;option value=&quot;Belgi&euml;&quot;&gt;Belgi&euml;&lt;/option&gt;
         &lt;option value=&quot;Duitsland&quot;&gt;Duitsland&lt;/option&gt;
@@ -419,12 +419,12 @@
         &lt;option value=&quot;Itali&euml;&quot;&gt;Itali&euml;&lt;/option&gt;
       &lt;/select&gt;
 
-      &lt;button is=&quot;vl-button&quot; onclick=&quot;document.getElementById(&apos;vl-enable-disable-methode&apos;).enable()&quot; type=&quot;button&quot;&gt;Enable&lt;/button&gt;
-      &lt;button is=&quot;vl-button&quot; onclick=&quot;document.getElementById(&apos;vl-enable-disable-methode&apos;).disable()&quot; type=&quot;button&quot;&gt;Disable&lt;/button&gt;
+      &lt;button is=&quot;vl-button&quot; onclick=&quot;document.getElementById(&apos;vl-select-enable-disable-methode&apos;).enable()&quot; type=&quot;button&quot;&gt;Enable&lt;/button&gt;
+      &lt;button is=&quot;vl-button&quot; onclick=&quot;document.getElementById(&apos;vl-select-enable-disable-methode&apos;).disable()&quot; type=&quot;button&quot;&gt;Disable&lt;/button&gt;
     </code>
   </pre>
     <div class="demo">
-      <select id="vl-enable-disable-methode" is="vl-select" data-vl-select>
+      <select id="vl-select-enable-disable-methode" is="vl-select" data-vl-select>
         <option placeholder value="">Kies een land</option>
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
@@ -433,9 +433,9 @@
         <option value="Italië">Italië</option>
       </select>
 
-      <button is="vl-button" onclick="document.getElementById('vl-enable-disable-methode').enable()"
+      <button is="vl-button" onclick="document.getElementById('vl-select-enable-disable-methode').enable()"
         type="button">Enable</button>
-      <button is="vl-button" onclick="document.getElementById('vl-enable-disable-methode').disable()"
+      <button is="vl-button" onclick="document.getElementById('vl-select-enable-disable-methode').disable()"
         type="button">Disable</button>
     </div>
   </div>
