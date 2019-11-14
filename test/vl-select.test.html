@@ -167,9 +167,18 @@
             value: 'test value',
             label: 'test label'
           }];
+          debugger;
           element.choices = data;
-          assert(selectInstance.setChoices.calledWith(data, 'value', 'label', true));
-          done();
+
+          new Promise(async (resolve, reject) => {
+            while(!element._dressed) {
+              await new Promise(resolve => setTimeout(resolve, 50));
+            }
+            resolve();
+          }).then(() => {
+            assert(selectInstance.setChoices.calledWith(data, 'value', 'label', true));
+            done();
+          });
         });
       });
 

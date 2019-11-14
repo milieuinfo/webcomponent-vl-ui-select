@@ -75,9 +75,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     if (newValue != null) {
       (async () => {
         if (this._dataVlSelectAttribute != null) {
-          while (!this._dressed) {
-            await new Promise(resolve => setTimeout(resolve, 100));
-          }
+          await awaitUntil(() => this._dressed);
           this.__wrap();
           this._wrapperElement.parentNode.classList.add('vl-select--' + type);
         } else {
@@ -143,7 +141,10 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @param {Object[]} choices met value en label attribuut.
    */
   set choices(choices) {
-    this._choices.setChoices(choices, 'value', 'label', true);
+    (async () => {
+      await awaitUntil(() => this._dressed);
+      this._choices.setChoices(choices, 'value', 'label', true);
+    })();
   }
 
   /**
@@ -180,18 +181,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @returns {Choices} de `Choices` instantie of `null` als de component nog niet geïnitialiseerd is door `dress()`
    */
   get _choices() {
-    return vl.select.selectInstances.find((instance) => {
-      return instance.element === this;
-    });
-  }
 
-  /**
-   * Geef de `Choices` instantie.
-   *
-   * @see https://www.npmjs.com/package/choices.js
-   * @returns {Choices} de `Choices` instantie of `null` als de component nog niet geïnitialiseerd is door `dress()`
-   */
-  get _choices() {
     return vl.select.selectInstances.find((instance) => {
       return instance.element === this;
     });
