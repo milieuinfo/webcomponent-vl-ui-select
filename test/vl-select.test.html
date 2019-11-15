@@ -13,19 +13,19 @@
 <body>
   <test-fixture id="vl-select-fixture">
     <template>
-      <select is="vl-select"/>
+      <select id="select-1" is="vl-select"/>
     </template>
   </test-fixture>
 
   <test-fixture id="vl-select-auto-dress-fixture">
     <template>
-      <select id="select" is="vl-select" data-vl-select/>
+      <select id="select-2" is="vl-select" data-vl-select/>
     </template>
   </test-fixture>
 
   <test-fixture id="vl-select-with-options-fixture">
     <template>
-      <select is="vl-select" data-vl-select>
+      <select id="select-3" is="vl-select" data-vl-select>
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
         <option value="Frankrijk">Frankrijk</option>
@@ -81,31 +81,29 @@
 
       test('de dress methode callt vl.select.dress', (done) => {
         const element = fixture('vl-select-fixture');
-        element.dress();
-        setTimeout(() => {
+        element.addEventListener(element.readyEvent, () => {
           assert(window.vl.select.dress.calledWith(element));
           done();
         });
+        element.dress();
       });
 
-      test('de dress methode callt vl.select.dress niet als dressed attribuut al gezet is', (done) => {
+      test('de dress methode callt vl.select.dress niet als dressed attribuut al gezet is', () => {
         const element = fixture('vl-select-fixture');
+        debugger;
         element.setAttribute('data-vl-select-dressed', 'true');
         element.dress();
-        setTimeout(() => {
-          assert(window.vl.select.dress.notCalled);
-          done();
-        });
+        assert(window.vl.select.dress.notCalled);
       });
 
       test('de dress methode met params callt vl.select.dress met params', (done) => {
         const element = fixture('vl-select-fixture');
         let params = { callbackFn: () => { } };
-        element.dress(params);
-        setTimeout(() => {
+        element.addEventListener(element.readyEvent, () => {
           assert(window.vl.select.dress.calledWith(element, params));
           done();
         });
+        element.dress(params);
       });
 
       test('de undress methode callt vl.select.undress niet als dressed atribuut niet is gezet', () => {
@@ -115,15 +113,16 @@
       });
 
       test('de undress methode callt vl.select.undress met de choices instantie enkel als dressed atribuut is gezet', (done) => {
-        const element = fixture('vl-select-auto-dress-fixture');
-        setTimeout(() => {
-          element.undress();
+        const element = fixture('vl-select-fixture');
+        element.addEventListener(element.readyEvent, () => {
           const selectInstance = vl.select.selectInstances.find((instance) => {
             return instance.element === element;
           });
+          element.undress();
           assert(window.vl.select.undress.calledWith(selectInstance));
           done();
         });
+        element.dress();
       });
 
       test('de enable methode callt vl.select.enable', () => {
@@ -158,7 +157,7 @@
 
       test('de mogelijkheden kunnen achteraf nog bepaald worden', (done) => {
         const element = fixture('vl-select-auto-dress-fixture');
-        setTimeout(() => {
+        element.addEventListener(element.readyEvent, () => {
           const selectInstance = vl.select.selectInstances.find((instance) => {
             return instance.element === element;
           });
@@ -167,24 +166,15 @@
             value: 'test value',
             label: 'test label'
           }];
-          debugger;
           element.choices = data;
-
-          new Promise(async (resolve, reject) => {
-            while(!element._dressed) {
-              await new Promise(resolve => setTimeout(resolve, 50));
-            }
-            resolve();
-          }).then(() => {
-            assert(selectInstance.setChoices.calledWith(data, 'value', 'label', true));
-            done();
-          });
+          assert(selectInstance.setChoices.calledWith(data, 'value', 'label', true));
+          done();
         });
       });
 
       test('het zetten van de sortFilter zorgt er voor de choices config aangepast worden met een sortFilter', (done) => {
         const element = fixture('vl-select-auto-dress-fixture');
-        setTimeout(() => {
+        element.addEventListener(element.readyEvent, () => {
           const sortFn = (item1, item2) => item1.id > item2.id;
           element.sortFilter = sortFn;
           const selectInstance = vl.select.selectInstances.find((instance) => {
@@ -196,10 +186,10 @@
       });
 
       test('bij het toevoegen van een select element aan de DOM zal de dress functie aangeroepen worden zodat de select functionaliteit geactiveerd wordt', (done) => {
-        const newSelect = document.createElement('select', { is: 'vl-select' });
-        newSelect.setAttribute('data-vl-select', '');
-        document.body.appendChild(newSelect);
-        setTimeout(() => {
+        const element = document.createElement('select', { is: 'vl-select' });
+        element.setAttribute('data-vl-select', '');
+        document.body.appendChild(element);
+        element.addEventListener(element.readyEvent, () => {
           assert(window.vl.select.dress.called);
           done();
         });
@@ -207,7 +197,7 @@
 
       test('de dress functie wordt maar 1 keer aangeroepen per select element', (done) => {
         const element = fixture('vl-select-auto-dress-fixture');
-        setTimeout(() => {
+        element.addEventListener(element.readyEvent, () => {
           assert.lengthOf(vl.select.selectInstances.filter((instance) => {
             return instance.element === element;
           }), 1);
@@ -215,14 +205,37 @@
         });
       });
 
+      test('de undress functie zorgt er ook voor dat de select instance verwijderd wordt', (done) => {
+        const element = fixture('vl-select-fixture');
+        element.addEventListener(element.readyEvent, () => {
+          element.undress();
+          assert.lengthOf(vl.select.selectInstances.filter((instance) => {
+            return instance.element === element;
+          }), 0);
+          done();
+        });
+        element.dress();
+      });
+
       test('de geselecteerde keuze kan gezet en opgevraagd worden', (done) => {
         const element = fixture('vl-select-with-options-fixture');
-        setTimeout(() => {
+        element.addEventListener(element.readyEvent, () => {
           assert.equal(element.value, 'België');
           element.value = 'Duitsland';
           assert.equal(element.value, 'Duitsland');
           done();
         });
+      });
+
+      test('wanneer het vl-select element volledig klaar is zal het een ready event versturen', (done) => {
+        const element1 = fixture('vl-select-fixture');
+        element1.addEventListener(element1.readyEvent, () => {
+          const element2 = fixture('vl-select-auto-dress-fixture');
+          element2.addEventListener(element2.readyEvent, () => {
+            done();
+          });
+        });
+        element1.dress();
       });
     });
   </script>

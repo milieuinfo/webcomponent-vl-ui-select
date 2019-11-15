@@ -28,6 +28,10 @@ Promise.all([
 * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-select.html|Demo}
 */
 export class VlSelect extends NativeVlElement(HTMLSelectElement) {
+  static get readyEvent() {
+    return 'VlSelectReady';
+  }
+
   static get _observedAttributes() {
     return ['error', 'success'];
   }
@@ -41,6 +45,10 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     if (this._dataVlSelectAttribute != null) {
       this.dress();
     }
+  }
+
+  get readyEvent() {
+    return VlSelect.readyEvent;
   }
 
   get _classPrefix() {
@@ -141,10 +149,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @param {Object[]} choices met value en label attribuut.
    */
   set choices(choices) {
-    (async () => {
-      await awaitUntil(() => this._dressed);
-      this._choices.setChoices(choices, 'value', 'label', true);
-    })();
+    this._choices.setChoices(choices, 'value', 'label', true);
   }
 
   /**
@@ -181,7 +186,6 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * @returns {Choices} de `Choices` instantie of `null` als de component nog niet geïnitialiseerd is door `dress()`
    */
   get _choices() {
-
     return vl.select.selectInstances.find((instance) => {
       return instance.element === this;
     });
@@ -206,6 +210,11 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     setTimeout(() => {
       if (!this._dressed) {
         vl.select.dress(this, params);
+
+        (async () => {
+          await awaitUntil(() => this._dressed);
+          this.dispatchEvent(new CustomEvent(VlSelect.readyEvent));
+        })();
       }
     });
   }
@@ -219,6 +228,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     if (this._dressed) {
       try {
         vl.select.undress(this._choices);
+        vl.select.selectInstances.splice(vl.select.selectInstances.indexOf(this._choices));
       } catch (exception) {
         console.error("er liep iets fout bij de undress functie, controleer dat het vl-select element een id bevat! Foutmelding: " + exception);
       }
