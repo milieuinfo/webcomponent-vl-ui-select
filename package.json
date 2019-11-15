@@ -8,7 +8,7 @@
     "prepare:util": "npm explore vl-ui-util -- npm run util",
     "test": "wct -l chrome,firefox --npm",
     "release": "np",
-    "release:prepare": "npm run release:prepare:build && npm run release:prepare:imports && npm run release:prepare:css",
+    "release:prepare": "npm run release:prepare:build && npm run release:prepare:imports && npm run release:prepare:css && npm run release:prepare:commit",
     "release:prepare:build": "uglifyjs --compress --mangle --output vl-select.js -- *.src.js",
     "release:prepare:imports": "npm run release:prepare:imports:core && npm run release:prepare:imports:dist",
     "release:prepare:imports:core": "replace '/node_modules/vl-ui-core/vl-core.src.js' '/node_modules/vl-ui-core/vl-core.js' vl-select.js",
