@@ -224,11 +224,20 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
         vl.select.dress(this, params);
 
         (async () => {
-          await awaitUntil(() => this._dressed);
+          await this.ready();
           this.dispatchEvent(new CustomEvent(this.readyEvent));
         })();
       }
     });
+  }
+
+  /**
+   * Geeft een promise die 'resolved' wanneer de select initialisatie klaar is.
+   *
+   * @returns {Promise} De promise
+   */
+  async ready() {
+    await awaitUntil(() => this._dressed === true);
   }
 
   /**
