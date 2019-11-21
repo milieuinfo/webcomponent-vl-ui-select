@@ -237,6 +237,13 @@
         });
         element1.dress();
       });
+
+      test('wanneer het vl-select element volledig klaar is resolved de ready functie', (done) => {
+        const element1 = fixture('vl-select-fixture');
+        element1.dress();
+        element1.ready().then(() => done());
+      });
+
     });
   </script>
 </body>
