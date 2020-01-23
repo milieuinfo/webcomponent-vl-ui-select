@@ -62,15 +62,16 @@ describe('vl-select', async () => {
         assert.isTrue(selectedValueAfterDelete == '');
     });
 
-    // it('ik kan een select dynamisch activeren', async () => {
-    //     const select = await vlSelectPage.getDynamischeSelect();
-    //     await assert.eventually.isFalse(select.hasValue('Label one'));
-    //     await assert.eventually.isFalse(select.hasValue('Label two'));
-    //     await vlSelectPage.activeerDynamischeData();
-    //     const selectAfterUpdate = await vlSelectPage.getDynamischeSelect();
-    //     await assert.eventually.isTrue(selectAfterUpdate.hasValue('Label one'));
-    //     await assert.eventually.isTrue(selectAfterUpdate.hasValue('Label two'));
-    // });
+    it('ik kan een select dynamisch activeren', async () => {
+        const select = await vlSelectPage.getDynamischeSelect();
+        await assert.eventually.isFalse(select.hasValue('Label one'));
+        await assert.eventually.isFalse(select.hasValue('Label two'));
+        await vlSelectPage.activeerDynamischeData();
+        const selectAfterUpdate = await vlSelectPage.getDynamischeSelect();
+        await assert.eventually.isTrue(selectAfterUpdate.isDressed());
+        await assert.eventually.isTrue(selectAfterUpdate.hasValue('Label one'));
+        await assert.eventually.isTrue(selectAfterUpdate.hasValue('Label two'));
+    });
 
     it('ik kan een select via javascript dressen en undressen', async () => {
         const select = await vlSelectPage.getDresUndressSelect();

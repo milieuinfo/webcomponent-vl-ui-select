@@ -2,8 +2,6 @@ const { VlElement } = require('vl-ui-core');
 const { By, Key } = require('selenium-webdriver');
 
 class VlSelect extends VlElement {  
-
-    
     async _getDressedContainer() {
         return this.findElement(By.xpath('../..'));
     }
@@ -30,7 +28,7 @@ class VlSelect extends VlElement {
     }
     
     async _getOptions() {
-        if(await this.isDressed()) {
+        if (await this.isDressed()) {
             const selectList = await this._getSelectList();
             return selectList.findElements(By.css('.vl-select__item'));
         } else {
@@ -46,16 +44,16 @@ class VlSelect extends VlElement {
     }
                             
     async isDressed() {
-        return (await this.getAttribute('data-vl-select-dressed')) == 'true';
+        return this.hasAttribute('data-vl-select-dressed');
     }
     
     async values() {
         const options = await this._getOptions();
-        return Promise.all(options.map(o => o.getText()));
+        return Promise.all(options.map(o => o.getAttribute('textContent')));
     }
 
     async hasValue(value) {
-        const values = await this.values();
+        const values = (await this.values()).map(v => v.trim());
         return values.includes(value);
     }
 
