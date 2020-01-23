@@ -2,5 +2,5 @@
 *.css.map
 *.iml
 .idea/
-vl-select.js
 node_modules/
+.vscode
