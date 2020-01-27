@@ -97,5 +97,19 @@ describe('vl-select', async () => {
         await assert.eventually.equal(select.getSelectedValue(), 'Duitsland');
         await vlSelectPage.verwijder();
         await assert.eventually.isEmpty(select.getSelectedValue());
-    })
+    });
+
+    it('ik kan een optie selecteren via text', async () => {
+        const select = await vlSelectPage.getDefaultSelect();
+        await select.selectByVisibleText('Frankrijk');
+        const text = await select.getSelectedValue();
+        assert.isTrue(text == 'Frankrijk');
+    });
+
+    it('ik kan een optie selecteren via index', async () => {
+        const select = await vlSelectPage.getDefaultSelect();
+        await select.selectByIndex(1);
+        const text = await select.getSelectedValue();
+        assert.isTrue(text == 'Duitsland');
+    });
 });

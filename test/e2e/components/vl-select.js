@@ -1,5 +1,5 @@
 const { VlElement } = require('vl-ui-core');
-const { By, Key } = require('selenium-webdriver');
+const { By, Key, until } = require('selenium-webdriver');
 
 class VlSelect extends VlElement {  
     async _getDressedContainer() {
@@ -13,8 +13,15 @@ class VlSelect extends VlElement {
     async _getInput() {
         return (await this._getSelectList()).findElement(By.css('.vl-input-field'));
     }
+
+    async _isOpen() {
+        return this.hasClass('is-open');
+    }
     
     async _openDressedDropdown() {
+        if(await this._isOpen()) {
+            return Promise.resolve();
+        }
         return (await this._getDressedContainer()).click();
     }
     
@@ -49,11 +56,11 @@ class VlSelect extends VlElement {
     
     async values() {
         const options = await this._getOptions();
-        return Promise.all(options.map(o => o.getAttribute('textContent')));
+        return Promise.all(options.map(o => o.getAttribute('value')));
     }
     
     async hasValue(value) {
-        const values = (await this.values()).map(v => v.trim());
+        const values = await this.values();
         return values.includes(value);
     }
     
@@ -79,7 +86,7 @@ class VlSelect extends VlElement {
             const webElementArray = map.filter(i => i.text == value);
             return webElementArray[0].webElement.click();
         } else {
-            await this.click();
+            await this._openDressedDropdown();
             return (await this.findElement(By.css('option[value="' + value + '"]'))).click();
         }
     }
@@ -96,8 +103,20 @@ class VlSelect extends VlElement {
             const webElementArray = map.filter(i => i.text == visibleText);
             return webElementArray[0].webElement.click();
         } else {
-            await this._click();
-            return (await this.findElement(By.xpath('//option[text() = "' + visibleText + '"]')))
+            await this._openDressedDropdown();
+            return (await this.findElement(By.xpath('//option[text() = "' + visibleText + '"]'))).click();
+        }
+    }
+
+    async selectByIndex(index) {
+        if((await this.isDressed())) {
+            await this._openDressedDropdown();
+            const selectItems = await this._getOptions();
+            return selectItems[index].click();
+        } else {
+            await this._openDressedDropdown();
+            const options = await this._getOptions();
+            return options[index].click();
         }
     }
 
