@@ -25,7 +25,7 @@ describe('vl-select', async () => {
 
     it('ik kan een value selecteren', async () => {
         const select = await vlSelectPage.getDefaultSelect();
-        await select.selectValue('Duitsland');
+        await select.selectByValue('Duitsland');
         const selectedValue = await select.getSelectedValue();
         assert.isTrue(selectedValue == 'Duitsland');
     });
@@ -54,7 +54,7 @@ describe('vl-select', async () => {
     
     it('ik kan een waarde verwijderen uit een dropdown', async () => {
         const select = await vlSelectPage.getDeletableSelect();
-        await select.selectValue('Duitsland');
+        await select.selectByValue('Duitsland');
         const selectedValue = await select.getSelectedValue();
         assert.isTrue(selectedValue == 'Duitsland');
         await select.deleteValue('Duitsland');

@@ -51,13 +51,23 @@ class VlSelect extends VlElement {
         const options = await this._getOptions();
         return Promise.all(options.map(o => o.getAttribute('textContent')));
     }
-
+    
     async hasValue(value) {
         const values = (await this.values()).map(v => v.trim());
         return values.includes(value);
     }
+    
+    async getAllVisibleText() {
+        const options = await this._getOptions();
+        return Promise.all(options.map(o => o.getAttribute('textContent')));
+    }
 
-    async selectValue(value) {
+    async hasVisibleText(visibleText) {
+        const texts = (await this.getAllVisibleText()).map(t => t.trim());
+        return texts.includes(visibleText);
+    }
+
+    async selectByValue(value) {
         if(await !this.hasValue(value)) {
             return Promise.reject('Value ' + value + ' niet gevonden in select!');
         }
@@ -73,6 +83,24 @@ class VlSelect extends VlElement {
             return (await this.findElement(By.css('option[value="' + value + '"]'))).click();
         }
     }
+
+    async selectByVisibleText(visibleText) {
+        if(await !this.hasVisibleText(visibleText)) {
+            return Promise.reject('Text ' + visibleText + ' niet gevonden in select!');
+        }
+        if((await this.isDressed())) {
+            await this._openDressedDropdown();
+            const selectItems = await this._getOptions();
+            const map = await this._mapDressedOptions(selectItems);
+
+            const webElementArray = map.filter(i => i.text == visibleText);
+            return webElementArray[0].webElement.click();
+        } else {
+            await this._click();
+            return (await this.findElement(By.xpath('//option[text() = "' + visibleText + '"]')))
+        }
+    }
+
 
     async search(searchText) {
         if(this.hasValue(searchText) == false) {
