@@ -18,16 +18,16 @@ describe('vl-select', async () => {
 
     it('ik kan controleren of de select een bepaalde value bevat', async () => {
         const select = await vlSelectPage.getDefaultSelect();
-        await assert.eventually.isTrue(select.hasVisibleText('België'));
-        await assert.eventually.isTrue(select.hasVisibleText('Duitsland'));
-        await assert.eventually.isTrue(select.hasVisibleText('Frankrijk'));
+        await assert.eventually.isTrue(select.hasText('België'));
+        await assert.eventually.isTrue(select.hasText('Duitsland'));
+        await assert.eventually.isTrue(select.hasText('Frankrijk'));
     });
 
     it('ik kan een value selecteren', async () => {
         const select = await vlSelectPage.getDefaultSelect();
         await select.selectByValue('Duitsland');
         const selectedValue = await select.getSelectedValue();
-        assert.isTrue(selectedValue == 'Duitsland');
+        assert.isTrue(selectedValue === 'Duitsland');
     });
     
     it('ik kan een select definieren als error', async () => {
@@ -49,28 +49,28 @@ describe('vl-select', async () => {
         const select = await vlSelectPage.getSearchSelect();
         await select.search('Frankrijk');
         const selectedValue = await select.getSelectedValue();
-        assert.isTrue(selectedValue == 'Frankrijk');
+        assert.isTrue(selectedValue === 'Frankrijk');
     });
     
     it('ik kan een waarde verwijderen uit een dropdown', async () => {
         const select = await vlSelectPage.getDeletableSelect();
         await select.selectByValue('Duitsland');
         const selectedValue = await select.getSelectedValue();
-        assert.isTrue(selectedValue == 'Duitsland');
+        assert.isTrue(selectedValue === 'Duitsland');
         await select.deleteValue('Duitsland');
         const selectedValueAfterDelete = await select.getSelectedValue();
-        assert.isTrue(selectedValueAfterDelete == '');
+        assert.isTrue(selectedValueAfterDelete === '');
     });
 
     it('ik kan een select dynamisch activeren', async () => {
         const select = await vlSelectPage.getDynamischeSelect();
-        await assert.eventually.isFalse(select.hasVisibleText('Label one'));
-        await assert.eventually.isFalse(select.hasVisibleText('Label two'));
+        await assert.eventually.isFalse(select.hasText('Label one'));
+        await assert.eventually.isFalse(select.hasText('Label two'));
         await vlSelectPage.activeerDynamischeData();
         const selectAfterUpdate = await vlSelectPage.getDynamischeSelect();
         await assert.eventually.isTrue(selectAfterUpdate.isDressed());
-        await assert.eventually.isTrue(selectAfterUpdate.hasVisibleText('Label one'));
-        await assert.eventually.isTrue(selectAfterUpdate.hasVisibleText('Label two'));
+        await assert.eventually.isTrue(selectAfterUpdate.hasText('Label one'));
+        await assert.eventually.isTrue(selectAfterUpdate.hasText('Label two'));
     });
 
     it('ik kan een select via javascript dressen en undressen', async () => {
@@ -101,43 +101,43 @@ describe('vl-select', async () => {
 
     it('ik kan een optie selecteren via text', async () => {
         const select = await vlSelectPage.getDefaultSelect();
-        await select.selectByVisibleText('Frankrijk');
+        await select.selectByText('Frankrijk');
         const text = await select.getSelectedValue();
-        assert.isTrue(text == 'Frankrijk');
+        assert.isTrue(text === 'Frankrijk');
     });
 
     it('ik kan een optie selecteren via text in een dressed dropdown', async () => {
         const select = await vlSelectPage.getSearchSelect();
-        await select.selectByVisibleText('Duitsland');
+        await select.selectByText('Duitsland');
         const text = await select.getSelectedValue();
-        assert.isTrue(text == 'Duitsland');
-    })
+        assert.isTrue(text === 'Duitsland');
+    });
 
     it('ik kan een optie selecteren via value', async () => {
         const select = await vlSelectPage.getDefaultSelect();
         await select.selectByValue('Duitsland');
         const text = await select.getSelectedValue();
-        assert.isTrue(text == 'Duitsland');
+        assert.isTrue(text === 'Duitsland');
     });
 
     it('ik kan een optie selecteren via value in een dressed dropdown', async () => {
         const select = await vlSelectPage.getSearchSelect();
         await select.selectByValue('Frankrijk');
         const text = await select.getSelectedValue();
-        assert.isTrue(text == 'Frankrijk');
+        assert.isTrue(text === 'Frankrijk');
     });
 
     it('ik kan een optie selecteren via index', async () => {
         const select = await vlSelectPage.getDefaultSelect();
         await select.selectByIndex(2);
         const text = await select.getSelectedValue();
-        assert.isTrue(text == 'Frankrijk');
+        assert.isTrue(text === 'Frankrijk');
     });
 
     it('ik kan een optie selecteren via index in een dressed dropdown', async () => {
         const select = await vlSelectPage.getSearchSelect();
         await select.selectByIndex(1);
         const text = await select.getSelectedValue();
-        assert.isTrue(text == 'Duitsland');
+        assert.isTrue(text === 'Duitsland');
     });
 });
