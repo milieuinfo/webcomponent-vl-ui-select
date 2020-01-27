@@ -58,7 +58,7 @@ class VlSelect extends VlElement {
     }
 
     async _getValue(element) {
-        if((await this.isDressed())){
+        if ((await this.isDressed())) {
             return element.getAttribute('data-value');
         } else {
             return element.getAttribute('value');
@@ -132,16 +132,11 @@ class VlSelect extends VlElement {
     }
 
     async selectByIndex(index) {
-        if ((await this.isDressed())) {
-            await this._openDressedDropdown();
-            const selectItems = await this._getOptions();
-            return selectItems[index].click();
-        } else {
-            await this._openDressedDropdown();
-            const options = await this._getOptions();
-            return options[index].click();
-        }
+        await this._openDressedDropdown();
+        const selectItems = await this._getOptions();
+        return selectItems[index].click();
     }
+
 
     async search(searchText) {
         if (this.hasValue(searchText) == false) {
