@@ -18,9 +18,9 @@ describe('vl-select', async () => {
 
     it('ik kan controleren of de select een bepaalde value bevat', async () => {
         const select = await vlSelectPage.getDefaultSelect();
-        await assert.eventually.isTrue(select.hasValue('België'));
-        await assert.eventually.isTrue(select.hasValue('Duitsland'));
-        await assert.eventually.isTrue(select.hasValue('Frankrijk'));
+        await assert.eventually.isTrue(select.hasVisibleText('België'));
+        await assert.eventually.isTrue(select.hasVisibleText('Duitsland'));
+        await assert.eventually.isTrue(select.hasVisibleText('Frankrijk'));
     });
 
     it('ik kan een value selecteren', async () => {
@@ -64,13 +64,13 @@ describe('vl-select', async () => {
 
     it('ik kan een select dynamisch activeren', async () => {
         const select = await vlSelectPage.getDynamischeSelect();
-        await assert.eventually.isFalse(select.hasValue('Label one'));
-        await assert.eventually.isFalse(select.hasValue('Label two'));
+        await assert.eventually.isFalse(select.hasVisibleText('Label one'));
+        await assert.eventually.isFalse(select.hasVisibleText('Label two'));
         await vlSelectPage.activeerDynamischeData();
         const selectAfterUpdate = await vlSelectPage.getDynamischeSelect();
         await assert.eventually.isTrue(selectAfterUpdate.isDressed());
-        await assert.eventually.isTrue(selectAfterUpdate.hasValue('Label one'));
-        await assert.eventually.isTrue(selectAfterUpdate.hasValue('Label two'));
+        await assert.eventually.isTrue(selectAfterUpdate.hasVisibleText('Label one'));
+        await assert.eventually.isTrue(selectAfterUpdate.hasVisibleText('Label two'));
     });
 
     it('ik kan een select via javascript dressen en undressen', async () => {
