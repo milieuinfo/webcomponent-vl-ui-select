@@ -2741,7 +2741,7 @@ global.select = factory();
             for (var t, i = Object(this), n = i.length >>> 0, s = arguments[1], o = 0; o < n; o++) {
               if (t = i[o], e.call(s, t, o, i)) return t;
             }
-          }), e.prototype = window.Event.prototype, window.CustomEvent = e;
+          }), e.prototype = window.Event.prototype;
         }();
       }]);
     });
