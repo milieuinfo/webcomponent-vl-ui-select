@@ -1,7 +1,7 @@
-import { awaitScript, awaitUntil, define, NativeVlElement } from 'vl-ui-core';
-import 'vl-ui-util/dist/js/util.min.js';
-import 'vl-ui-core/dist/js/core.min.js';
-import 'vl-ui-select/dist/select.js';
+import { awaitUntil, define, NativeVlElement } from 'vl-ui-core';
+import '@govflanders/vl-ui-util/dist/js/util.min.js';
+import '@govflanders/vl-ui-core/dist/js/core.min.js';
+import '/dist/select.js';
 
 /**
 * VlSelect
