@@ -11,12 +11,16 @@ class VlSelectPage extends Page {
         return this._getSelect('#select-default');
     }
 
+    async getErrorSelect() {
+        return this._getSelect('#select-error');
+    }
+
     async getSuccessSelect() {
         return this._getSelect('#select-success');
     }
 
-    async getErrorSelect() {
-        return this._getSelect('#select-error');
+    async getDressedSelect() {
+        return this._getSelect('#select-dressed');
     }
 
     async getSearchSelect() {
@@ -67,11 +71,11 @@ class VlSelectPage extends Page {
         return (await this.driver.findElement(By.css('#disable-button'))).click();
     }
 
-    async kies() {
+    async select() {
         return (await this.driver.findElement(By.css('#kies-button'))).click();
     }
 
-    async verwijder() {
+    async remove() {
         return (await this.driver.findElement(By.css('#verwijder-button'))).click();
     }
 

@@ -15,14 +15,8 @@ class VlSelect extends VlElement {
     }
 
     async _isOpen() {
-        return this.hasClass('is-open');
-    }
-
-    async _openDressedDropdown() {
-        if (await this._isOpen()) {
-            return Promise.resolve();
-        }
-        return (await this._getDressedContainer()).click();
+        const container = await this._getDressedContainer();
+        return container.hasClass('is-open');
     }
 
     async _getSelectParent() {
@@ -52,7 +46,7 @@ class VlSelect extends VlElement {
     }
 
     async _getWebelementMap() {
-        await this._openDressedDropdown();
+        await this.open();
         const selectItems = await this._getOptions();
         return this._mapDressedOptions(selectItems);
     }
@@ -82,9 +76,16 @@ class VlSelect extends VlElement {
 
     async _clickOption(option) {
         if ((await this.isDressed())) {
-            await this._openDressedDropdown();
+            await this.open();
         }
         return option.webElement.click();
+    }
+
+    async open() {
+        if (await this._isOpen()) {
+            return Promise.resolve();
+        }
+        return (await this._getDressedContainer()).click();
     }
 
     async isDressed() {
@@ -101,14 +102,14 @@ class VlSelect extends VlElement {
         return values.includes(value);
     }
 
-    async _getAllText() {
+    async _getAllValues() {
         const options = await this._getOptions();
         return Promise.all(options.map(o => o.getAttribute('textContent')));
     }
 
-    async hasText(text) {
-        const texts = (await this._getAllText()).map(t => t.trim());
-        return texts.includes(text);
+    async hasValue(value) {
+        const values = (await this._getAllValues()).map(t => t.trim());
+        return values.includes(value);
     }
 
     async selectByValue(value) {
@@ -122,7 +123,7 @@ class VlSelect extends VlElement {
     }
 
     async selectByText(visibleText) {
-        if (await !this.hasText(visibleText)) {
+        if (await !this.hasValue(visibleText)) {
             return Promise.reject('Text ' + visibleText + ' niet gevonden in select!');
         }
         const options = await this._getOptions();
@@ -132,27 +133,22 @@ class VlSelect extends VlElement {
     }
 
     async selectByIndex(index) {
-        await this._openDressedDropdown();
+        await this.open();
         const selectItems = await this._getOptions();
         return selectItems[index].click();
     }
-
 
     async search(searchText) {
         if (this.hasValue(searchText) === false) {
             return Promise.reject('Waarde ' + searchText + ' niet gevonden in de dropdown!');
         }
-        await this._openDressedDropdown();
+        await this.open();
         const input = await this._getInput();
         await input.sendKeys(searchText);
-        await input.sendKeys(Key.RETURN);
     }
 
-    async deleteValue(value) {
-        if (this.hasValue(value)) {
-            return (await this._getDeleteButton()).click();
-        }
-        return Promise.reject('Waarde ' + value + ' niet gevonden in de dropdown!');
+    async deleteSelectedValue() {
+        return (await this._getDeleteButton()).click();
     }
 
     async getSelectedValue() {
