@@ -1,3 +1,3 @@
 module.exports = { 
-    VlSelect: require('../vl-select.src.js').VlSelect
+    VlSelect: require('../dist/vl-select.src.js').VlSelect
 }

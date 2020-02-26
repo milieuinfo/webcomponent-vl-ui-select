@@ -141,7 +141,4 @@ describe('vl-select', async () => {
         assert.isTrue(text === 'Duitsland');
     });
 
-    after(async () => {
-        return driver.quit();
-    })
 });
