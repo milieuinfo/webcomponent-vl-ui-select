@@ -164,7 +164,46 @@ describe('vl-select', async () => {
         await assert.eventually.isEmpty(select.getSelectedValue());
      });
 
-    after(async () => {
-        return driver.quit();
-    })
+    it('ik kan een optie selecteren via text', async () => {
+        const select = await vlSelectPage.getDefaultSelect();
+        await select.selectByText('Frankrijk');
+        const text = await select.getSelectedValue();
+        assert.isTrue(text === 'Frankrijk');
+    });
+
+    it('ik kan een optie selecteren via text in een dressed dropdown', async () => {
+        const select = await vlSelectPage.getSearchSelect();
+        await select.selectByText('Duitsland');
+        const text = await select.getSelectedValue();
+        assert.isTrue(text === 'Duitsland');
+    });
+
+    it('ik kan een optie selecteren via value', async () => {
+        const select = await vlSelectPage.getDefaultSelect();
+        await select.selectByValue('Duitsland');
+        const text = await select.getSelectedValue();
+        assert.isTrue(text === 'Duitsland');
+    });
+
+    it('ik kan een optie selecteren via value in een dressed dropdown', async () => {
+        const select = await vlSelectPage.getSearchSelect();
+        await select.selectByValue('Frankrijk');
+        const text = await select.getSelectedValue();
+        assert.isTrue(text === 'Frankrijk');
+    });
+
+    it('ik kan een optie selecteren via index', async () => {
+        const select = await vlSelectPage.getDefaultSelect();
+        await select.selectByIndex(2);
+        const text = await select.getSelectedValue();
+        assert.isTrue(text === 'Frankrijk');
+    });
+
+    it('ik kan een optie selecteren via index in een dressed dropdown', async () => {
+        const select = await vlSelectPage.getSearchSelect();
+        await select.selectByIndex(1);
+        const text = await select.getSelectedValue();
+        assert.isTrue(text === 'Duitsland');
+    });
+
 });
