@@ -1,5 +1,5 @@
 const { VlElement } = require('vl-ui-core').Test;
-const { By, Key } = require('selenium-webdriver');
+const { By } = require('selenium-webdriver');
 
 class VlSelect extends VlElement {
     async _getDressedContainer() {
@@ -78,7 +78,7 @@ class VlSelect extends VlElement {
         if ((await this.isDressed())) {
             await this.open();
         }
-        return option.webElement.click();
+        return option.click();
     }
 
     async open() {
@@ -94,21 +94,11 @@ class VlSelect extends VlElement {
 
     async values() {
         const options = await this._getOptions();
-        return Promise.all(options.map(o => o.getAttribute('value')));
+        return Promise.all(options.map(option => this._getValue(option)));
     }
 
     async hasValue(value) {
         const values = await this.values();
-        return values.includes(value);
-    }
-
-    async _getAllValues() {
-        const options = await this._getOptions();
-        return Promise.all(options.map(o => o.getAttribute('textContent')));
-    }
-
-    async hasValue(value) {
-        const values = (await this._getAllValues()).map(t => t.trim());
         return values.includes(value);
     }
 
@@ -119,7 +109,7 @@ class VlSelect extends VlElement {
         const options = await this._getOptions();
         const map = await this._mapValues(options);
         const option = await map.filter(m => m.value === value)[0];
-        return this._clickOption(option);
+        return this._clickOption(option.webElement);
     }
 
     async selectByText(visibleText) {
@@ -129,7 +119,7 @@ class VlSelect extends VlElement {
         const options = await this._getOptions();
         const map = await this._mapVisibleText(options);
         const option = await map.filter(m => m.visibleText === visibleText)[0];
-        return this._clickOption(option);
+        return this._clickOption(option.webElement);
     }
 
     async selectByIndex(index) {
@@ -167,6 +157,14 @@ class VlSelect extends VlElement {
         return this.hasAttribute('disabled');
     }
 
+    async isSearchable() {
+        try {
+            await this._getInput();
+            return true;
+        } catch {
+            return false;
+        }
+    }
 }
 
 module.exports = VlSelect;
