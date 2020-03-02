@@ -82,10 +82,11 @@ class VlSelect extends VlElement {
     }
 
     async open() {
-        if (await this._isOpen()) {
-            return Promise.resolve();
+        const isOpen = await this._isOpen();
+        if (!isOpen) {
+            const container = await this._getDressedContainer();
+            await container.click();
         }
-        return (await this._getDressedContainer()).click();
     }
 
     async isDressed() {
