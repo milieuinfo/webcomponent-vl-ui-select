@@ -11,16 +11,28 @@ class VlSelectPage extends Page {
         return this._getSelect('#select-default');
     }
 
-    async getSuccessSelect() {
-        return this._getSelect('#select-success');
-    }
-
     async getErrorSelect() {
         return this._getSelect('#select-error');
     }
 
-    async getSearchSelect() {
-        return this._getSelect('#select-search');
+    async getSuccessSelect() {
+        return this._getSelect('#select-success');
+    }
+
+    async getDressedSelect() {
+        return this._getSelect('#select-dressed');
+    }
+
+    async getDressedToggleSuccessSelect() {
+        return this._getSelect('#select-dressed-toggle-success');
+    }
+
+    async getSearchableSelect() {
+        return this._getSelect('#select-searchable');
+    }
+
+    async getNotSearchableSelect() {
+        return this._getSelect('#select-not-searchable');
     }
 
     async getDisabledSelect() {
@@ -31,24 +43,36 @@ class VlSelectPage extends Page {
         return this._getSelect('#select-deletable');
     }
 
-    async getDynamischeSelect() {
-        return this._getSelect('#vl-select-dynamisch');
+    async getLimitedSearchResultsSelect() {
+        return this._getSelect('#select-limited-search-results');
+    }
+
+    async getUnlimitedSearchResultsSelect() {
+        return this._getSelect('#select-unlimited-search-results');
+    }
+
+    async getDynamicSelect() {
+        return this._getSelect('#select-dynamic');
     }
 
     async getDresUndressSelect() {
-        return this._getSelect('#vl-select-dress-undress-methode');
+        return this._getSelect('#select-dress-undress-methode');
     }
 
     async getEnableDisableSelect() {
-        return this._getSelect('#vl-select-enable-disable-methode');
+        return this._getSelect('#select-enable-disable-methode');
     }
 
     async getSetMethodeSelect() {
-        return this._getSelect('#vl-select-set-get-methode');
+        return this._getSelect('#select-set-get-methode');
     }
 
     async activeerDynamischeData() {
-        return (await this.driver.findElement(By.css('#activeer-data'))).click();
+        return (await this.driver.findElement(By.css('#activate-data-button'))).click();
+    }
+
+    async toggleSuccess() {
+        return (await this.driver.findElement(By.css('#toggle-success-button'))).click();
     }
 
     async dress() {
@@ -67,12 +91,12 @@ class VlSelectPage extends Page {
         return (await this.driver.findElement(By.css('#disable-button'))).click();
     }
 
-    async kies() {
-        return (await this.driver.findElement(By.css('#kies-button'))).click();
+    async select() {
+        return (await this.driver.findElement(By.css('#select-button'))).click();
     }
 
-    async verwijder() {
-        return (await this.driver.findElement(By.css('#verwijder-button'))).click();
+    async remove() {
+        return (await this.driver.findElement(By.css('#remove-button'))).click();
     }
 
     async load() {

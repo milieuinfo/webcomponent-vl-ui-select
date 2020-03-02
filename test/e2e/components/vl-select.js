@@ -1,5 +1,5 @@
 const { VlElement } = require('vl-ui-core').Test;
-const { By, Key } = require('selenium-webdriver');
+const { By } = require('selenium-webdriver');
 
 class VlSelect extends VlElement {
     async _getDressedContainer() {
@@ -15,14 +15,8 @@ class VlSelect extends VlElement {
     }
 
     async _isOpen() {
-        return this.hasClass('is-open');
-    }
-
-    async _openDressedDropdown() {
-        if (await this._isOpen()) {
-            return Promise.resolve();
-        }
-        return (await this._getDressedContainer()).click();
+        const container = await this._getDressedContainer();
+        return container.hasClass('is-open');
     }
 
     async _getSelectParent() {
@@ -52,7 +46,7 @@ class VlSelect extends VlElement {
     }
 
     async _getWebelementMap() {
-        await this._openDressedDropdown();
+        await this.open();
         const selectItems = await this._getOptions();
         return this._mapDressedOptions(selectItems);
     }
@@ -82,9 +76,17 @@ class VlSelect extends VlElement {
 
     async _clickOption(option) {
         if ((await this.isDressed())) {
-            await this._openDressedDropdown();
+            await this.open();
         }
-        return option.webElement.click();
+        return option.click();
+    }
+
+    async open() {
+        const isOpen = await this._isOpen();
+        if (!isOpen) {
+            const container = await this._getDressedContainer();
+            await container.click();
+        }
     }
 
     async isDressed() {
@@ -93,7 +95,12 @@ class VlSelect extends VlElement {
 
     async values() {
         const options = await this._getOptions();
-        return Promise.all(options.map(o => o.getAttribute('value')));
+        return Promise.all(options.map(option => this._getValue(option)));
+    }
+
+    async texts() {
+        const options = await this._getOptions();
+        return Promise.all(options.map(option => option.getAttribute('textContent').trim()));
     }
 
     async hasValue(value) {
@@ -101,13 +108,8 @@ class VlSelect extends VlElement {
         return values.includes(value);
     }
 
-    async _getAllText() {
-        const options = await this._getOptions();
-        return Promise.all(options.map(o => o.getAttribute('textContent')));
-    }
-
     async hasText(text) {
-        const texts = (await this._getAllText()).map(t => t.trim());
+        const texts = await this.texts();
         return texts.includes(text);
     }
 
@@ -118,7 +120,7 @@ class VlSelect extends VlElement {
         const options = await this._getOptions();
         const map = await this._mapValues(options);
         const option = await map.filter(m => m.value === value)[0];
-        return this._clickOption(option);
+        return this._clickOption(option.webElement);
     }
 
     async selectByText(visibleText) {
@@ -128,31 +130,26 @@ class VlSelect extends VlElement {
         const options = await this._getOptions();
         const map = await this._mapVisibleText(options);
         const option = await map.filter(m => m.visibleText === visibleText)[0];
-        return this._clickOption(option);
+        return this._clickOption(option.webElement);
     }
 
     async selectByIndex(index) {
-        await this._openDressedDropdown();
+        await this.open();
         const selectItems = await this._getOptions();
         return selectItems[index].click();
     }
-
 
     async search(searchText) {
         if (this.hasValue(searchText) === false) {
             return Promise.reject('Waarde ' + searchText + ' niet gevonden in de dropdown!');
         }
-        await this._openDressedDropdown();
+        await this.open();
         const input = await this._getInput();
         await input.sendKeys(searchText);
-        await input.sendKeys(Key.RETURN);
     }
 
-    async deleteValue(value) {
-        if (this.hasValue(value)) {
-            return (await this._getDeleteButton()).click();
-        }
-        return Promise.reject('Waarde ' + value + ' niet gevonden in de dropdown!');
+    async deleteSelectedValue() {
+        return (await this._getDeleteButton()).click();
     }
 
     async getSelectedValue() {
@@ -171,6 +168,14 @@ class VlSelect extends VlElement {
         return this.hasAttribute('disabled');
     }
 
+    async isSearchable() {
+        try {
+            await this._getInput();
+            return true;
+        } catch {
+            return false;
+        }
+    }
 }
 
 module.exports = VlSelect;
