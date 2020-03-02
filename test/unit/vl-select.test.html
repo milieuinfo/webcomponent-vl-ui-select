@@ -90,7 +90,6 @@
 
       test('de dress methode callt vl.select.dress niet als dressed attribuut al gezet is', () => {
         const element = fixture('vl-select-fixture');
-        debugger;
         element.setAttribute('data-vl-select-dressed', 'true');
         element.dress();
         assert(window.vl.select.dress.notCalled);
