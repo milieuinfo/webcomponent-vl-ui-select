@@ -98,9 +98,19 @@ class VlSelect extends VlElement {
         return Promise.all(options.map(option => this._getValue(option)));
     }
 
+    async texts() {
+        const options = await this._getOptions();
+        return Promise.all(options.map(option => option.getAttribute('textContent').trim()));
+    }
+
     async hasValue(value) {
         const values = await this.values();
         return values.includes(value);
+    }
+
+    async hasText(text) {
+        const texts = await this.texts();
+        return texts.includes(text);
     }
 
     async selectByValue(value) {
@@ -114,7 +124,7 @@ class VlSelect extends VlElement {
     }
 
     async selectByText(visibleText) {
-        if (await !this.hasValue(visibleText)) {
+        if (await !this.hasText(visibleText)) {
             return Promise.reject('Text ' + visibleText + ' niet gevonden in select!');
         }
         const options = await this._getOptions();
