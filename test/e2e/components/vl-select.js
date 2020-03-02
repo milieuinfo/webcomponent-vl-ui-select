@@ -100,7 +100,7 @@ class VlSelect extends VlElement {
 
     async texts() {
         const options = await this._getOptions();
-        return Promise.all(options.map(option => option.getAttribute('textContent').trim()));
+        return Promise.all(options.map(option => option.getAttribute('textContent')));
     }
 
     async hasValue(value) {
