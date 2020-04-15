@@ -238,11 +238,22 @@
       });
 
       test('wanneer het vl-select element volledig klaar is resolved de ready functie', (done) => {
-        const element1 = fixture('vl-select-fixture');
-        element1.dress();
-        element1.ready().then(() => done());
+        const element = fixture('vl-select-fixture');
+        element.dress();
+        element.ready().then(() => done());
       });
 
+      test('wanneer het select element een slot attribuut bevat, zal het na de dress het slot attribuut kopiëren naar het wrapper element', (done) => {
+        const element = fixture('vl-select-auto-dress-fixture');
+        const slot = 'test';
+        element.setAttribute('slot', slot);
+        element.ready().then(() => {
+          assert.isFalse(element.hasAttribute('slot'));
+          assert.isTrue(element._wrapperElement.hasAttribute('slot'));
+          assert.equal(element._wrapperElement.getAttribute('slot'), slot);
+          done();
+        });
+      });
     });
   </script>
 </body>
