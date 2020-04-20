@@ -53,7 +53,7 @@
     "vl-ui-core": "^5.0.1"
   },
   "devDependencies": {
-    "@govflanders/vl-ui-input-field": "3.9.1",
+    "@govflanders/vl-ui-input-field": "3.9.2",
     "vl-ui-form-grid": "^3.0.0",
     "vl-ui-modal": "^3.0.0",
     "vl-ui-upload": "^3.0.0",
