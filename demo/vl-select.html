@@ -78,13 +78,14 @@
             <button id="toggle-success-button" is="vl-button" onclick="toggleSuccess()" type="button">Toggle success</button>
 
             <script type="text/javascript">
+                // eslint-disable-next-line no-unused-vars
                 function toggleSuccess() {
-                    const element = document.getElementById('select-dressed-toggle-success');
-                    if (!element.hasAttribute('success')) {
-                        element.setAttribute('success', '');
-                    } else {
-                        element.removeAttribute('success');
-                    }
+                  const element = document.getElementById('select-dressed-toggle-success');
+                  if (!element.hasAttribute('success')) {
+                    element.setAttribute('success', '');
+                  } else {
+                    element.removeAttribute('success');
+                  }
                 }
             </script>
         </vl-demo>
@@ -200,16 +201,17 @@
                 data</button>
 
             <script type="text/javascript">
+                // eslint-disable-next-line no-unused-vars
                 function laadDynamisch() {
-                    document.getElementById('select-dynamic').dress({
-                        callbackFn: (select) => {
-                            return [
-                                { value: 'one', label: 'Label one', disabled: true },
-                                { value: 'two', label: 'Label two', selected: true },
-                                { value: 'three', label: 'Label three' },
-                            ];
-                        }
-                    });
+                  document.getElementById('select-dynamic').dress({
+                    callbackFn: (select) => {
+                      return [
+                        {value: 'one', label: 'Label one', disabled: true},
+                        {value: 'two', label: 'Label two', selected: true},
+                        {value: 'three', label: 'Label three'},
+                      ];
+                    },
+                  });
                 }
             </script>
         </vl-demo>
