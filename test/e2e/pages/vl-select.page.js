@@ -100,7 +100,7 @@ class VlSelectPage extends Page {
   }
 
   async load() {
-    return super.load(Config.baseUrl + '/demo/vl-select.html');
+    return super.load(Config.baseUrl + '/demo/vl-select.html?no-header=true&no-footer=true');
   }
 }
 
