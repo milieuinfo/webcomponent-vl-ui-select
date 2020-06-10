@@ -1,107 +1,107 @@
 const VlSelect = require('../components/vl-select');
-const { Page, Config } = require('vl-ui-core').Test;
-const { By } = require('selenium-webdriver');
+const {Page, Config} = require('vl-ui-core').Test;
+const {By} = require('selenium-webdriver');
 
 class VlSelectPage extends Page {
-    async _getSelect(selector) {
-        return new VlSelect(this.driver, selector);
-    }
+  async _getSelect(selector) {
+    return new VlSelect(this.driver, selector);
+  }
 
-    async getDefaultSelect() {
-        return this._getSelect('#select-default');
-    }
+  async getDefaultSelect() {
+    return this._getSelect('#select-default');
+  }
 
-    async getErrorSelect() {
-        return this._getSelect('#select-error');
-    }
+  async getErrorSelect() {
+    return this._getSelect('#select-error');
+  }
 
-    async getSuccessSelect() {
-        return this._getSelect('#select-success');
-    }
+  async getSuccessSelect() {
+    return this._getSelect('#select-success');
+  }
 
-    async getDressedSelect() {
-        return this._getSelect('#select-dressed');
-    }
+  async getDressedSelect() {
+    return this._getSelect('#select-dressed');
+  }
 
-    async getDressedToggleSuccessSelect() {
-        return this._getSelect('#select-dressed-toggle-success');
-    }
+  async getDressedToggleSuccessSelect() {
+    return this._getSelect('#select-dressed-toggle-success');
+  }
 
-    async getSearchableSelect() {
-        return this._getSelect('#select-searchable');
-    }
+  async getSearchableSelect() {
+    return this._getSelect('#select-searchable');
+  }
 
-    async getNotSearchableSelect() {
-        return this._getSelect('#select-not-searchable');
-    }
+  async getNotSearchableSelect() {
+    return this._getSelect('#select-not-searchable');
+  }
 
-    async getDisabledSelect() {
-        return this._getSelect('#select-disabled');
-    }
+  async getDisabledSelect() {
+    return this._getSelect('#select-disabled');
+  }
 
-    async getDeletableSelect() {
-        return this._getSelect('#select-deletable');
-    }
+  async getDeletableSelect() {
+    return this._getSelect('#select-deletable');
+  }
 
-    async getLimitedSearchResultsSelect() {
-        return this._getSelect('#select-limited-search-results');
-    }
+  async getLimitedSearchResultsSelect() {
+    return this._getSelect('#select-limited-search-results');
+  }
 
-    async getUnlimitedSearchResultsSelect() {
-        return this._getSelect('#select-unlimited-search-results');
-    }
+  async getUnlimitedSearchResultsSelect() {
+    return this._getSelect('#select-unlimited-search-results');
+  }
 
-    async getDynamicSelect() {
-        return this._getSelect('#select-dynamic');
-    }
+  async getDynamicSelect() {
+    return this._getSelect('#select-dynamic');
+  }
 
-    async getDresUndressSelect() {
-        return this._getSelect('#select-dress-undress-methode');
-    }
+  async getDresUndressSelect() {
+    return this._getSelect('#select-dress-undress-methode');
+  }
 
-    async getEnableDisableSelect() {
-        return this._getSelect('#select-enable-disable-methode');
-    }
+  async getEnableDisableSelect() {
+    return this._getSelect('#select-enable-disable-methode');
+  }
 
-    async getSetMethodeSelect() {
-        return this._getSelect('#select-set-get-methode');
-    }
+  async getSetMethodeSelect() {
+    return this._getSelect('#select-set-get-methode');
+  }
 
-    async activeerDynamischeData() {
-        return (await this.driver.findElement(By.css('#activate-data-button'))).click();
-    }
+  async activeerDynamischeData() {
+    return (await this.driver.findElement(By.css('#activate-data-button'))).click();
+  }
 
-    async toggleSuccess() {
-        return (await this.driver.findElement(By.css('#toggle-success-button'))).click();
-    }
+  async toggleSuccess() {
+    return (await this.driver.findElement(By.css('#toggle-success-button'))).click();
+  }
 
-    async dress() {
-        return (await this.driver.findElement(By.css('#dress-button'))).click();
-    }
+  async dress() {
+    return (await this.driver.findElement(By.css('#dress-button'))).click();
+  }
 
-    async undress() {
-        return (await this.driver.findElement(By.css('#undress-button'))).click();
-    }
+  async undress() {
+    return (await this.driver.findElement(By.css('#undress-button'))).click();
+  }
 
-    async enable() {
-        return (await this.driver.findElement(By.css('#enable-button'))).click();
-    }
+  async enable() {
+    return (await this.driver.findElement(By.css('#enable-button'))).click();
+  }
 
-    async disable() {
-        return (await this.driver.findElement(By.css('#disable-button'))).click();
-    }
+  async disable() {
+    return (await this.driver.findElement(By.css('#disable-button'))).click();
+  }
 
-    async select() {
-        return (await this.driver.findElement(By.css('#select-button'))).click();
-    }
+  async select() {
+    return (await this.driver.findElement(By.css('#select-button'))).click();
+  }
 
-    async remove() {
-        return (await this.driver.findElement(By.css('#remove-button'))).click();
-    }
+  async remove() {
+    return (await this.driver.findElement(By.css('#remove-button'))).click();
+  }
 
-    async load() {
-        return super.load(Config.baseUrl + '/demo/vl-select.html');
-    }
+  async load() {
+    return super.load(Config.baseUrl + '/demo/vl-select.html?no-header=true&no-footer=true');
+  }
 }
 
 module.exports = VlSelectPage;

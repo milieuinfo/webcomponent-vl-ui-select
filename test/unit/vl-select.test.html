@@ -97,7 +97,7 @@
 
       test('de dress methode met params callt vl.select.dress met params', (done) => {
         const element = fixture('vl-select-fixture');
-        let params = { callbackFn: () => { } };
+        const params = {callbackFn: () => { }};
         element.addEventListener(element.readyEvent, () => {
           assert(window.vl.select.dress.calledWith(element, params));
           done();
@@ -163,7 +163,7 @@
           sandbox.spy(selectInstance, 'setChoices');
           const data = [{
             value: 'test value',
-            label: 'test label'
+            label: 'test label',
           }];
           element.choices = data;
           assert(selectInstance.setChoices.calledWith(data, 'value', 'label', true));
@@ -185,7 +185,7 @@
       });
 
       test('bij het toevoegen van een select element aan de DOM zal de dress functie aangeroepen worden zodat de select functionaliteit geactiveerd wordt', (done) => {
-        const element = document.createElement('select', { is: 'vl-select' });
+        const element = document.createElement('select', {is: 'vl-select'});
         element.setAttribute('data-vl-select', '');
         document.body.appendChild(element);
         element.addEventListener(element.readyEvent, () => {
