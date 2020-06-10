@@ -134,9 +134,12 @@ class VlSelect extends VlElement {
   }
 
   async selectByIndex(index) {
-    await this.open();
+    const values = await this.values();
+    if (values.length < index - 1) {
+      return Promise.reject(new Error('Er zijn maar ' + values.length + ' values in de dropdown'));
+    }
     const selectItems = await this._getOptions();
-    return selectItems[index].click();
+    return this._clickOption(selectItems[index]);
   }
 
   async search(searchText) {
