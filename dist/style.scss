@@ -31,3 +31,7 @@
 .js-vl-select.is-open, .vl-select__list--dropdown.is-active {
     z-index: 101;
 }
+
+.js-vl-select.vl-search__input > .vl-select__inner {
+    border: none;
+}
