@@ -34,7 +34,7 @@
     "release": "npm explore vl-ui-util -- npm run release",
     "prerelease:prepare": "replace '0\\\\0' '0' ./src/style.css",
     "release:prepare": "npm explore vl-ui-util -- npm run release-component:prepare $(pwd) select",
-    "release:testless": "npm explore vl-ui-util -- npm run release:testless",
+    "release:testless": "np --yolo",
     "demo": "http-server"
   },
   "dependencies": {
