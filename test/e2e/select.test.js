@@ -117,12 +117,14 @@ describe('vl-select', async () => {
     const select = await vlSelectPage.getLimitedSearchResultsSelect();
     await select.search('straat');
     await assert.eventually.lengthOf(select.values(), 5);
+    await select.close();
   });
 
   it('als gebruiker krijg ik een onbeperkt aantal zoekresultaten te zien', async () => {
     const select = await vlSelectPage.getUnlimitedSearchResultsSelect();
     await select.search('straat');
     await assert.eventually.lengthOf(select.values(), 14);
+    await select.close();
   });
 
   it('als gebruiker kan ik een select dynamisch activeren', async () => {

@@ -89,6 +89,14 @@ class VlSelect extends VlElement {
     }
   }
 
+  async close() {
+    const isOpen = await this._isOpen();
+    if (isOpen) {
+      const container = await this._getDressedContainer();
+      await container.click();
+    }
+  }
+
   async isDressed() {
     return this.hasAttribute('data-vl-select-dressed');
   }
