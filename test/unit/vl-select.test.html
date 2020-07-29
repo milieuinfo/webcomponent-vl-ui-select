@@ -25,12 +25,18 @@
 
   <test-fixture id="vl-select-with-options-fixture">
     <template>
+      <select id="select-3" is="vl-select">
+        <option value="België">België</option>
+        <option value="Duitsland">Duitsland</option>
+      </select>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="vl-select-auto-dress-with-options-fixture">
+    <template>
       <select id="select-3" is="vl-select" data-vl-select>
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
-        <option value="Frankrijk">Frankrijk</option>
-        <option value="Nederland">Nederland</option>
-        <option value="Italië">Italië</option>
       </select>
     </template>
   </test-fixture>
@@ -216,8 +222,15 @@
         element.dress();
       });
 
-      test('de geselecteerde keuze kan gezet en opgevraagd worden', (done) => {
+      test('de geselecteerde keuze kan gezet en opgevraagd worden', () => {
         const element = fixture('vl-select-with-options-fixture');
+        assert.equal(element.value, 'België');
+        element.value = 'Duitsland';
+        assert.equal(element.value, 'Duitsland');
+      });
+
+      test('de geselecteerde keuze kan gezet en opgevraagd worden bij een dressed select', (done) => {
+        const element = fixture('vl-select-auto-dress-with-options-fixture');
         element.addEventListener(element.readyEvent, () => {
           assert.equal(element.value, 'België');
           element.value = 'Duitsland';

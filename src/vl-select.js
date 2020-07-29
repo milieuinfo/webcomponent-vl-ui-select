@@ -174,7 +174,11 @@ export class VlSelect extends nativeVlElement(HTMLSelectElement) {
    * @param {string} value - de option value van het option element dat gekozen moet worden.
    */
   set value(value) {
-    vl.select.setValueByChoice(this, value);
+    if (this._dressed) {
+      vl.select.setValueByChoice(this, value);
+    } else {
+      super.value = value;
+    }
   }
 
   /**
