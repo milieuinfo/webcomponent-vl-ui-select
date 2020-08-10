@@ -18,8 +18,7 @@
 </head>
 
 <body>
-    <vl-demo-page data-vl-webcomponent="vl-select"
-        data-vl-link="https://overheid.vlaanderen.be/webuniversum/v3/documentation/forms/vl-ui-select">
+    <vl-demo-page data-vl-webcomponent="vl-select" data-vl-link="https://overheid.vlaanderen.be/webuniversum/v3/documentation/forms/vl-ui-select">
         <vl-demo data-vl-title="Select">
             <select id="select-default" is="vl-select">
                 <option value="Belgium">België</option>
@@ -37,7 +36,7 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Select block">
-            <select is="vl-select" block>
+            <select is="vl-select" data-vl-block>
                 <option value="België">België</option>
                 <option value="Duitsland">Duitsland</option>
                 <option value="Frankrijk">Frankrijk</option>
@@ -45,7 +44,7 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Select error">
-            <select id="select-error" is="vl-select" error>
+            <select id="select-error" is="vl-select" data-vl-error>
                 <option value="België">België</option>
                 <option value="Duitsland">Duitsland</option>
                 <option value="Frankrijk">Frankrijk</option>
@@ -53,7 +52,7 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Select success">
-            <select id="select-success" is="vl-select" success>
+            <select id="select-success" is="vl-select" data-vl-success>
                 <option value="België">België</option>
                 <option value="Duitsland">Duitsland</option>
                 <option value="Frankrijk">Frankrijk</option>
@@ -90,8 +89,7 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Select met zoeken">
-            <select id="select-searchable" is="vl-select" tabindex="0" data-vl-select
-                data-vl-select-search-empty-text="Geen resultaten gevonden">
+            <select id="select-searchable" is="vl-select" tabindex="0" data-vl-select data-vl-select-search-empty-text="Geen resultaten gevonden">
                 <optgroup label="Landen">
                     <option value="België">België</option>
                     <option value="Duitsland">Duitsland</option>
@@ -121,7 +119,7 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Select disabled">
-            <select id="select-disabled" is="vl-select" tabindex="0" data-vl-select data-vl-select-search="false" disabled>
+            <select id="select-disabled" is="vl-select" tabindex="0" data-vl-select data-vl-select-search="false" data-vl-disabled>
                 <optgroup label="Landen">
                     <option value="België">België</option>
                     <option value="Duitsland">Duitsland</option>
@@ -136,8 +134,7 @@
         </vl-demo>
 
         <vl-demo data-vl-title="Select deletable">
-            <select id="select-deletable" is="vl-select" tabindex="0" data-vl-select-deletable data-vl-select
-                data-vl-select-search="false">
+            <select id="select-deletable" is="vl-select" tabindex="0" data-vl-select-deletable data-vl-select data-vl-select-search="false">
                 <optgroup label="Landen">
                     <option value="België">België</option>
                     <option value="Duitsland">Duitsland</option>
