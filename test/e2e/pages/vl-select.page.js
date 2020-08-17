@@ -1,6 +1,6 @@
 const VlSelect = require('../components/vl-select');
 const {Page, Config} = require('vl-ui-core').Test;
-const {By} = require('selenium-webdriver');
+const {By} = require('vl-ui-core').Test.Setup;
 
 class VlSelectPage extends Page {
   async _getSelect(selector) {

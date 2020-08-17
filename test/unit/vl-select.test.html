@@ -65,9 +65,9 @@
         const element = fixture('vl-select-fixture');
         ['block', 'error', 'success', 'disabled'].forEach((attribuut) => {
           assert.isFalse(element.classList.contains('vl-select--' + attribuut));
-          element.setAttribute(attribuut, '');
+          element.setAttribute(`data-vl-${attribuut}`, '');
           assert.isTrue(element.classList.contains('vl-select--' + attribuut));
-          element.removeAttribute(attribuut);
+          element.removeAttribute(`data-vl-${attribuut}`);
           assert.isFalse(element.classList.contains('vl-select--' + attribuut));
         });
       });
