@@ -105,12 +105,13 @@ describe('vl-select', async () => {
     await assert.eventually.isFalse(select.isSearchable());
   });
 
-  it('als gebruiker kan ik de geselecteerde optie deselecteren', async () => {
+  it('als gebruiker kan ik de geselecteerde optie deselecteren en zal het select element niet open staan', async () => {
     const select = await vlSelectPage.getDeletableSelect();
     await select.selectByValue('Duitsland');
     await assert.eventually.equal(select.getSelectedValue(), 'Duitsland');
     await select.deleteSelectedValue();
     await assert.eventually.notEqual(select.getSelectedValue(), 'Duitsland');
+    await assert.eventually.isFalse(select.isOpen());
   });
 
   it('als gebruiker krijg ik een beperkt aantal zoekresultaten te zien', async () => {
