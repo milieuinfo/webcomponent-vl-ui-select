@@ -32,7 +32,6 @@
     "test:e2e": "npm explore vl-ui-util -- npm run test:component:e2e",
     "test:e2e:grid": "npm explore vl-ui-util -- npm run test:component:e2e:grid",
     "release": "npm explore vl-ui-util -- npm run release",
-    "prerelease:prepare": "replace '0\\\\0' '0' ./src/style.css",
     "release:prepare": "npm explore vl-ui-util -- npm run release-component:prepare $(pwd) select",
     "release:testless": "np --yolo",
     "demo": "http-server"
@@ -48,11 +47,11 @@
   },
   "devDependencies": {
     "@govflanders/vl-ui-input-field": "^3.11.5",
+    "vl-ui-action-group": "^3.0.6",
     "vl-ui-body": "^1.0.4",
     "vl-ui-form-grid": "^3.0.6",
     "vl-ui-modal": "^4.0.0",
-    "vl-ui-action-group": "^3.0.6",
     "vl-ui-upload": "^3.0.5",
-    "vl-ui-util": "^5.2.12"
+    "vl-ui-util": "^5.2.13"
   }
 }
