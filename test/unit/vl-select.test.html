@@ -51,7 +51,6 @@
           sandbox.spy(window.vl.select, 'undress');
           sandbox.spy(window.vl.select, 'enable');
           sandbox.spy(window.vl.select, 'disable');
-          sandbox.spy(window.vl.select, 'removeActive');
           sandbox.spy(window.vl.select, 'showDropdown');
           sandbox.spy(window.vl.select, 'hideDropdown');
           done();
@@ -144,6 +143,7 @@
 
       test('de removeActive methode callt vl.select.removeActive', () => {
         const element = fixture('vl-select-fixture');
+        sandbox.spy(window.vl.select, 'removeActive');
         element.removeActive();
         assert(window.vl.select.removeActive.calledWith(element));
       });
@@ -264,6 +264,17 @@
           assert.isFalse(element.hasAttribute('slot'));
           assert.isTrue(element._wrapperElement.hasAttribute('slot'));
           assert.equal(element._wrapperElement.getAttribute('slot'), slot);
+          done();
+        });
+      });
+
+      test('bij het programmatisch verwijderen van een geselecteerde optie in combinatie met het data-vl-deletable attribuut zal de select gesloten blijven', (done) => {
+        const element = fixture('vl-select-auto-dress-with-options-fixture');
+        element.setAttribute('data-vl-select-deletable', '');
+        element.addEventListener(element.readyEvent, () => {
+          element.value = 'België';
+          element.removeActive();
+          assert.isFalse(element.parentElement.parentElement.classList.contains('is-open'));
           done();
         });
       });
