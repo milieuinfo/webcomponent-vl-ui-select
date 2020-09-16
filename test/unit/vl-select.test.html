@@ -41,7 +41,9 @@
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+    import {awaitUntil} from 'vl-ui-core/dist/vl-core';
+
     suite('vl-select', () => {
       const sandbox = sinon.createSandbox();
 
@@ -266,6 +268,18 @@
           assert.equal(element._wrapperElement.getAttribute('slot'), slot);
           done();
         });
+      });
+
+      test('na het manueel dressen van een select wordt het error attribuut correct verwerkt', (done) => {
+        const select = fixture('vl-select-fixture');
+        select.addEventListener(select.readyEvent, () => {
+          select.setAttribute('data-vl-error', '');
+          awaitUntil(() => select._dressed).then(() => {
+            assert.isTrue(select._wrapperElement.parentNode.classList.contains('vl-select--error'));
+            done();
+          });
+        });
+        select.dress();
       });
     });
   </script>
