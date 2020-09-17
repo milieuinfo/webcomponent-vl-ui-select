@@ -42,7 +42,9 @@
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+    import {awaitUntil} from 'vl-ui-core/dist/vl-core';
+
     suite('vl-select', () => {
       const sandbox = sinon.createSandbox();
 
@@ -52,7 +54,6 @@
           sandbox.spy(window.vl.select, 'undress');
           sandbox.spy(window.vl.select, 'enable');
           sandbox.spy(window.vl.select, 'disable');
-          sandbox.spy(window.vl.select, 'removeActive');
           sandbox.spy(window.vl.select, 'showDropdown');
           sandbox.spy(window.vl.select, 'hideDropdown');
           done();
@@ -145,6 +146,7 @@
 
       test('de removeActive methode callt vl.select.removeActive', () => {
         const element = fixture('vl-select-fixture');
+        sandbox.spy(window.vl.select, 'removeActive');
         element.removeActive();
         assert(window.vl.select.removeActive.calledWith(element));
       });
@@ -287,6 +289,29 @@
           select.addEventListener('change', () => done());
           options[1].dispatchEvent(new MouseEvent('mousedown', {bubbles: true}));
         });
+      });
+
+      test('bij het programmatisch verwijderen van een geselecteerde optie in combinatie met het data-vl-deletable attribuut zal de select gesloten blijven', (done) => {
+        const element = fixture('vl-select-auto-dress-with-options-fixture');
+        element.setAttribute('data-vl-select-deletable', '');
+        element.addEventListener(element.readyEvent, () => {
+          element.value = 'België';
+          element.removeActive();
+          assert.isFalse(element.parentElement.parentElement.classList.contains('is-open'));
+          done();
+        });
+      });
+
+      test('na het manueel dressen van een select wordt het error attribuut correct verwerkt', (done) => {
+        const select = fixture('vl-select-fixture');
+        select.addEventListener(select.readyEvent, () => {
+          select.setAttribute('data-vl-error', '');
+          awaitUntil(() => select._dressed).then(() => {
+            assert.isTrue(select._wrapperElement.parentNode.classList.contains('vl-select--error'));
+            done();
+          });
+        });
+        select.dress();
       });
     });
   </script>
