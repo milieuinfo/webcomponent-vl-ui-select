@@ -87,7 +87,7 @@ export class VlSelect extends nativeVlElement(HTMLSelectElement) {
   __stateChangedCallback(newValue, type) {
     if (newValue != null) {
       (async () => {
-        if (this._dataVlSelectAttribute != null) {
+        if (this._dressed) {
           await awaitUntil(() => this._dressed);
           this.__wrap();
           this._wrapperElement.parentNode.classList.add('vl-select--' + type);
@@ -96,7 +96,7 @@ export class VlSelect extends nativeVlElement(HTMLSelectElement) {
         }
       })();
     } else {
-      if (this._dataVlSelectAttribute != null) {
+      if (this._dressed) {
         this.__unwrap();
       } else {
         this.classList.remove('vl-select--' + type);
