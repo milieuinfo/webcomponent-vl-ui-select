@@ -297,6 +297,17 @@ export class VlSelect extends nativeVlElement(HTMLSelectElement) {
     vl.select.hideDropdown(this);
   }
 
+  /**
+   * Geeft focus aan het element.
+   */
+  focus() {
+    if (this._dressed) {
+      this._wrapperElement.focus();
+    } else {
+      super.focus();
+    }
+  }
+
   _copySlotAttribute() {
     const attribute = this.getAttribute('slot');
     this.removeAttribute('slot');

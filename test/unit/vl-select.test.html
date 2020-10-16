@@ -302,7 +302,7 @@
         });
       });
 
-      test('na het manueel dressen van een select wordt het error attribuut correct verwerkt', (done) => {
+      test('na het manueel dressen van een select wordt het error attribuut correct verwerkt', (done) => {
         const select = fixture('vl-select-fixture');
         select.addEventListener(select.readyEvent, () => {
           select.setAttribute('data-vl-error', '');
@@ -312,6 +312,20 @@
           });
         });
         select.dress();
+      });
+
+      test('kan programmatisch focus activeren', (done) => {
+        const select = fixture('vl-select-fixture');
+        select.addEventListener('focus', () => done());
+        select.focus();
+      });
+
+      test('kan programmatisch focus activeren bij een dressed variant', (done) => {
+        const select = fixture('vl-select-auto-dress-fixture');
+        select.addEventListener(select.readyEvent, () => {
+          select._wrapperElement.addEventListener('focus', () => done());
+          select.focus();
+        });
       });
     });
   </script>
