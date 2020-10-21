@@ -48,9 +48,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   connectedCallback() {
-    super.connectedCallback();
     this.classList.add('vl-select');
-    this.setAttribute('data-vl-validate-error-parent', '');
     if (this._hasDressedAttribute) {
       this.dress();
     } else {
@@ -101,7 +99,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
         if (this._hasDressedAttribute || this._dressed) {
           await awaitUntil(() => this._dressed);
           this.__wrap();
-          this._wrapperElement.parentNode.classList.add('vl-select--' + type);
+          this._wrapperElement.parentNode.classList.add('vl-input-field--' + type);
         } else {
           this.classList.add('vl-select--' + type);
         }
@@ -110,6 +108,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
       if (this._hasDressedAttribute || this._dressed) {
         this.__unwrap();
       } else {
+        this.classList.remove('vl-input-field--' + type);
         this.classList.remove('vl-select--' + type);
       }
     }
@@ -122,6 +121,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
    */
   __wrap() {
     const wrapper = document.createElement('div');
+    wrapper.setAttribute('data-vl-validate-error-parent', '');
     this._wrapperElement.parentNode.insertBefore(wrapper, this._wrapperElement);
     wrapper.appendChild(this._wrapperElement);
   }
@@ -311,10 +311,8 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
    */
   focus() {
     if (this._dressed) {
-      setTimeout(() => {
-        this._wrapperElement.focus();
-        this._wrapperElement.click();
-      });
+      this._wrapperElement.focus();
+      this._wrapperElement.click();
     } else {
       super.focus();
     }
