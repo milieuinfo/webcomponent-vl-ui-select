@@ -311,8 +311,10 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
    */
   focus() {
     if (this._dressed) {
-      this._wrapperElement.focus();
-      this._wrapperElement.click();
+      setTimeout(() => {
+        this._wrapperElement.focus();
+        this._wrapperElement.click();
+      });
     } else {
       super.focus();
     }
