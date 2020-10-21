@@ -87,6 +87,11 @@
         assert.isTrue(element.classList.contains('vl-select'));
       });
 
+      test('heeft het validate error parent attribuut', () => {
+        const element = fixture('vl-select-fixture');
+        assert.isTrue(element.hasAttribute('data-vl-validate-error-parent'));
+      });
+
       test('krijgt de juiste class wanneer het element een correct attribuut bevat', () => {
         const element = fixture('vl-select-fixture');
         ['block', 'error', 'success', 'disabled'].forEach((attribuut) => {

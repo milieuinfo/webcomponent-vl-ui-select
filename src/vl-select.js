@@ -50,6 +50,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   connectedCallback() {
     super.connectedCallback();
     this.classList.add('vl-select');
+    this.setAttribute('data-vl-validate-error-parent', '');
     if (this._hasDressedAttribute) {
       this.dress();
     } else {
