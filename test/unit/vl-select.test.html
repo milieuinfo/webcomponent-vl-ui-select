@@ -346,7 +346,9 @@
       test('kan programmatisch focus activeren bij een dressed variant', (done) => {
         const select = fixture('vl-select-auto-dress-fixture');
         select.addEventListener(select.readyEvent, () => {
-          select._wrapperElement.addEventListener('focus', () => done());
+          select._wrapperElement.addEventListener('focus', () => {
+            select._wrapperElement.addEventListener('click', () => done());
+          });
           select.focus();
         });
       });

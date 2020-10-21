@@ -127,10 +127,11 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   __unwrap() {
-    const wrapper = this._wrapperElement;
-    const parent = wrapper.parentNode;
-    parent.parentNode.insertBefore(wrapper, parent);
-    parent.remove();
+    if (this._wrapperElement) {
+      const parent = this._wrapperElement.parentNode;
+      parent.parentNode.insertBefore(this._wrapperElement, parent);
+      parent.remove();
+    }
   }
 
   /**
@@ -312,6 +313,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     if (this._dressed) {
       setTimeout(() => {
         this._wrapperElement.focus();
+        this._wrapperElement.click();
       });
     } else {
       super.focus();
