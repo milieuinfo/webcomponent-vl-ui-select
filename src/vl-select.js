@@ -1,7 +1,10 @@
 import {nativeVlElement, awaitUntil, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
-import '/node_modules/@govflanders/vl-ui-util/dist/js/util.js';
-import '/node_modules/@govflanders/vl-ui-core/dist/js/core.js';
+import {vlFormValidation, vlFormValidationElement} from '/node_modules/vl-ui-form-validation/dist/vl-form-validation-all.js';
 import '/lib/select.js';
+
+Promise.all([
+  vlFormValidation.ready(),
+]).then(() => define('vl-select', VlSelect, {extends: 'select'}));
 
 /**
 * VlSelect
@@ -26,7 +29,7 @@ import '/lib/select.js';
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
 * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-select.html|Demo}
 */
-export class VlSelect extends nativeVlElement(HTMLSelectElement) {
+export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelectElement)) {
   /**
    * Geeft de ready event naam.
    *
@@ -37,7 +40,7 @@ export class VlSelect extends nativeVlElement(HTMLSelectElement) {
   }
 
   static get _observedAttributes() {
-    return ['error', 'success'];
+    return vlFormValidation._observedAttributes().concat(['error', 'success']);
   }
 
   static get _observedChildClassAttributes() {
@@ -45,9 +48,12 @@ export class VlSelect extends nativeVlElement(HTMLSelectElement) {
   }
 
   connectedCallback() {
+    super.connectedCallback();
     this.classList.add('vl-select');
     if (this._hasDressedAttribute) {
       this.dress();
+    } else {
+      this._dressFormValidation();
     }
   }
 
@@ -231,6 +237,7 @@ export class VlSelect extends nativeVlElement(HTMLSelectElement) {
         (async () => {
           await this.ready();
           this._copySlotAttribute();
+          this._dressFormValidation();
           this.dispatchEvent(new CustomEvent(this.readyEvent));
         })();
       }
@@ -302,7 +309,9 @@ export class VlSelect extends nativeVlElement(HTMLSelectElement) {
    */
   focus() {
     if (this._dressed) {
-      this._wrapperElement.focus();
+      setTimeout(() => {
+        this._wrapperElement.focus();
+      });
     } else {
       super.focus();
     }
@@ -316,5 +325,3 @@ export class VlSelect extends nativeVlElement(HTMLSelectElement) {
     }
   }
 }
-
-define('vl-select', VlSelect, {extends: 'select'});
