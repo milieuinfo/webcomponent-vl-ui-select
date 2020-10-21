@@ -87,11 +87,6 @@
         assert.isTrue(element.classList.contains('vl-select'));
       });
 
-      test('heeft het validate error parent attribuut', () => {
-        const element = fixture('vl-select-fixture');
-        assert.isTrue(element.hasAttribute('data-vl-validate-error-parent'));
-      });
-
       test('krijgt de juiste class wanneer het element een correct attribuut bevat', () => {
         const element = fixture('vl-select-fixture');
         ['block', 'error', 'success', 'disabled'].forEach((attribuut) => {
@@ -295,7 +290,6 @@
       });
 
       test('change event wordt bij een dressed variant gepropageerd', (done) => {
-        debugger;
         const select = fixture('vl-select-auto-dress-with-options-fixture');
         select.addEventListener(select.readyEvent, () => {
           const options = select._wrapperElement.querySelectorAll('.vl-select__item--choice');
@@ -305,7 +299,6 @@
       });
 
       test('change event wordt bij een dressed variant gepropageerd ook wanneer value leeg is', (done) => {
-        debugger;
         const select = fixture('vl-select-auto-dress-with-options-fixture');
         select.addEventListener(select.readyEvent, () => {
           const options = select._wrapperElement.querySelectorAll('.vl-select__item--choice');
@@ -325,13 +318,20 @@
         });
       });
 
-      test('na het manueel dressen van een select wordt het error attribuut correct verwerkt', (done) => {
+      test('na het manueel dressen van een select wordt het error en success attribuut correct verwerkt', (done) => {
         const select = fixture('vl-select-fixture');
         select.addEventListener(select.readyEvent, () => {
-          select.setAttribute('data-vl-error', '');
-          awaitUntil(() => select._dressed).then(() => {
-            assert.isTrue(select._wrapperElement.parentNode.classList.contains('vl-select--error'));
-            done();
+          const states = ['error', 'success'];
+          states.forEach((state, index) => {
+            select.setAttribute(`data-vl-${state}`, '');
+            awaitUntil(() => select._dressed).then(() => {
+              assert.isTrue(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
+              select.removeAttribute(`data-vl-${state}`);
+              assert.isFalse(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
+              if (index+1 == states.length) {
+                done();
+              }
+            });
           });
         });
         select.dress();
@@ -377,6 +377,17 @@
         awaitUntil(() => select._dressed).then(() => {
           assert(vl.formValidation.dress.calledWith(select.form));
           done();
+        });
+      });
+
+      test('na een dress bevat de parent van het wrap element het validatie error parent attribuut voor correcte formulier validatie', (done) => {
+        const select = fixture('vl-select-auto-dress-fixture');
+        select.addEventListener(select.readyEvent, () => {
+          select.setAttribute('data-vl-error', '');
+          awaitUntil(() => select._dressed).then(() => {
+            assert.isTrue(select._wrapperElement.parentNode.hasAttribute('data-vl-validate-error-parent'));
+            done();
+          });
         });
       });
     });
