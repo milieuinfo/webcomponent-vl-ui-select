@@ -53,6 +53,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
       this.dress();
     } else {
       this._dressFormValidation();
+      this._setValidationParentAttribute();
     }
   }
 
@@ -104,8 +105,11 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
         }
       })();
     } else {
-      this.classList.remove('vl-input-field--' + type);
-      this.classList.remove('vl-select--' + type);
+      if (this._hasDressedAttribute || this._dressed) {
+        this._wrapperElement.parentNode.classList.remove('vl-input-field--' + type);
+      } else {
+        this.classList.remove('vl-select--' + type);
+      }
     }
   }
 
@@ -116,7 +120,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
    */
   __wrap() {
     const wrapper = document.createElement('div');
-    wrapper.setAttribute('data-vl-validate-error-parent', '');
+    this._setValidationParentAttribute(wrapper);
     this._wrapperElement.parentNode.insertBefore(wrapper, this._wrapperElement);
     wrapper.appendChild(this._wrapperElement);
   }
@@ -227,8 +231,8 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
           await this.ready();
           this._copySlotAttribute();
           this.__wrap();
-          this._dressFormValidation();
           this.disabled = true;
+          this._dressFormValidation();
           this.dispatchEvent(new CustomEvent(this.readyEvent));
         })();
       }
@@ -326,5 +330,9 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     const dress = this.dress;
     super._dressFormValidation();
     this.dress = dress;
+  }
+
+  _setValidationParentAttribute(element) {
+    (element || this).setAttribute('data-vl-validate-error-parent', '');
   }
 }
