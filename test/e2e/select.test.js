@@ -152,7 +152,6 @@ describe('vl-select', async () => {
 
   it('als gebruiker kan ik een select via een knop enablen en disablen', async () => {
     const select = await vlSelectPage.getEnableDisableSelect();
-    await assert.eventually.isTrue(select.isEnabled());
     await vlSelectPage.disable();
     await assert.eventually.isFalse(select.isEnabled());
     await vlSelectPage.enable();
