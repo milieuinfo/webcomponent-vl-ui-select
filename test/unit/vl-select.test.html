@@ -45,7 +45,12 @@
   <test-fixture id="vl-select-form-fixture">
     <template>
       <form>
-        <select id="select" is="vl-select"/>
+        <select id="select" is="vl-select" 
+          data-required="true" 
+          data-vl-error-message="Verplicht!" 
+          data-vl-error-placeholder="select-error" data-vl-validation-type="select">
+        </select>
+        <p error data-vl-error-id="select-error"></p>
       </form>
     </template>
   </test-fixture>
@@ -319,7 +324,7 @@
       });
 
       test('na het manueel dressen van een select wordt het error en success attribuut correct verwerkt', (done) => {
-        const select = fixture('vl-select-fixture');
+        const select = fixture('vl-select-form-fixture').querySelector('select');
         select.addEventListener(select.readyEvent, () => {
           const states = ['error', 'success'];
           states.forEach((state, index) => {
@@ -327,6 +332,7 @@
             awaitUntil(() => select._dressed).then(() => {
               assert.isTrue(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
               select.removeAttribute(`data-vl-${state}`);
+              select.dispatchEvent(new Event('change'));
               assert.isFalse(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
               if (index+1 == states.length) {
                 done();
@@ -388,6 +394,14 @@
             assert.isTrue(select._wrapperElement.parentNode.hasAttribute('data-vl-validate-error-parent'));
             done();
           });
+        });
+      });
+
+      test('na een dress wordt het hidden select element op disabled gezet om een focus te voorkomen bij de native formulier validatie', (done) => {
+        const select = fixture('vl-select-auto-dress-fixture');
+        awaitUntil(() => select._dressed).then(() => {
+          assert.isTrue(select.disabled);
+          done();
         });
       });
     });

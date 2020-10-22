@@ -98,19 +98,14 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
       (async () => {
         if (this._hasDressedAttribute || this._dressed) {
           await awaitUntil(() => this._dressed);
-          this.__wrap();
           this._wrapperElement.parentNode.classList.add('vl-input-field--' + type);
         } else {
           this.classList.add('vl-select--' + type);
         }
       })();
     } else {
-      if (this._hasDressedAttribute || this._dressed) {
-        this.__unwrap();
-      } else {
-        this.classList.remove('vl-input-field--' + type);
-        this.classList.remove('vl-select--' + type);
-      }
+      this.classList.remove('vl-input-field--' + type);
+      this.classList.remove('vl-select--' + type);
     }
   }
 
@@ -124,14 +119,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     wrapper.setAttribute('data-vl-validate-error-parent', '');
     this._wrapperElement.parentNode.insertBefore(wrapper, this._wrapperElement);
     wrapper.appendChild(this._wrapperElement);
-  }
-
-  __unwrap() {
-    if (this._wrapperElement) {
-      const parent = this._wrapperElement.parentNode;
-      parent.parentNode.insertBefore(this._wrapperElement, parent);
-      parent.remove();
-    }
   }
 
   /**
@@ -239,7 +226,9 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
         (async () => {
           await this.ready();
           this._copySlotAttribute();
+          this.__wrap();
           this._dressFormValidation();
+          this.disabled = true;
           this.dispatchEvent(new CustomEvent(this.readyEvent));
         })();
       }
@@ -326,6 +315,17 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     if (attribute) {
       this._wrapperElement.setAttribute('slot', attribute);
     }
+  }
+
+  _setClassAttributes() {
+    this.setAttribute('data-vl-success-class', `vl-input-field--success`);
+    this.setAttribute('data-vl-error-class', `vl-input-field--error`);
+  }
+
+  _dressFormValidation() {
+    const dress = this.dress;
+    super._dressFormValidation();
+    this.dress = dress;
   }
 }
 
