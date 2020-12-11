@@ -34,4 +34,7 @@
 
 .js-vl-select.vl-search__input > .vl-select__inner {
     border: none;
+    &:hover {
+        box-shadow: none;
+    }
 }
