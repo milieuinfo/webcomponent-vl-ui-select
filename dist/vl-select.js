@@ -321,11 +321,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     }
   }
 
-  _setClassAttributes() {
-    this.setAttribute('data-vl-success-class', `vl-input-field--success`);
-    this.setAttribute('data-vl-error-class', `vl-input-field--error`);
-  }
-
   _dressFormValidation() {
     const dress = this.dress;
     super._dressFormValidation();

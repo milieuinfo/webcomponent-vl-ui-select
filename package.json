@@ -51,9 +51,9 @@
     "@govflanders/vl-ui-input-field": "^3.12.3",
     "vl-ui-action-group": "^3.1.2",
     "vl-ui-body": "^1.0.7",
-    "vl-ui-form-grid": "^3.0.7",
-    "vl-ui-modal": "^4.0.2",
-    "vl-ui-upload": "^3.3.2",
-    "vl-ui-util": "^5.3.4"
+    "vl-ui-form-grid": "^3.0.8",
+    "vl-ui-modal": "^4.0.3",
+    "vl-ui-upload": "^3.3.3",
+    "vl-ui-util": "^5.3.6"
   }
 }
