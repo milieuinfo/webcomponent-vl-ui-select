@@ -1,11 +1,12 @@
 
-const {assert, driver} = require('vl-ui-core').Test.Setup;
+const {assert, getDriver} = require('vl-ui-core').Test.Setup;
 const VlSelectPage = require('./pages/vl-select.page');
 
 describe('vl-select', async () => {
-  const vlSelectPage = new VlSelectPage(driver);
+  let vlSelectPage;
 
   before(() => {
+    vlSelectPage = new VlSelectPage(getDriver());
     return vlSelectPage.load();
   });
 
