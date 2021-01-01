@@ -40,11 +40,11 @@
     "@govflanders/vl-ui-core": "^4.0.5",
     "@govflanders/vl-ui-select": "^3.11.5",
     "@govflanders/vl-ui-util": "^3.11.5",
-    "vl-ui-core": "github:milieuinfo/webcomponent-vl-ui-core#form-validation",
+    "vl-ui-core": "^7.0.2",
     "vl-ui-form-validation": "github:milieuinfo/webcomponent-vl-ui-form-validation#form-validation"
   },
   "peerDependencies": {
-    "vl-ui-core": "milieuinfo/webcomponent-vl-ui-core#form-validation",
+    "vl-ui-core": "^7.0.2",
     "vl-ui-form-validation": "milieuinfo/webcomponent-vl-ui-form-validation#form-validation"
   },
   "devDependencies": {
