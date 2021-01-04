@@ -13,19 +13,19 @@
 <body>
   <test-fixture id="vl-select-fixture">
     <template>
-      <select id="select-1" is="vl-select"/>
+      <select id="select" is="vl-select"/>
     </template>
   </test-fixture>
 
   <test-fixture id="vl-select-auto-dress-fixture">
     <template>
-      <select id="select-2" is="vl-select" data-vl-select/>
+      <select id="select" is="vl-select" data-vl-select/>
     </template>
   </test-fixture>
 
   <test-fixture id="vl-select-with-options-fixture">
     <template>
-      <select id="select-3" is="vl-select">
+      <select id="select" is="vl-select">
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
       </select>
@@ -34,7 +34,7 @@
 
   <test-fixture id="vl-select-auto-dress-with-options-fixture">
     <template>
-      <select id="select-4" is="vl-select" data-vl-select>
+      <select id="select" is="vl-select" data-vl-select>
         <option placeholder value="">Kies een land</option>
         <option value="België">België</option>
         <option value="Duitsland" selected>Duitsland</option>
@@ -42,8 +42,31 @@
     </template>
   </test-fixture>
 
+  <test-fixture id="vl-select-form-fixture">
+    <template>
+      <form>
+        <select id="select" is="vl-select" 
+          data-required="true" 
+          data-vl-error-message="Verplicht!" 
+          data-vl-error-placeholder="select-error" data-vl-validation-type="select">
+        </select>
+        <p error data-vl-error-id="select-error"></p>
+      </form>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="vl-select-auto-dress-form-fixture">
+    <template>
+      <form>
+        <select id="select" is="vl-select" data-vl-select/>
+      </form>
+    </template>
+  </test-fixture>
+
   <script type="module">
     import {awaitUntil} from 'vl-ui-core/dist/vl-core';
+    import {VlSelect} from '../../src/vl-select';
+    import {vlFormValidation} from 'vl-ui-form-validation/dist/vl-form-validation';
 
     suite('vl-select', () => {
       const sandbox = sinon.createSandbox();
@@ -272,7 +295,6 @@
       });
 
       test('change event wordt bij een dressed variant gepropageerd', (done) => {
-        debugger;
         const select = fixture('vl-select-auto-dress-with-options-fixture');
         select.addEventListener(select.readyEvent, () => {
           const options = select._wrapperElement.querySelectorAll('.vl-select__item--choice');
@@ -282,7 +304,6 @@
       });
 
       test('change event wordt bij een dressed variant gepropageerd ook wanneer value leeg is', (done) => {
-        debugger;
         const select = fixture('vl-select-auto-dress-with-options-fixture');
         select.addEventListener(select.readyEvent, () => {
           const options = select._wrapperElement.querySelectorAll('.vl-select__item--choice');
@@ -302,13 +323,20 @@
         });
       });
 
-      test('na het manueel dressen van een select wordt het error attribuut correct verwerkt', (done) => {
-        const select = fixture('vl-select-fixture');
+      test('na het manueel dressen van een select wordt het error en success attribuut correct verwerkt', (done) => {
+        const select = fixture('vl-select-form-fixture').querySelector('select');
         select.addEventListener(select.readyEvent, () => {
-          select.setAttribute('data-vl-error', '');
-          awaitUntil(() => select._dressed).then(() => {
-            assert.isTrue(select._wrapperElement.parentNode.classList.contains('vl-select--error'));
-            done();
+          const states = ['error', 'success'];
+          states.forEach((state, index) => {
+            select.setAttribute(`data-vl-${state}`, '');
+            awaitUntil(() => select._dressed).then(() => {
+              assert.isTrue(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
+              select.removeAttribute(`data-vl-${state}`);
+              assert.isFalse(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
+              if (index+1 == states.length) {
+                done();
+              }
+            });
           });
         });
         select.dress();
@@ -323,8 +351,52 @@
       test('kan programmatisch focus activeren bij een dressed variant', (done) => {
         const select = fixture('vl-select-auto-dress-fixture');
         select.addEventListener(select.readyEvent, () => {
-          select._wrapperElement.addEventListener('focus', () => done());
+          select._wrapperElement.addEventListener('focus', () => {
+            select._wrapperElement.addEventListener('click', () => done());
+          });
           select.focus();
+        });
+      });
+
+      test('bevat de form validation observed attributes om correcte formulier validatie te realiseren', () => {
+        vlFormValidation._observedAttributes().forEach((attribute) => assert.include(VlSelect._observedAttributes, attribute));
+      });
+
+      test('de select zal de validation dress functie uitvoeren als het onderdeel van een formulier is', () => {
+        sandbox.spy(vl.formValidation, 'dress');
+        fixture('vl-select-fixture');
+        assert(vl.formValidation.dress.notCalled);
+        const select = fixture('vl-select-form-fixture').querySelector('select');
+        assert(vl.formValidation.dress.calledWith(select.form));
+      });
+
+      test('de auto dress select zal pas wanneer dress uitgevoerd werd de validation dress functie uitvoeren als het onderdeel van een formulier is', (done) => {
+        sandbox.spy(vl.formValidation, 'dress');
+        fixture('vl-select-auto-dress-fixture');
+        assert(vl.formValidation.dress.notCalled);
+        const select = fixture('vl-select-auto-dress-form-fixture').querySelector('select');
+        awaitUntil(() => select._dressed).then(() => {
+          assert(vl.formValidation.dress.calledWith(select.form));
+          done();
+        });
+      });
+
+      test('na een dress bevat de parent van het wrap element het validatie error parent attribuut voor correcte formulier validatie', (done) => {
+        const select = fixture('vl-select-auto-dress-fixture');
+        select.addEventListener(select.readyEvent, () => {
+          select.setAttribute('data-vl-error', '');
+          awaitUntil(() => select._dressed).then(() => {
+            assert.isTrue(select._wrapperElement.parentNode.hasAttribute('data-vl-validate-error-parent'));
+            done();
+          });
+        });
+      });
+
+      test('na een dress wordt het hidden select element op disabled gezet om een focus te voorkomen bij de native formulier validatie', (done) => {
+        const select = fixture('vl-select-auto-dress-fixture');
+        awaitUntil(() => select._dressed).then(() => {
+          assert.isTrue(select.disabled);
+          done();
         });
       });
     });
