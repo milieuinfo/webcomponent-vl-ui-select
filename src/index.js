@@ -1,3 +1,1 @@
-module.exports = {
-  VlSelect: require('../dist/vl-select.src.js').VlSelect,
-};
+export * from '../dist/vl-select.src.js';
