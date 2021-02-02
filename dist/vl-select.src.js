@@ -1,6 +1,6 @@
 import {nativeVlElement, awaitUntil, define} from 'vl-ui-core';
 import {vlFormValidation, vlFormValidationElement} from 'vl-ui-form-validation';
-import 'vl-ui-select/lib/select.js';
+import '../lib/select.js';
 
 Promise.all([
   vlFormValidation.ready(),
