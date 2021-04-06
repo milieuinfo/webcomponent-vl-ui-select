@@ -412,30 +412,30 @@
       test('de select placeholders bevatten default waarden', (done) => {
         const select = fixture('vl-select-auto-dress-fixture');
         awaitUntil(() => select._dressed).then(() => {
-          assert.equal(vl.i18n.i18n["select.no_more_options"], "Geen resterende opties gevonden");
-          assert.equal(vl.i18n.i18n["select.placeholder_value"], "Selecteer item");
-          assert.equal(vl.i18n.i18n["select.no_results"], "Geen resultaten gevonden");
-          assert.equal(vl.i18n.i18n["select.search_placeholder_value"], "Zoek item");
+          assert.equal(vl.i18n.i18n['select.no_more_options'], 'Geen resterende opties gevonden');
+          assert.equal(vl.i18n.i18n['select.placeholder_value'], 'Selecteer item');
+          assert.equal(vl.i18n.i18n['select.no_results'], 'Geen resultaten gevonden');
+          assert.equal(vl.i18n.i18n['select.search_placeholder_value'], 'Zoek item');
           done();
         });
       });
 
       test('kan waarde van search placeholder wijzigen via attribuut', (done) => {
         const select = fixture('vl-select-auto-dress-fixture');
-        const nieuweSearchPlaceholderText = "Dit is een nieuwe tekst"
-        awaitUntil(() => select._dressed).then(() => { 
+        const nieuweSearchPlaceholderText = 'Dit is een nieuwe tekst';
+        awaitUntil(() => select._dressed).then(() => {
           select.setAttribute('data-vl-search-placeholder', nieuweSearchPlaceholderText);
-          assert.equal(vl.i18n.i18n["select.search_placeholder_value"], nieuweSearchPlaceholderText);
+          assert.equal(vl.i18n.i18n['select.search_placeholder_value'], nieuweSearchPlaceholderText);
           done();
         });
       });
 
       test('kan waarde van search no more options wijzigen via attribuut', (done) => {
         const select = fixture('vl-select-auto-dress-fixture');
-        const nieuweSearchNoMoreOptionsText = "Dit is een nieuwe tekst";
-        awaitUntil(() => select._dressed).then(() => { 
+        const nieuweSearchNoMoreOptionsText = 'Dit is een nieuwe tekst';
+        awaitUntil(() => select._dressed).then(() => {
           select.setAttribute('data-vl-search-no-results-text', nieuweSearchNoMoreOptionsText);
-          assert.equal(vl.i18n.i18n["select.no_more_options"], nieuweSearchNoMoreOptionsText);
+          assert.equal(vl.i18n.i18n['select.no_more_options'], nieuweSearchNoMoreOptionsText);
           done();
         });
       });
@@ -446,8 +446,8 @@
         const select2 = multipleSelects.querySelector('#select2');
         await awaitUntil(() => select1._dressed);
         await awaitUntil(() => select2._dressed);
-        assert.equal(select1.__placeHolderValue, "placeholder 1");
-        assert.equal(select2.__placeHolderValue, "placeholder 2");
+        assert.equal(select1.__placeHolderValue, 'placeholder 1');
+        assert.equal(select2.__placeHolderValue, 'placeholder 2');
       });
 
       // test('wanneer meerdere selects verschillende waarden hebben voor de search-no-result-text, worden die ook verschillend getoond', async () => {
@@ -462,9 +462,7 @@
       //   assert.equal(select1.__noResultsText, "no results 1");
       //   assert.equal(select2.__noResultsText, "no results 2");
       // });
-
     });
   </script>
 </body>
-
 </html>

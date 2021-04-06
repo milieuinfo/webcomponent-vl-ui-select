@@ -111,14 +111,13 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   set placeholder(value) {
-    debugger
     this._placeholderElement.innerText = value;
   }
 
   set searchPlaceholder(value) {
     this._changeTranslation('select.search_placeholder_value', value);
   }
-  
+
   set searchEmptyText(value) {
     this.setAttribute('data-vl-select-search-empty-text', value);
   }
@@ -255,9 +254,9 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
    * @param {Object} params - object with callbackFn: function(select) with return value the items for `setChoices`
    * @fires VlSelect#VlSelectReady ready event wordt verstuurd wanneer veilige interactie met de webcomponent mogelijk is.
    */
+
   dress(params) {
     setTimeout(() => {
-
       if (this.getAttribute('data-vl-search-placeholder')) {
         this.searchPlaceholder = this.getAttribute('data-vl-search-placeholder');
       } else {
