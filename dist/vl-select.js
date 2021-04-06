@@ -40,7 +40,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   static get _observedAttributes() {
-    return vlFormValidation._observedAttributes().concat(['error', 'success']);
+    return vlFormValidation._observedAttributes().concat(['error', 'success', 'placeholder', 'search-placeholder', 'search-empty-text', 'search-no-results-text']);
   }
 
   static get _observedChildClassAttributes() {
@@ -92,6 +92,38 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   _errorChangedCallback(oldValue, newValue) {
     this.__stateChangedCallback(newValue, 'error');
+  }
+
+  _placeholderChangedCallback(oldValue, newValue) {
+    this.placeholder = newValue;
+  }
+
+  _searchPlaceholderChangedCallback(oldValue, newValue) {
+    this.searchPlaceholder = newValue;
+  }
+
+  _searchEmptyTextChangedCallback(oldValue, newValue) {
+    this.searchEmptyText = newValue;
+  }
+
+  _searchNoResultsTextChangedCallback(oldValue, newValue) {
+    this.searchNoResultsText = newValue;
+  }
+
+  set placeholder(value) {
+    this._placeholderElement.innerText = value;
+  }
+
+  set searchPlaceholder(value) {
+    this._changeTranslation('select.search_placeholder_value', value);
+  }
+
+  set searchEmptyText(value) {
+    this.setAttribute('data-vl-select-search-empty-text', value);
+  }
+
+  set searchNoResultsText(value) {
+    this._changeTranslation('select.no_more_options', value);
   }
 
   __stateChangedCallback(newValue, type) {
@@ -222,8 +254,22 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
    * @param {Object} params - object with callbackFn: function(select) with return value the items for `setChoices`
    * @fires VlSelect#VlSelectReady ready event wordt verstuurd wanneer veilige interactie met de webcomponent mogelijk is.
    */
+
   dress(params) {
     setTimeout(() => {
+      if (this.getAttribute('data-vl-search-placeholder')) {
+        this.searchPlaceholder = this.getAttribute('data-vl-search-placeholder');
+      } else {
+        this.searchPlaceholder = 'Zoek item';
+      }
+
+      // if (this.getAttribute('data-vl-select-search-empty-text')) {
+      //   this.searchNoResultsText = this.getAttribute('data-vl-select-search-empty-text');
+      //   this.searchEmptyText = this.getAttribute('data-vl-select-search-empty-text');
+      // } else {
+      //   this.searchNoResultsText = 'Geen resterende opties gevonden';
+      // }
+
       if (!this._dressed) {
         vl.select.dress(this, params);
 
@@ -329,5 +375,13 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   _setValidationParentAttribute(element) {
     (element || this).setAttribute('data-vl-validate-error-parent', '');
+  }
+
+  get __placeHolderValue() {
+    return this._wrapperElement.querySelector('input').getAttribute('placeholder');
+  }
+
+  get __noResultsText() {
+    return this._wrapperElement.querySelector('.has-no-choices').innerText;
   }
 }
