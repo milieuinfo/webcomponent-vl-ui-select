@@ -40,7 +40,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   static get _observedAttributes() {
-    return vlFormValidation._observedAttributes().concat(['error', 'success', 'placeholder', 'search-placeholder', 'search-empty-text', 'search-no-results-text']);
+    return vlFormValidation._observedAttributes().concat(['error', 'success', 'search-placeholder', 'search-no-results-text']);
   }
 
   static get _observedChildClassAttributes() {
@@ -94,20 +94,12 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     this.__stateChangedCallback(newValue, 'error');
   }
 
-  _placeholderChangedCallback(oldValue, newValue) {
-    this.placeholder = newValue;
-  }
-
   _searchPlaceholderChangedCallback(oldValue, newValue) {
     this.searchPlaceholderTranslation = newValue;
   }
 
   _searchNoResultsTextChangedCallback(oldValue, newValue) {
     this.searchNoResultsText = newValue;
-  }
-
-  set placeholder(value) {
-    this._placeholderElement.innerText = value;
   }
 
   set searchPlaceholderTranslation(value) {
