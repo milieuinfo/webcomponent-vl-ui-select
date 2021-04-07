@@ -24,12 +24,16 @@ Promise.all([
 * @property {boolean} data-vl-select-search-result-limit - Attribuut om het aantal resultaten te limiteren.
 * @property {boolean} data-vl-select-search-no-result-limit - Attribuut om het aantal resultaten te limiteren.
 * @property {boolean} data-vl-select-deletable - Attribuut om te activeren of deactiveren dat het geselecteerde kan verwijderd worden.
+* @property {string} data-vl-search-placeholder - Attribuut bepaalt de placeholder van het zoek adres input element.
 *
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/releases/latest|Release notes}
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
 * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-select.html|Demo}
 */
 export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelectElement)) {
+  static get DEFAULT_SEARCH_PLACEHOLDER() {
+    return 'Zoek item';
+  }
   /**
    * Geeft de ready event naam.
    *
@@ -40,7 +44,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   static get _observedAttributes() {
-    return vlFormValidation._observedAttributes().concat(['error', 'success', 'placeholder', 'search-placeholder', 'search-empty-text', 'search-no-results-text']);
+    return vlFormValidation._observedAttributes().concat(['error', 'success', 'search-placeholder', 'search-no-results-text']);
   }
 
   static get _observedChildClassAttributes() {
@@ -94,20 +98,12 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     this.__stateChangedCallback(newValue, 'error');
   }
 
-  _placeholderChangedCallback(oldValue, newValue) {
-    this.placeholder = newValue;
-  }
-
   _searchPlaceholderChangedCallback(oldValue, newValue) {
     this.searchPlaceholderTranslation = newValue;
   }
 
   _searchNoResultsTextChangedCallback(oldValue, newValue) {
     this.searchNoResultsText = newValue;
-  }
-
-  set placeholder(value) {
-    this._placeholderElement.innerText = value;
   }
 
   set searchPlaceholderTranslation(value) {
@@ -252,7 +248,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
       if (this.getAttribute('data-vl-search-placeholder')) {
         this.searchPlaceholderTranslation = this.getAttribute('data-vl-search-placeholder');
       } else {
-        this.searchPlaceholderTranslation = 'Zoek item';
+        this.searchPlaceholderTranslation = VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
       }
 
       if (!this._dressed) {
