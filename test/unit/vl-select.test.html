@@ -66,8 +66,8 @@
   <test-fixture id="multiple-selects-fixture">
     <template>
       <div>
-        <select id="select1" is="vl-select" data-vl-select data-vl-search-placeholder="placeholder 1" data-vl-select-search-empty-text="empty text 1"></select>
-        <select id="select2" is="vl-select" data-vl-select data-vl-search-placeholder="placeholder 2" data-vl-select-search-empty-text="empty text 2"></select>
+        <select id="select1" is="vl-select" data-vl-select data-vl-search-placeholder="placeholder 1"></select>
+        <select id="select2" is="vl-select" data-vl-select data-vl-search-placeholder="placeholder 2"></select>
       </div>
     </template>
   </test-fixture>
@@ -449,19 +449,6 @@
         assert.equal(select1.__placeHolderValue, 'placeholder 1');
         assert.equal(select2.__placeHolderValue, 'placeholder 2');
       });
-
-      // test('wanneer meerdere selects verschillende waarden hebben voor de search-no-result-text, worden die ook verschillend getoond', async () => {
-      //   const multipleSelects = fixture('multiple-selects-fixture');
-      //   const select1 = multipleSelects.querySelector('#select1');
-      //   const select2 = multipleSelects.querySelector('#select2');
-      //   await awaitUntil(() => select1._dressed);
-      //   await awaitUntil(() => select2._dressed);
-      //   debugger
-      //   console.log(select1.__noResultsText);
-      //   console.log(select2.__noResultsText);
-      //   assert.equal(select1.__noResultsText, "no results 1");
-      //   assert.equal(select2.__noResultsText, "no results 2");
-      // });
     });
   </script>
 </body>

@@ -102,10 +102,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     this.searchPlaceholder = newValue;
   }
 
-  _searchEmptyTextChangedCallback(oldValue, newValue) {
-    this.searchEmptyText = newValue;
-  }
-
   _searchNoResultsTextChangedCallback(oldValue, newValue) {
     this.searchNoResultsText = newValue;
   }
@@ -116,10 +112,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   set searchPlaceholder(value) {
     this._changeTranslation('select.search_placeholder_value', value);
-  }
-
-  set searchEmptyText(value) {
-    this.setAttribute('data-vl-select-search-empty-text', value);
   }
 
   set searchNoResultsText(value) {
@@ -263,13 +255,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
         this.searchPlaceholder = 'Zoek item';
       }
 
-      // if (this.getAttribute('data-vl-select-search-empty-text')) {
-      //   this.searchNoResultsText = this.getAttribute('data-vl-select-search-empty-text');
-      //   this.searchEmptyText = this.getAttribute('data-vl-select-search-empty-text');
-      // } else {
-      //   this.searchNoResultsText = 'Geen resterende opties gevonden';
-      // }
-
       if (!this._dressed) {
         vl.select.dress(this, params);
 
@@ -379,10 +364,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   get __placeHolderValue() {
     return this._wrapperElement.querySelector('input').getAttribute('placeholder');
-  }
-
-  get __noResultsText() {
-    return this._wrapperElement.querySelector('.has-no-choices').innerText;
   }
 }
 
