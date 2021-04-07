@@ -99,7 +99,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   _searchPlaceholderChangedCallback(oldValue, newValue) {
-    this.searchPlaceholder = newValue;
+    this.searchPlaceholderTranslation = newValue;
   }
 
   _searchNoResultsTextChangedCallback(oldValue, newValue) {
@@ -110,7 +110,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     this._placeholderElement.innerText = value;
   }
 
-  set searchPlaceholder(value) {
+  set searchPlaceholderTranslation(value) {
     this._changeTranslation('select.search_placeholder_value', value);
   }
 
@@ -250,9 +250,9 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   dress(params) {
     setTimeout(() => {
       if (this.getAttribute('data-vl-search-placeholder')) {
-        this.searchPlaceholder = this.getAttribute('data-vl-search-placeholder');
+        this.searchPlaceholderTranslation = this.getAttribute('data-vl-search-placeholder');
       } else {
-        this.searchPlaceholder = 'Zoek item';
+        this.searchPlaceholderTranslation = 'Zoek item';
       }
 
       if (!this._dressed) {
