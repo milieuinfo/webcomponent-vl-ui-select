@@ -446,8 +446,8 @@
         const select2 = multipleSelects.querySelector('#select2');
         await awaitUntil(() => select1._dressed);
         await awaitUntil(() => select2._dressed);
-        assert.equal(select1.__placeHolderValue, 'placeholder 1');
-        assert.equal(select2.__placeHolderValue, 'placeholder 2');
+        assert.equal(select1.__placeholderValue, 'placeholder 1');
+        assert.equal(select2.__placeholderValue, 'placeholder 2');
       });
     });
   </script>
