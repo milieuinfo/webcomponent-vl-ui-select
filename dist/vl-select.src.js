@@ -25,6 +25,7 @@ Promise.all([
 * @property {boolean} data-vl-select-search-no-result-limit - Attribuut om het aantal resultaten te limiteren.
 * @property {boolean} data-vl-select-deletable - Attribuut om te activeren of deactiveren dat het geselecteerde kan verwijderd worden.
 * @property {string} data-vl-search-placeholder - Attribuut bepaalt de placeholder van het zoek adres input element.
+* @property {string} data-vl-no-result-text - Attribuut bepaalt de tekst wanneer er geen zoekresultaten meer zijn.
 *
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/releases/latest|Release notes}
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
@@ -108,6 +109,10 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   set searchPlaceholderTranslation(value) {
     this._changeTranslation('select.search_placeholder_value', value);
+  }
+
+  set searchPlaceholder(value) {
+    this.setAttribute('data-vl-search-placeholder', value);
   }
 
   set searchNoResultsText(value) {
@@ -235,6 +240,18 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     return this._element.closest('.js-vl-select');
   }
 
+  get _searchPlaceholder() {
+    return this.getAttribute('data-vl-search-placeholder');
+  }
+
+  _setTranslations() {
+    if (this._searchPlaceholder) {
+      this.searchPlaceholderTranslation = this._searchPlaceholder;
+    } else {
+      this.searchPlaceholderTranslation = VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
+    }
+  }
+
   /**
    * Initialiseer de `Choices` config.
    *
@@ -245,11 +262,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   dress(params) {
     setTimeout(() => {
-      if (this.getAttribute('data-vl-search-placeholder')) {
-        this.searchPlaceholderTranslation = this.getAttribute('data-vl-search-placeholder');
-      } else {
-        this.searchPlaceholderTranslation = VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
-      }
+      this._setTranslations();
 
       if (!this._dressed) {
         vl.select.dress(this, params);
@@ -356,10 +369,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   _setValidationParentAttribute(element) {
     (element || this).setAttribute('data-vl-validate-error-parent', '');
-  }
-
-  get __placeHolderValue() {
-    return this._wrapperElement.querySelector('input').getAttribute('placeholder');
   }
 }
 
