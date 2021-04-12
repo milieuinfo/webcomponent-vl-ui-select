@@ -236,6 +236,10 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     return this._element.closest('.js-vl-select');
   }
 
+  get _searchPlaceholder() {
+    return this.getAttribute('data-vl-search-placeholder');
+  }
+
   /**
    * Initialiseer de `Choices` config.
    *
@@ -246,8 +250,8 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   dress(params) {
     setTimeout(() => {
-      if (this.getAttribute('data-vl-search-placeholder')) {
-        this.searchPlaceholderTranslation = this.getAttribute('data-vl-search-placeholder');
+      if (this._searchPlaceholder) {
+        this.searchPlaceholderTranslation = this._searchPlaceholder;
       } else {
         this.searchPlaceholderTranslation = VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
       }
