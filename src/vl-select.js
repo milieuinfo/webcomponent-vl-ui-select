@@ -111,6 +111,10 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     this._changeTranslation('select.search_placeholder_value', value);
   }
 
+  set searchPlaceholder(value) {
+    this.setAttribute('data-vl-search-placeholder', value);
+  }
+
   set searchNoResultsText(value) {
     this._changeTranslation('select.no_more_options', value);
   }
