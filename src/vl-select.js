@@ -366,8 +366,4 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   _setValidationParentAttribute(element) {
     (element || this).setAttribute('data-vl-validate-error-parent', '');
   }
-
-  get __placeholderValue() {
-    return this._wrapperElement.querySelector('input').getAttribute('placeholder');
-  }
 }

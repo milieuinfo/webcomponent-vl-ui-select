@@ -80,6 +80,10 @@
     suite('vl-select', () => {
       const sandbox = sinon.createSandbox();
 
+      const getPlaceholderAttribute = function(element) {
+        return element._wrapperElement.querySelector('input').getAttribute('placeholder');
+      };
+
       setup((done) => {
         customElements.whenDefined('vl-select').then(() => {
           sandbox.spy(window.vl.select, 'dress');
@@ -446,8 +450,8 @@
         const select2 = multipleSelects.querySelector('#select2');
         await awaitUntil(() => select1._dressed);
         await awaitUntil(() => select2._dressed);
-        assert.equal(select1.__placeholderValue, 'placeholder 1');
-        assert.equal(select2.__placeholderValue, 'placeholder 2');
+        assert.equal(getPlaceholderAttribute(select1), 'placeholder 1');
+        assert.equal(getPlaceholderAttribute(select2), 'placeholder 2');
       });
     });
   </script>
