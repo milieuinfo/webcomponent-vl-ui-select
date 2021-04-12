@@ -25,6 +25,7 @@ Promise.all([
 * @property {boolean} data-vl-select-search-no-result-limit - Attribuut om het aantal resultaten te limiteren.
 * @property {boolean} data-vl-select-deletable - Attribuut om te activeren of deactiveren dat het geselecteerde kan verwijderd worden.
 * @property {string} data-vl-search-placeholder - Attribuut bepaalt de placeholder van het zoek adres input element.
+* @property {string} data-vl-no-result-text - Attribuut bepaalt de tekst wanneer er geen zoekresultaten meer zijn.
 *
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/releases/latest|Release notes}
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
