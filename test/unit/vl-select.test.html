@@ -13,13 +13,13 @@
 <body>
   <test-fixture id="vl-select-fixture">
     <template>
-      <select id="select" is="vl-select"/>
+      <select id="select" is="vl-select" />
     </template>
   </test-fixture>
 
   <test-fixture id="vl-select-auto-dress-fixture">
     <template>
-      <select id="select" is="vl-select" data-vl-select/>
+      <select id="select" is="vl-select" data-vl-select />
     </template>
   </test-fixture>
 
@@ -42,12 +42,20 @@
     </template>
   </test-fixture>
 
+  <test-fixture id="vl-select-auto-dress-custom-no-results-fixture">
+    <template>
+      <select id="select" is="vl-select" data-vl-select data-vl-search-no-result-text='No results found'>
+        <option placeholder value="">Kies een land</option>
+        <option value="België">België</option>
+        <option value="Duitsland">Duitsland</option>
+      </select>
+    </template>
+  </test-fixture>
+
   <test-fixture id="vl-select-form-fixture">
     <template>
       <form>
-        <select id="select" is="vl-select" 
-          data-required="true" 
-          data-vl-error-message="Verplicht!" 
+        <select id="select" is="vl-select" data-required="true" data-vl-error-message="Verplicht!"
           data-vl-error-placeholder="select-error" data-vl-validation-type="select">
         </select>
         <p error data-vl-error-id="select-error"></p>
@@ -72,6 +80,15 @@
     </template>
   </test-fixture>
 
+  <test-fixture id="multiple-auto-dress-form-fixture">
+    <template>
+      <form>
+        <select id="select1" is="vl-select" data-vl-select data-vl-search-no-results-text="no results 1" />
+        <select id="select2" is="vl-select" data-vl-select data-vl-search-no-results-text="no results 1" />
+      </form>
+    </template>
+  </test-fixture>
+
   <script type="module">
     import {awaitUntil} from 'vl-ui-core/dist/vl-core';
     import {VlSelect} from '../../src/vl-select';
@@ -83,6 +100,7 @@
       const getPlaceholderAttribute = function(element) {
         return element._wrapperElement.querySelector('input').getAttribute('placeholder');
       };
+
 
       setup((done) => {
         customElements.whenDefined('vl-select').then(() => {
@@ -346,7 +364,7 @@
               assert.isTrue(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
               select.removeAttribute(`data-vl-${state}`);
               assert.isFalse(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
-              if (index+1 == states.length) {
+              if (index + 1 == states.length) {
                 done();
               }
             });
@@ -434,15 +452,15 @@
         });
       });
 
-      test('kan waarde van search no more options wijzigen via attribuut', (done) => {
-        const select = fixture('vl-select-auto-dress-fixture');
-        const nieuweSearchNoMoreOptionsText = 'Dit is een nieuwe tekst';
-        awaitUntil(() => select._dressed).then(() => {
-          select.setAttribute('data-vl-search-no-results-text', nieuweSearchNoMoreOptionsText);
-          assert.equal(vl.i18n.i18n['select.no_more_options'], nieuweSearchNoMoreOptionsText);
-          done();
-        });
-      });
+      // test('kan waarde van search no more options wijzigen via attribuut', (done) => {
+      //   const select = fixture('vl-select-auto-dress-fixture');
+      //   const nieuweSearchNoMoreOptionsText = 'Dit is een nieuwe tekst';
+      //   awaitUntil(() => select._dressed).then(() => {
+      //     select.setAttribute('data-vl-search-no-results-text', nieuweSearchNoMoreOptionsText);
+      //     assert.equal(vl.i18n.i18n['select.no_more_options'], nieuweSearchNoMoreOptionsText);
+      //     done();
+      //   });
+      // });
 
       test('wanneer meerdere selects verschillende waarden hebben voor de search-placeholder, worden die ook verschillend getoond', async () => {
         const multipleSelects = fixture('multiple-selects-fixture');
@@ -453,7 +471,57 @@
         assert.equal(getPlaceholderAttribute(select1), 'placeholder 1');
         assert.equal(getPlaceholderAttribute(select2), 'placeholder 2');
       });
+
+      test('De default tekst die wordt getoond als er geen resterende resultaten zijn komt uit de i18n vertalingen', (done) => {
+        const dressedSelectWithNoChoices = fixture('vl-select-auto-dress-fixture');
+        dressedSelectWithNoChoices.addEventListener(dressedSelectWithNoChoices.readyEvent, () => {
+          dressedSelectWithNoChoices._wrapperElement.addEventListener('focus', () => {
+            dressedSelectWithNoChoices._wrapperElement.addEventListener('click', () => {
+              assert.equal(dressedSelectWithNoChoices._wrapperElement.querySelector('.has-no-choices').innerText, vl.i18n.i18n['select.no_more_options']);
+              done();
+            });
+          });
+          dressedSelectWithNoChoices.focus();
+        });
+      });
+
+      test('De default tekst wanneer geen resultaten gevonden zijn bij een dressed select is zoals verwacht', (done) => {
+        const select = fixture('vl-select-auto-dress-with-options-fixture');
+        select.addEventListener(select.readyEvent, () => {
+          select._wrapperElement.addEventListener('focus', () => {
+            select._wrapperElement.addEventListener('click', () => {
+              sendKey(select, 'P');
+              console.log(select._wrapperElement.querySelector('.has-no-results').innerText);
+              assert.equal(select._wrapperElement.querySelector('.has-no-results').innerText, vl.i18n.i18n['select.no_results']);
+              done();
+            });
+          });
+          select.focus();
+        });
+      });
+
+      function sendKey(select, key) {
+        select._wrapperElement.querySelector('input').value += key;
+        select._wrapperElement.querySelector('input').dispatchEvent(new KeyboardEvent('keyup', {'bubbles': true, 'keyCode': key.charCodeAt(0)} ));
+      }
+
+      // test('De tekst die getoond wordt wanneer er geen resultaten gevinden zijn is via attribuut in te stellen', (done) => {
+      //   const select = fixture('vl-select-auto-dress-custom-no-results-fixture');
+      //   select.addEventListener(select.readyEvent, () => {
+      //     select._wrapperElement.addEventListener('focus', () => {
+      //       select._wrapperElement.addEventListener('click', () => {
+      //         sendKey(select, 'P');
+      //         debugger;
+      //         assert.equal(select._wrapperElement.querySelector('.has-no-results').innerText, select.getAttribute('data-vl-search-no-result-text'));
+      //         debugger;
+      //         done();
+      //       });
+      //     });
+      //     select.focus();
+      //   });
+      // });
     });
   </script>
 </body>
+
 </html>

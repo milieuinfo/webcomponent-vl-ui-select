@@ -25,7 +25,7 @@ Promise.all([
 * @property {boolean} data-vl-select-search-no-result-limit - Attribuut om het aantal resultaten te limiteren.
 * @property {boolean} data-vl-select-deletable - Attribuut om te activeren of deactiveren dat het geselecteerde kan verwijderd worden.
 * @property {string} data-vl-search-placeholder - Attribuut bepaalt de placeholder van het zoek adres input element.
-* @property {string} data-vl-no-result-text - Attribuut bepaalt de tekst wanneer er geen zoekresultaten meer zijn.
+* @property {string} data-vl-search-no-result-text - Attribuut bepaalt de tekst wanneer er geen zoekresultaten meer zijn.
 *
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/releases/latest|Release notes}
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
@@ -35,11 +35,16 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   static get DEFAULT_SEARCH_PLACEHOLDER() {
     return 'Zoek item';
   }
+
+  static get DEFAULT_SEARCH_NO_RESULT() {
+    return 'Geen resultaten gevonden';
+  }
   /**
    * Geeft de ready event naam.
    *
    * @return {string}
    */
+
   static get readyEvent() {
     return 'VlSelectReady';
   }
@@ -104,7 +109,8 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   _searchNoResultsTextChangedCallback(oldValue, newValue) {
-    this.searchNoResultsText = newValue;
+    this.searchNoResultTransation = newValue;
+    // this.searchNoResultsText = newValue;
   }
 
   set searchPlaceholderTranslation(value) {
@@ -115,9 +121,14 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     this.setAttribute('data-vl-search-placeholder', value);
   }
 
-  set searchNoResultsText(value) {
-    this._changeTranslation('select.no_more_options', value);
+  set searchNoResultTransation(value) {
+    this._changeTranslation('select.no_results', value);
   }
+
+  // set searchNoResultsText(value) {
+  //   // this._changeTranslation('select.no_results', value);
+  //   this._changeTranslation('select.no_more_options', value);
+  // }
 
   __stateChangedCallback(newValue, type) {
     if (newValue != null) {
@@ -244,12 +255,22 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     return this.getAttribute('data-vl-search-placeholder');
   }
 
+  get _searchNoResult() {
+    return this.getAttribute('data-vl-search-no-result-text');
+  }
+
   _setTranslations() {
     if (this._searchPlaceholder) {
       this.searchPlaceholderTranslation = this._searchPlaceholder;
     } else {
       this.searchPlaceholderTranslation = VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
     }
+
+    // if (this._searchNoResult) {
+    //   this.searchNoResultTransation = this._searchNoResult;
+    // } else {
+    //   this.searchNoResultTransation = VlSelect.DEFAULT_SEARCH_NO_RESULT;
+    // }
   }
 
   /**
@@ -264,6 +285,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     setTimeout(() => {
       this._setTranslations();
 
+      debugger;
       if (!this._dressed) {
         vl.select.dress(this, params);
 
