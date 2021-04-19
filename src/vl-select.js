@@ -285,7 +285,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     setTimeout(() => {
       this._setTranslations();
 
-      debugger;
       if (!this._dressed) {
         vl.select.dress(this, params);
 
