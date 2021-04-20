@@ -55,7 +55,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   static get _observedAttributes() {
-    return vlFormValidation._observedAttributes().concat(['error', 'success', 'search-placeholder', 'search-no-results-text', 'no-more-options']);
+    return vlFormValidation._observedAttributes().concat(['error', 'success']);
   }
 
   static get _observedChildClassAttributes() {
@@ -109,35 +109,17 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     this.__stateChangedCallback(newValue, 'error');
   }
 
-  _searchPlaceholderChangedCallback(oldValue, newValue) {
-    this.searchPlaceholderTranslation = newValue;
-  }
-
-  _searchNoResultsTextChangedCallback(oldValue, newValue) {
-    this.searchNoResultTransation = newValue;
-    // this.searchNoResultsText = newValue;
-  }
-
-  set searchPlaceholderTranslation(value) {
+  set __searchPlaceholderTranslation(value) {
     this._changeTranslation('select.search_placeholder_value', value);
   }
 
-  set searchPlaceholder(value) {
-    this.setAttribute('data-vl-search-placeholder', value);
-  }
-
-  set searchNoResultTransation(value) {
+  set __searchNoResultTransation(value) {
     this._changeTranslation('select.no_results', value);
   }
 
-  set _noMoreOptionsTranslation(value) {
+  set __noMoreOptionsTranslation(value) {
     this._changeTranslation('select.no_more_options', value);
   }
-
-  // set searchNoResultsText(value) {
-  //   // this._changeTranslation('select.no_results', value);
-  //   this._changeTranslation('select.no_more_options', value);
-  // }
 
   __stateChangedCallback(newValue, type) {
     if (newValue != null) {
@@ -260,35 +242,35 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     return this._element.closest('.js-vl-select');
   }
 
-  get _searchPlaceholder() {
+  get __searchPlaceholder() {
     return this.getAttribute('data-vl-search-placeholder');
   }
 
-  get _searchNoResults() {
+  get __searchNoResults() {
     return this.getAttribute('data-vl-search-no-results-text');
   }
 
-  get _noMoreOptions() {
+  get __noMoreOptions() {
     return this.getAttribute('data-vl-no-more-options');
   }
 
   _setTranslations() {
-    if (this._searchPlaceholder) {
-      this.searchPlaceholderTranslation = this._searchPlaceholder;
+    if (this.__searchPlaceholder) {
+      this.__searchPlaceholderTranslation = this.__searchPlaceholder;
     } else {
-      this.searchPlaceholderTranslation = VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
+      this.__searchPlaceholderTranslation = VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
     }
 
-    if (this._searchNoResults) {
-      this.searchNoResultTransation = this._searchNoResults;
+    if (this.__searchNoResults) {
+      this.__searchNoResultTransation = this.__searchNoResults;
     } else {
-      this.searchNoResultTransation = VlSelect.DEFAULT_SEARCH_NO_RESULT;
+      this.__searchNoResultTransation = VlSelect.DEFAULT_SEARCH_NO_RESULT;
     }
 
-    if (this._noMoreOptions) {
-      this._noMoreOptionsTranslation = this._noMoreOptions;
+    if (this.__noMoreOptions) {
+      this.__noMoreOptionsTranslation = this.__noMoreOptions;
     } else {
-      this._noMoreOptionsTranslation = VlSelect.DEFAULT_NO_MORE_OPTIONS;
+      this.__noMoreOptionsTranslation = VlSelect.DEFAULT_NO_MORE_OPTIONS;
     }
   }
 
