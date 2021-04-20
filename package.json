@@ -54,6 +54,6 @@
     "vl-ui-form-grid": "^3.0.8",
     "vl-ui-modal": "^4.0.3",
     "vl-ui-upload": "^3.4.0",
-    "vl-ui-util": "^5.3.10"
+    "vl-ui-util": "^5.3.11"
   }
 }

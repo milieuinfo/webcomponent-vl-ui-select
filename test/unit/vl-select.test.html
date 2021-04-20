@@ -83,10 +83,10 @@
   <test-fixture id="multiple-auto-dress-with-custom-no-results-fixture">
     <template>
       <div>
-        <select id="select1" is="vl-select" data-vl-select data-vl-search-no-results-text="Custom No Results Found 1">
+        <select id="select1" is="vl-select" data-vl-select data-vl-search-no-result-text="Custom No Results Found 1">
           <option value="België">België</option>
         </select>
-        <select id="select2" is="vl-select" data-vl-select data-vl-search-no-results-text="Custom No Results Found 2">
+        <select id="select2" is="vl-select" data-vl-select data-vl-search-no-result-text="Custom No Results Found 2">
           <option value="België">België</option>
         </select>
       </div>
@@ -456,16 +456,6 @@
         });
       });
 
-      // test('kan waarde van search no more options wijzigen via attribuut', (done) => {
-      //   const select = fixture('vl-select-auto-dress-fixture');
-      //   const nieuweSearchNoMoreOptionsText = 'Dit is een nieuwe tekst';
-      //   awaitUntil(() => select._dressed).then(() => {
-      //     select.setAttribute('data-vl-search-no-results-text', nieuweSearchNoMoreOptionsText);
-      //     assert.equal(vl.i18n.i18n['select.no_more_options'], nieuweSearchNoMoreOptionsText);
-      //     done();
-      //   });
-      // });
-
       test('wanneer meerdere selects verschillende waarden hebben voor de search-placeholder, worden die ook verschillend getoond', async () => {
         const multipleSelects = fixture('multiple-selects-fixture');
         const select1 = multipleSelects.querySelector('#select1');
@@ -489,39 +479,47 @@
         });
       });
 
-      test('De default tekst wanneer geen resultaten gevonden zijn bij een dressed select is zoals verwacht', (done) => {
+      test('De default tekst wanneer geen resultaten gevonden zijn bij een dressed select is zoals verwacht', async () => {
         const select = fixture('vl-select-auto-dress-with-options-fixture');
-        select.addEventListener(select.readyEvent, () => {
-          select._wrapperElement.addEventListener('focus', () => {
-            select._wrapperElement.addEventListener('click', () => {
-              sendKey(select, 'P');
-              console.log(select._wrapperElement.querySelector('.has-no-results').innerText);
-              assert.equal(select._wrapperElement.querySelector('.has-no-results').innerText, vl.i18n.i18n['select.no_results']);
-              done();
-            });
-          });
-          select.focus();
-        });
+        await assertThatSelectExpectedNoResultTextToont(select, vl.i18n.i18n['select.no_results']);
+      });
+    
+
+      test('De tekst die getoond wordt wanneer er geen resultaten gevinden zijn is via attribuut in te stellen', async () => {
+        const select = fixture('vl-select-auto-dress-custom-no-results-fixture');
+        await assertThatSelectExpectedNoResultTextToont(select, select.getAttribute('data-vl-search-no-result-text'));
       });
 
+      test('Wanneer meerdere dressed selects op een pagina staan, tonen ze elk hun eigen waarde van hun data-vl-search-no-result-text attribuut', async () => {
+        const multipleSelects = fixture('multiple-auto-dress-with-custom-no-results-fixture');
+        const select1 = multipleSelects.querySelector('#select1');
+        const select2 = multipleSelects.querySelector('#select2');
+    
+        await Promise.all([
+          assertThatSelectExpectedNoResultTextToont(select1, select1.getAttribute('data-vl-search-no-result-text')),
+          assertThatSelectExpectedNoResultTextToont(select2, select2.getAttribute('data-vl-search-no-result-text')),
+        ]);
+      });
+
+      function assertThatSelectExpectedNoResultTextToont(select, expectedNoResultText) {
+        return new Promise(function(resolve, reject) {
+          select.addEventListener(select.readyEvent, () => {
+            select._wrapperElement.addEventListener('focus', () => {
+              select._wrapperElement.addEventListener('click', () => {
+                sendKey(select, 'P');
+                assert.equal(select._wrapperElement.querySelector('.has-no-results').innerText, expectedNoResultText);
+                resolve();
+              });
+            });
+            select.focus();
+          });
+        });
+      }
+    
       function sendKey(select, key) {
         select._wrapperElement.querySelector('input').value += key;
         select._wrapperElement.querySelector('input').dispatchEvent(new KeyboardEvent('keyup', {'bubbles': true, 'keyCode': key.charCodeAt(0)} ));
       }
-
-      test('De tekst die getoond wordt wanneer er geen resultaten gevinden zijn is via attribuut in te stellen', (done) => {
-        const select = fixture('vl-select-auto-dress-custom-no-results-fixture');
-        select.addEventListener(select.readyEvent, () => {
-          select._wrapperElement.addEventListener('focus', () => {
-            select._wrapperElement.addEventListener('click', () => {
-              sendKey(select, 'P');
-              assert.equal(select._wrapperElement.querySelector('.has-no-results').innerText, select.getAttribute('data-vl-search-no-result-text'));
-              done();
-            });
-          });
-          select.focus();
-        });
-      });
     });
   </script>
 </body>
