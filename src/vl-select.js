@@ -26,6 +26,7 @@ Promise.all([
 * @property {boolean} data-vl-select-deletable - Attribuut om te activeren of deactiveren dat het geselecteerde kan verwijderd worden.
 * @property {string} data-vl-search-placeholder - Attribuut bepaalt de placeholder van het zoek adres input element.
 * @property {string} data-vl-search-no-results-text - Attribuut bepaalt de tekst wanneer er geen zoekresultaten meer zijn.
+* @property {string} data-vl-no-more-options - Attribuut bepaalt de tekst wanneer er geen keuzes meer mogelijk zijn.
 *
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/releases/latest|Release notes}
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
@@ -50,7 +51,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   static get _observedAttributes() {
-    return vlFormValidation._observedAttributes().concat(['error', 'success', 'search-placeholder', 'search-no-results-text']);
+    return vlFormValidation._observedAttributes().concat(['error', 'success', 'search-placeholder', 'search-no-results-text', 'no-more-options']);
   }
 
   static get _observedChildClassAttributes() {
@@ -123,6 +124,10 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   set searchNoResultTransation(value) {
     this._changeTranslation('select.no_results', value);
+  }
+
+  set _noMoreOptionsTranslation(value) {
+    this._changeTranslation('select.no_more_options', value);
   }
 
   // set searchNoResultsText(value) {
@@ -259,6 +264,10 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     return this.getAttribute('data-vl-search-no-results-text');
   }
 
+  get _noMoreOptions() {
+    return this.getAttribute('data-vl-no-more-options');
+  }
+
   _setTranslations() {
     if (this._searchPlaceholder) {
       this.searchPlaceholderTranslation = this._searchPlaceholder;
@@ -270,6 +279,10 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
       this.searchNoResultTransation = this._searchNoResults;
     } else {
       this.searchNoResultTransation = VlSelect.DEFAULT_SEARCH_NO_RESULT;
+    }
+
+    if (this._noMoreOptions) {
+      this._noMoreOptionsTranslation = this._noMoreOptions;
     }
   }
 
