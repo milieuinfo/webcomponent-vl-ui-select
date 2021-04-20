@@ -99,6 +99,28 @@
     </template>
   </test-fixture>
 
+  <test-fixture id="multiple-selects-waarvan-één-met-default-value-fixture">
+    <template>
+      <div>
+        <select id="select1" is="vl-select" data-vl-select data-vl-search-placeholder="placeholder 1" data-vl-no-more-options="No More Options 1"></select>
+        <select id="select2" is="vl-select" data-vl-select ></select>
+      </div>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="multiple-auto-dress-with-custom-no-results-and-defaul-no-results-fixture">
+    <template>
+      <div>
+        <select id="select1" is="vl-select" data-vl-select data-vl-search-no-results-text="Custom No Results Found 1">
+          <option value="België">België</option>
+        </select>
+        <select id="select2" is="vl-select" data-vl-select>
+          <option value="België">België</option>
+        </select>
+      </div>
+    </template>
+  </test-fixture>
+
   <script type="module">
     import {awaitUntil} from 'vl-ui-core/dist/vl-core';
     import {VlSelect} from '../../src/vl-select';
@@ -462,15 +484,23 @@
         });
       });
 
-      test('wanneer meerdere selects verschillende waarden hebben voor de search-placeholder, worden die ook verschillend getoond', async () => {
+      test('Wanneer meerdere selects verschillende waarden hebben voor de search-placeholder, worden die ook verschillend getoond', async () => {
         const multipleSelects = fixture('multiple-selects-fixture');
         const select1 = multipleSelects.querySelector('#select1');
         const select2 = multipleSelects.querySelector('#select2');
-        await awaitUntil(() => select1._dressed);
-        await awaitUntil(() => select2._dressed);
-        assert.equal(getPlaceholderAttribute(select1), 'placeholder 1');
-        assert.equal(getPlaceholderAttribute(select2), 'placeholder 2');
+        await assertThatSelectExpectedSearchPlaceholderTextToont(select1, select1.getAttribute('data-vl-search-placeholder'));
+        await assertThatSelectExpectedSearchPlaceholderTextToont(select2, select2.getAttribute('data-vl-search-placeholder'));
       });
+
+      test('Wanneer een tweede select geen custom tekst heeft voor de search-placeholder, wordt hier de default waarde getoond', async () => {
+        const multipleSelects = fixture('multiple-selects-waarvan-één-met-default-value-fixture');
+        const select1 = multipleSelects.querySelector('#select1');
+        const select2 = multipleSelects.querySelector('#select2');
+
+        await assertThatSelectExpectedSearchPlaceholderTextToont(select1, select1.getAttribute('data-vl-search-placeholder'));
+        await assertThatSelectExpectedSearchPlaceholderTextToont(select2, VlSelect.DEFAULT_SEARCH_PLACEHOLDER);
+      });
+
 
       test('De default tekst wanneer geen resultaten gevonden zijn bij een dressed select is zoals verwacht', async () => {
         const select = fixture('vl-select-auto-dress-with-options-fixture');
@@ -492,6 +522,15 @@
         await assertThatSelectExpectedNoResultTextToont(select2, select2.getAttribute('data-vl-search-no-results-text'));
       });
 
+      test('Wanneer een tweede select geen custom tekst heeft voor de search-no-results-text, wordt hier de default waarde getoond', async () => {
+        const multipleSelects = fixture('multiple-auto-dress-with-custom-no-results-and-defaul-no-results-fixture');
+        const select1 = multipleSelects.querySelector('#select1');
+        const select2 = multipleSelects.querySelector('#select2');
+    
+        await assertThatSelectExpectedNoResultTextToont(select1, select1.getAttribute('data-vl-search-no-results-text'));
+        await assertThatSelectExpectedNoResultTextToont(select2, VlSelect.DEFAULT_SEARCH_NO_RESULT);
+      });
+
       test('De default tekst die wordt getoond als er geen resterende resultaten zijn komt uit de i18n vertalingen', async () => {
         const dressedSelectWithNoChoices = fixture('vl-select-auto-dress-fixture');
         await assertThatSelectExpectedNoMoreOptionsTextToont(dressedSelectWithNoChoices, vl.i18n.i18n['select.no_more_options']);
@@ -511,7 +550,24 @@
         await assertThatSelectExpectedNoMoreOptionsTextToont(select2, select2.getAttribute('data-vl-no-more-options'));
       });
 
+      test('Wanneer een tweede select geen custom tekst heeft voor de no-more-options, wordt hier de default waarde getoond', async () => {
+        const multipleSelects = fixture('multiple-selects-waarvan-één-met-default-value-fixture');
+        const select1 = multipleSelects.querySelector('#select1');
+        const select2 = multipleSelects.querySelector('#select2');
+    
+        await assertThatSelectExpectedNoMoreOptionsTextToont(select1, select1.getAttribute('data-vl-no-more-options'));
+        await assertThatSelectExpectedNoMoreOptionsTextToont(select2, VlSelect.DEFAULT_NO_MORE_OPTIONS);
+      });
 
+
+      function assertThatSelectExpectedSearchPlaceholderTextToont(select, expectedSearchPlaceholderText) {
+        return new Promise(async function(resolve, reject) {
+          await select.ready();
+          assert.equal(getPlaceholderAttribute(select), expectedSearchPlaceholderText);
+          resolve();
+        });
+      }
+    
       function assertThatSelectExpectedNoResultTextToont(select, expectedNoResultText) {
         return new Promise(async function(resolve, reject) {
           await select.ready();

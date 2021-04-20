@@ -40,6 +40,10 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   static get DEFAULT_SEARCH_NO_RESULT() {
     return 'Geen resultaten gevonden';
   }
+
+  static get DEFAULT_NO_MORE_OPTIONS() {
+    return 'Geen resterende opties gevonden';
+  }
   /**
    * Geeft de ready event naam.
    *
@@ -283,6 +287,8 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
     if (this._noMoreOptions) {
       this._noMoreOptionsTranslation = this._noMoreOptions;
+    } else {
+      this._noMoreOptionsTranslation = VlSelect.DEFAULT_NO_MORE_OPTIONS;
     }
   }
 
