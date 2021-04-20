@@ -474,16 +474,6 @@
         });
       });
 
-      test('kan waarde van search placeholder wijzigen via attribuut', (done) => {
-        const select = fixture('vl-select-auto-dress-fixture');
-        const nieuweSearchPlaceholderText = 'Dit is een nieuwe tekst';
-        awaitUntil(() => select._dressed).then(() => {
-          select.setAttribute('data-vl-search-placeholder', nieuweSearchPlaceholderText);
-          assert.equal(vl.i18n.i18n['select.search_placeholder_value'], nieuweSearchPlaceholderText);
-          done();
-        });
-      });
-
       test('Wanneer meerdere selects verschillende waarden hebben voor de search-placeholder, worden die ook verschillend getoond', async () => {
         const multipleSelects = fixture('multiple-selects-fixture');
         const select1 = multipleSelects.querySelector('#select1');
