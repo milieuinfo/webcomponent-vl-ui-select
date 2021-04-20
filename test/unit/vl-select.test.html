@@ -488,10 +488,8 @@
         const select1 = multipleSelects.querySelector('#select1');
         const select2 = multipleSelects.querySelector('#select2');
     
-        await Promise.all([
-          assertThatSelectExpectedNoResultTextToont(select1, select1.getAttribute('data-vl-search-no-results-text')),
-          assertThatSelectExpectedNoResultTextToont(select2, select2.getAttribute('data-vl-search-no-results-text')),
-        ]);
+        await assertThatSelectExpectedNoResultTextToont(select1, select1.getAttribute('data-vl-search-no-results-text'));
+        await assertThatSelectExpectedNoResultTextToont(select2, select2.getAttribute('data-vl-search-no-results-text'));
       });
 
       test('De default tekst die wordt getoond als er geen resterende resultaten zijn komt uit de i18n vertalingen', async () => {
