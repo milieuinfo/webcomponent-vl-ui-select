@@ -44,7 +44,7 @@
 
   <test-fixture id="vl-select-auto-dress-custom-no-results-fixture">
     <template>
-      <select id="select" is="vl-select" data-vl-select data-vl-search-no-result-text='Custom No Results Found!'>
+      <select id="select" is="vl-select" data-vl-select data-vl-search-no-results-text='Custom No Results Found!'>
         <option placeholder value="">Kies een land</option>
         <option value="België">België</option>
         <option value="Duitsland">Duitsland</option>
@@ -83,10 +83,10 @@
   <test-fixture id="multiple-auto-dress-with-custom-no-results-fixture">
     <template>
       <div>
-        <select id="select1" is="vl-select" data-vl-select data-vl-search-no-result-text="Custom No Results Found 1">
+        <select id="select1" is="vl-select" data-vl-select data-vl-search-no-results-text="Custom No Results Found 1">
           <option value="België">België</option>
         </select>
-        <select id="select2" is="vl-select" data-vl-select data-vl-search-no-result-text="Custom No Results Found 2">
+        <select id="select2" is="vl-select" data-vl-select data-vl-search-no-results-text="Custom No Results Found 2">
           <option value="België">België</option>
         </select>
       </div>
@@ -466,6 +466,28 @@
         assert.equal(getPlaceholderAttribute(select2), 'placeholder 2');
       });
 
+      test('De default tekst wanneer geen resultaten gevonden zijn bij een dressed select is zoals verwacht', async () => {
+        const select = fixture('vl-select-auto-dress-with-options-fixture');
+        await assertThatSelectExpectedNoResultTextToont(select, vl.i18n.i18n['select.no_results']);
+      });
+    
+
+      test('De tekst die getoond wordt wanneer er geen resultaten gevinden zijn is via attribuut in te stellen', async () => {
+        const select = fixture('vl-select-auto-dress-custom-no-results-fixture');
+        await assertThatSelectExpectedNoResultTextToont(select, select.getAttribute('data-vl-search-no-results-text'));
+      });
+
+      test('Wanneer meerdere dressed selects op een pagina staan, tonen ze elk hun eigen waarde van hun data-vl-search-no-results-text attribuut', async () => {
+        const multipleSelects = fixture('multiple-auto-dress-with-custom-no-results-fixture');
+        const select1 = multipleSelects.querySelector('#select1');
+        const select2 = multipleSelects.querySelector('#select2');
+    
+        await Promise.all([
+          assertThatSelectExpectedNoResultTextToont(select1, select1.getAttribute('data-vl-search-no-results-text')),
+          assertThatSelectExpectedNoResultTextToont(select2, select2.getAttribute('data-vl-search-no-results-text')),
+        ]);
+      });
+
       test('De default tekst die wordt getoond als er geen resterende resultaten zijn komt uit de i18n vertalingen', (done) => {
         const dressedSelectWithNoChoices = fixture('vl-select-auto-dress-fixture');
         dressedSelectWithNoChoices.addEventListener(dressedSelectWithNoChoices.readyEvent, () => {
@@ -479,27 +501,6 @@
         });
       });
 
-      test('De default tekst wanneer geen resultaten gevonden zijn bij een dressed select is zoals verwacht', async () => {
-        const select = fixture('vl-select-auto-dress-with-options-fixture');
-        await assertThatSelectExpectedNoResultTextToont(select, vl.i18n.i18n['select.no_results']);
-      });
-    
-
-      test('De tekst die getoond wordt wanneer er geen resultaten gevinden zijn is via attribuut in te stellen', async () => {
-        const select = fixture('vl-select-auto-dress-custom-no-results-fixture');
-        await assertThatSelectExpectedNoResultTextToont(select, select.getAttribute('data-vl-search-no-result-text'));
-      });
-
-      test('Wanneer meerdere dressed selects op een pagina staan, tonen ze elk hun eigen waarde van hun data-vl-search-no-result-text attribuut', async () => {
-        const multipleSelects = fixture('multiple-auto-dress-with-custom-no-results-fixture');
-        const select1 = multipleSelects.querySelector('#select1');
-        const select2 = multipleSelects.querySelector('#select2');
-    
-        await Promise.all([
-          assertThatSelectExpectedNoResultTextToont(select1, select1.getAttribute('data-vl-search-no-result-text')),
-          assertThatSelectExpectedNoResultTextToont(select2, select2.getAttribute('data-vl-search-no-result-text')),
-        ]);
-      });
 
       function assertThatSelectExpectedNoResultTextToont(select, expectedNoResultText) {
         return new Promise(function(resolve, reject) {

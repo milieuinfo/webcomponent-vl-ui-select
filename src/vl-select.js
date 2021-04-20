@@ -25,7 +25,7 @@ Promise.all([
 * @property {boolean} data-vl-select-search-no-result-limit - Attribuut om het aantal resultaten te limiteren.
 * @property {boolean} data-vl-select-deletable - Attribuut om te activeren of deactiveren dat het geselecteerde kan verwijderd worden.
 * @property {string} data-vl-search-placeholder - Attribuut bepaalt de placeholder van het zoek adres input element.
-* @property {string} data-vl-search-no-result-text - Attribuut bepaalt de tekst wanneer er geen zoekresultaten meer zijn.
+* @property {string} data-vl-search-no-results-text - Attribuut bepaalt de tekst wanneer er geen zoekresultaten meer zijn.
 *
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/releases/latest|Release notes}
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
@@ -255,8 +255,8 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     return this.getAttribute('data-vl-search-placeholder');
   }
 
-  get _searchNoResult() {
-    return this.getAttribute('data-vl-search-no-result-text');
+  get _searchNoResults() {
+    return this.getAttribute('data-vl-search-no-results-text');
   }
 
   _setTranslations() {
@@ -266,8 +266,8 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
       this.searchPlaceholderTranslation = VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
     }
 
-    if (this._searchNoResult) {
-      this.searchNoResultTransation = this._searchNoResult;
+    if (this._searchNoResults) {
+      this.searchNoResultTransation = this._searchNoResults;
     } else {
       this.searchNoResultTransation = VlSelect.DEFAULT_SEARCH_NO_RESULT;
     }
