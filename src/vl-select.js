@@ -255,23 +255,9 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   _setTranslations() {
-    if (this.__searchPlaceholder) {
-      this.__searchPlaceholderTranslation = this.__searchPlaceholder;
-    } else {
-      this.__searchPlaceholderTranslation = VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
-    }
-
-    if (this.__searchNoResults) {
-      this.__searchNoResultTransation = this.__searchNoResults;
-    } else {
-      this.__searchNoResultTransation = VlSelect.DEFAULT_SEARCH_NO_RESULT;
-    }
-
-    if (this.__noMoreOptions) {
-      this.__noMoreOptionsTranslation = this.__noMoreOptions;
-    } else {
-      this.__noMoreOptionsTranslation = VlSelect.DEFAULT_NO_MORE_OPTIONS;
-    }
+    this.__searchPlaceholderTranslation = this.__searchPlaceholder || VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
+    this.__searchNoResultTransation = this.__searchNoResults || VlSelect.DEFAULT_SEARCH_NO_RESULT;
+    this.__noMoreOptionsTranslation = this.__noMoreOptions || VlSelect.DEFAULT_NO_MORE_OPTIONS;
   }
 
   /**
