@@ -413,9 +413,10 @@
       });
 
       test('de select standaard teksten zijn identiek aan de standaard die centraal gedeclareerd wordt', () => {
-        assert.equal(vl.i18n.i18n['select.no_more_options'], VlSelect.DEFAULT_NO_MORE_OPTIONS);
-        assert.equal(vl.i18n.i18n['select.no_results'], VlSelect.DEFAULT_SEARCH_NO_RESULT);
-        assert.equal(vl.i18n.i18n['select.search_placeholder_value'], VlSelect.DEFAULT_SEARCH_PLACEHOLDER);
+        const select = fixture('vl-select-auto-dress-fixture');
+        assert.equal(vl.i18n.i18n['select.no_more_options'], select.DEFAULT_NO_MORE_OPTIONS);
+        assert.equal(vl.i18n.i18n['select.no_results'], select.DEFAULT_SEARCH_NO_RESULT);
+        assert.equal(vl.i18n.i18n['select.search_placeholder_value'], select.DEFAULT_SEARCH_PLACEHOLDER);
       });
 
       test('de placeholder tekst kan per select geconfigureerd worden', async () => {
@@ -442,15 +443,15 @@
       test('de teksten configuratie van een select heeft geen invloed op een select zonder tekst configuratie die de standaard teksten zal tonen', async () => {
         const selects = fixture('multiple-selects-default-texts-fixture');
         assert.equal(await getPlaceholderText(selects[0]), selects[0].getAttribute('data-vl-search-placeholder'));
-        assert.equal(await getPlaceholderText(selects[1]), VlSelect.DEFAULT_SEARCH_PLACEHOLDER);
+        assert.equal(await getPlaceholderText(selects[1]), selects[1].DEFAULT_SEARCH_PLACEHOLDER);
         assert.notEqual(await getPlaceholderText(selects[0]), await getPlaceholderText(selects[1]));
 
         assert.equal(await getNoResultsText(selects[0]), selects[0].getAttribute('data-vl-search-no-results-text'));
-        assert.equal(await getNoResultsText(selects[1]), VlSelect.DEFAULT_SEARCH_NO_RESULT);
+        assert.equal(await getNoResultsText(selects[1]), selects[1].DEFAULT_SEARCH_NO_RESULT);
         assert.notEqual(await getNoResultsText(selects[0]), await getNoResultsText(selects[1]));
 
         assert.equal(await getNoMoreOptionsText(selects[0]), selects[0].getAttribute('data-vl-no-more-options'));
-        assert.equal(await getNoMoreOptionsText(selects[1]), VlSelect.DEFAULT_NO_MORE_OPTIONS);
+        assert.equal(await getNoMoreOptionsText(selects[1]), selects[1].DEFAULT_NO_MORE_OPTIONS);
         assert.notEqual(await getNoMoreOptionsText(selects[0]), await getNoMoreOptionsText(selects[1]));
       });
 
