@@ -33,17 +33,6 @@ Promise.all([
 * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-select.html|Demo}
 */
 export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelectElement)) {
-  static get DEFAULT_SEARCH_PLACEHOLDER() {
-    return 'Zoek item';
-  }
-
-  static get DEFAULT_SEARCH_NO_RESULT() {
-    return 'Geen resultaten gevonden';
-  }
-
-  static get DEFAULT_NO_MORE_OPTIONS() {
-    return 'Geen resterende opties gevonden';
-  }
   /**
    * Geeft de ready event naam.
    *
@@ -79,6 +68,18 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
    */
   get readyEvent() {
     return VlSelect.readyEvent;
+  }
+
+  get DEFAULT_SEARCH_PLACEHOLDER() {
+    return 'Zoek item';
+  }
+
+  get DEFAULT_SEARCH_NO_RESULT() {
+    return 'Geen resultaten gevonden';
+  }
+
+  get DEFAULT_NO_MORE_OPTIONS() {
+    return 'Geen resterende opties gevonden';
   }
 
   get _classPrefix() {
@@ -255,9 +256,9 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   _setTranslations() {
-    this.__searchPlaceholderTranslation = this.__searchPlaceholder || VlSelect.DEFAULT_SEARCH_PLACEHOLDER;
-    this.__searchNoResultTransation = this.__searchNoResults || VlSelect.DEFAULT_SEARCH_NO_RESULT;
-    this.__noMoreOptionsTranslation = this.__noMoreOptions || VlSelect.DEFAULT_NO_MORE_OPTIONS;
+    this.__searchPlaceholderTranslation = this.__searchPlaceholder || this.DEFAULT_SEARCH_PLACEHOLDER;
+    this.__searchNoResultTransation = this.__searchNoResults || this.DEFAULT_SEARCH_NO_RESULT;
+    this.__noMoreOptionsTranslation = this.__noMoreOptions || this.DEFAULT_NO_MORE_OPTIONS;
   }
 
   /**
