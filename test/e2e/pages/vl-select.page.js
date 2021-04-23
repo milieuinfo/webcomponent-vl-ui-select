@@ -67,6 +67,10 @@ class VlSelectPage extends Page {
     return this._getSelect('#select-set-get-methode');
   }
 
+  async getSearchValue() {
+    return (await this.driver.findElement(By.css('#search-value'))).getText();
+  }
+
   async activeerDynamischeData() {
     return (await this.driver.findElement(By.css('#activate-data-button'))).click();
   }

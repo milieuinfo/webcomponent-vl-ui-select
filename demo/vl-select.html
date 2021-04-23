@@ -105,6 +105,18 @@
                     <option value="Gent">Gent</option>
                 </optgroup>
             </select>
+
+            <div>
+                Je hebt gezocht naar: <span id="search-value">/</span>
+            </div>
+
+            <script type="text/javascript">
+                const element = document.getElementById('select-searchable');
+                element.addEventListener('changeQuery', ({detail: {value}}) => {
+                    const searchValueElement = document.getElementById('search-value');
+                    searchValueElement.textContent = value;
+                });
+            </script>
         </vl-demo>
 
         <vl-demo data-vl-title="Select zonder search">
@@ -228,7 +240,6 @@
             <div is="vl-action-group" slot="actions">
                 <button id="dress-button" is="vl-button" onclick="document.getElementById('select-dress-undress-methode').dress()" type="button">Dress</button>
                 <button id="undress-button" is="vl-button" onclick="document.getElementById('select-dress-undress-methode').undress()" type="button">Undress</button>
-                </div>
             </div>
         </vl-demo>
 

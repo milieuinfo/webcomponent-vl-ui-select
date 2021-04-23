@@ -166,4 +166,10 @@ describe('vl-select', async () => {
     await vlSelectPage.remove();
     await assert.eventually.isEmpty(select.getSelectedValue());
   });
+
+  it('als gebruiker kan ik een terugkoppeling te zien krijgen als ik zoek', async () => {
+    const select = await vlSelectPage.getSearchableSelect();
+    await select.search('foobar');
+    await assert.eventually.equal(vlSelectPage.getSearchValue(), 'foobar');
+  });
 });
