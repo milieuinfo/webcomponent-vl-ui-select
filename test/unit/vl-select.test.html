@@ -13,13 +13,13 @@
 <body>
   <test-fixture id="vl-select-fixture">
     <template>
-      <select id="select" is="vl-select"/>
+      <select id="select" is="vl-select" />
     </template>
   </test-fixture>
 
   <test-fixture id="vl-select-auto-dress-fixture">
     <template>
-      <select id="select" is="vl-select" data-vl-select/>
+      <select id="select" is="vl-select" data-vl-select />
     </template>
   </test-fixture>
 
@@ -45,9 +45,7 @@
   <test-fixture id="vl-select-form-fixture">
     <template>
       <form>
-        <select id="select" is="vl-select" 
-          data-required="true" 
-          data-vl-error-message="Verplicht!" 
+        <select id="select" is="vl-select" data-required="true" data-vl-error-message="Verplicht!"
           data-vl-error-placeholder="select-error" data-vl-validation-type="select">
         </select>
         <p error data-vl-error-id="select-error"></p>
@@ -58,8 +56,22 @@
   <test-fixture id="vl-select-auto-dress-form-fixture">
     <template>
       <form>
-        <select id="select" is="vl-select" data-vl-select/>
+        <select id="select" is="vl-select" data-vl-select />
       </form>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="multiple-selects-fixture">
+    <template>
+      <select id="select1" is="vl-select" data-vl-select data-vl-search-placeholder="placeholder 1" data-vl-search-no-results-text="custom no results found 1" data-vl-no-more-options="no more options 1"></select>
+      <select id="select2" is="vl-select" data-vl-select data-vl-search-placeholder="placeholder 2" data-vl-search-no-results-text="custom no results found 2" data-vl-no-more-options="no more options 2"></select>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="multiple-selects-default-texts-fixture">
+    <template>
+      <select id="select1" is="vl-select" data-vl-select data-vl-search-placeholder="placeholder 1" data-vl-search-no-results-text="custom no results found 1" data-vl-no-more-options="no more options 1"></select>
+      <select id="select2" is="vl-select" data-vl-select></select>
     </template>
   </test-fixture>
 
@@ -333,7 +345,7 @@
               assert.isTrue(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
               select.removeAttribute(`data-vl-${state}`);
               assert.isFalse(select._wrapperElement.parentNode.classList.contains(`vl-input-field--${state}`));
-              if (index+1 == states.length) {
+              if (index + 1 == states.length) {
                 done();
               }
             });
@@ -399,6 +411,88 @@
           done();
         });
       });
+
+      test('de select standaard teksten zijn identiek aan de standaard die centraal gedeclareerd wordt', () => {
+        const select = fixture('vl-select-auto-dress-fixture');
+        assert.equal(vl.i18n.i18n['select.no_more_options'], select.DEFAULT_NO_MORE_OPTIONS);
+        assert.equal(vl.i18n.i18n['select.no_results'], select.DEFAULT_SEARCH_NO_RESULT);
+        assert.equal(vl.i18n.i18n['select.search_placeholder_value'], select.DEFAULT_SEARCH_PLACEHOLDER);
+      });
+
+      test('de placeholder tekst kan per select geconfigureerd worden', async () => {
+        const selects = fixture('multiple-selects-fixture');
+        assert.equal(await getPlaceholderText(selects[0]), selects[0].getAttribute('data-vl-search-placeholder'));
+        assert.equal(await getPlaceholderText(selects[1]), selects[1].getAttribute('data-vl-search-placeholder'));
+        assert.notEqual(await getPlaceholderText(selects[0]), await getPlaceholderText(selects[1]));
+      });
+
+      test('de geen resultaten tekst kan per select geconfigureerd worden', async () => {
+        const selects = fixture('multiple-selects-fixture');
+        const geenResultatenText1 = await getNoResultsText(selects[0]);
+        const geenResultatenText2 = await getNoResultsText(selects[1]);
+        assert.equal(geenResultatenText1, selects[0].getAttribute('data-vl-search-no-results-text'));
+        assert.equal(geenResultatenText2, selects[1].getAttribute('data-vl-search-no-results-text'));
+        assert.notEqual(geenResultatenText1, geenResultatenText2);
+      });
+
+      test('de geen keuzes meer tekst kan per select geconfigureerd worden', async () => {
+        const selects = fixture('multiple-selects-fixture');
+        assert.equal(await getNoMoreOptionsText(selects[0]), selects[0].getAttribute('data-vl-no-more-options'));
+        assert.equal(await getNoMoreOptionsText(selects[1]), selects[1].getAttribute('data-vl-no-more-options'));
+        assert.notEqual(await getNoMoreOptionsText(selects[0]), await getNoMoreOptionsText(selects[1]));
+      });
+
+      test('de teksten configuratie van een select heeft geen invloed op een select zonder tekst configuratie die de standaard teksten zal tonen', async () => {
+        const selects = fixture('multiple-selects-default-texts-fixture');
+        assert.equal(await getPlaceholderText(selects[0]), selects[0].getAttribute('data-vl-search-placeholder'));
+        assert.equal(await getPlaceholderText(selects[1]), selects[1].DEFAULT_SEARCH_PLACEHOLDER);
+        assert.notEqual(await getPlaceholderText(selects[0]), await getPlaceholderText(selects[1]));
+
+        assert.equal(await getNoResultsText(selects[0]), selects[0].getAttribute('data-vl-search-no-results-text'));
+        assert.equal(await getNoResultsText(selects[1]), selects[1].DEFAULT_SEARCH_NO_RESULT);
+        assert.notEqual(await getNoResultsText(selects[0]), await getNoResultsText(selects[1]));
+
+        assert.equal(await getNoMoreOptionsText(selects[0]), selects[0].getAttribute('data-vl-no-more-options'));
+        assert.equal(await getNoMoreOptionsText(selects[1]), selects[1].DEFAULT_NO_MORE_OPTIONS);
+        assert.notEqual(await getNoMoreOptionsText(selects[0]), await getNoMoreOptionsText(selects[1]));
+      });
+
+      const getPlaceholderText = (select) => {
+        return new Promise(async (resolve, reject) => {
+          await select.ready();
+          return resolve(select._wrapperElement.querySelector('input').getAttribute('placeholder'));
+        });
+      };
+    
+      const getNoResultsText = (select) => {
+        return new Promise(async (resolve, reject) => {
+          await select.ready();
+          select._wrapperElement.addEventListener('click', async () => {
+            sendKey(select, 'P');
+            await awaitUntil(() => select._wrapperElement.querySelector('.has-no-results') != null);
+            resolve(select._wrapperElement.querySelector('.has-no-results').innerText);
+            setTimeout(() => sendKey(select, ''));
+          });
+          select.focus();
+        });
+      };
+
+      const getNoMoreOptionsText = (select) => {
+        return new Promise(async (resolve, reject) => {
+          await select.ready();
+          select._wrapperElement.addEventListener('click', async () => {
+            await awaitUntil(() => select._wrapperElement.querySelector('.has-no-choices') != null);
+            resolve(select._wrapperElement.querySelector('.has-no-choices').innerText);
+          });
+          select.focus();
+        });
+      };
+
+      const sendKey = (select, key) => {
+        select._wrapperElement.querySelector('input').focus();
+        select._wrapperElement.querySelector('input').value = key;
+        select._wrapperElement.querySelector('input').dispatchEvent(new KeyboardEvent('keyup', {'bubbles': true, 'keyCode': key.charCodeAt(0) || 46} ));
+      };
     });
   </script>
 </body>
