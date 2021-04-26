@@ -428,9 +428,11 @@
 
       test('de geen resultaten tekst kan per select geconfigureerd worden', async () => {
         const selects = fixture('multiple-selects-fixture');
-        assert.equal(await getNoResultsText(selects[0]), selects[0].getAttribute('data-vl-search-no-results-text'));
-        assert.equal(await getNoResultsText(selects[1]), selects[1].getAttribute('data-vl-search-no-results-text'));
-        assert.notEqual(await getNoResultsText(selects[0]), await getNoResultsText(selects[1]));
+        const geenResultatenText1 = await getNoResultsText(selects[0]);
+        const geenResultatenText2 = await getNoResultsText(selects[1]);
+        assert.equal(geenResultatenText1, selects[0].getAttribute('data-vl-search-no-results-text'));
+        assert.equal(geenResultatenText2, selects[1].getAttribute('data-vl-search-no-results-text'));
+        assert.notEqual(geenResultatenText1, geenResultatenText2);
       });
 
       test('de geen keuzes meer tekst kan per select geconfigureerd worden', async () => {
@@ -446,9 +448,11 @@
         assert.equal(await getPlaceholderText(selects[1]), selects[1].DEFAULT_SEARCH_PLACEHOLDER);
         assert.notEqual(await getPlaceholderText(selects[0]), await getPlaceholderText(selects[1]));
 
-        assert.equal(await getNoResultsText(selects[0]), selects[0].getAttribute('data-vl-search-no-results-text'));
-        assert.equal(await getNoResultsText(selects[1]), selects[1].DEFAULT_SEARCH_NO_RESULT);
-        assert.notEqual(await getNoResultsText(selects[0]), await getNoResultsText(selects[1]));
+        const geenResultatenText1 = await getNoResultsText(selects[0]);
+        const geenResultatenText2 = await getNoResultsText(selects[1]);
+        assert.equal(geenResultatenText1, selects[0].getAttribute('data-vl-search-no-results-text'));
+        assert.equal(geenResultatenText2, selects[1].DEFAULT_SEARCH_NO_RESULT);
+        assert.notEqual(geenResultatenText1, geenResultatenText2);
 
         assert.equal(await getNoMoreOptionsText(selects[0]), selects[0].getAttribute('data-vl-no-more-options'));
         assert.equal(await getNoMoreOptionsText(selects[1]), selects[1].DEFAULT_NO_MORE_OPTIONS);
@@ -465,8 +469,9 @@
       const getNoResultsText = (select) => {
         return new Promise(async (resolve, reject) => {
           await select.ready();
-          select._wrapperElement.addEventListener('click', () => {
+          select._wrapperElement.addEventListener('click', async () => {
             sendKey(select, 'P');
+            await awaitUntil(() => select._wrapperElement.querySelector('.has-no-results') != null);
             resolve(select._wrapperElement.querySelector('.has-no-results').innerText);
             sendKey(select, '');
           });
@@ -477,7 +482,8 @@
       const getNoMoreOptionsText = (select) => {
         return new Promise(async (resolve, reject) => {
           await select.ready();
-          select._wrapperElement.addEventListener('click', () => {
+          select._wrapperElement.addEventListener('click', async () => {
+            await awaitUntil(() => select._wrapperElement.querySelector('.has-no-choices') != null);
             resolve(select._wrapperElement.querySelector('.has-no-choices').innerText);
           });
           select.focus();
