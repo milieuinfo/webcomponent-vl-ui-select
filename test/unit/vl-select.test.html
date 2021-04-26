@@ -448,11 +448,9 @@
         assert.equal(await getPlaceholderText(selects[1]), selects[1].DEFAULT_SEARCH_PLACEHOLDER);
         assert.notEqual(await getPlaceholderText(selects[0]), await getPlaceholderText(selects[1]));
 
-        const geenResultatenText1 = await getNoResultsText(selects[0]);
-        const geenResultatenText2 = await getNoResultsText(selects[1]);
-        assert.equal(geenResultatenText1, selects[0].getAttribute('data-vl-search-no-results-text'));
-        assert.equal(geenResultatenText2, selects[1].DEFAULT_SEARCH_NO_RESULT);
-        assert.notEqual(geenResultatenText1, geenResultatenText2);
+        assert.equal(await getNoResultsText(selects[0]), selects[0].getAttribute('data-vl-search-no-results-text'));
+        assert.equal(await getNoResultsText(selects[1]), selects[1].DEFAULT_SEARCH_NO_RESULT);
+        assert.notEqual(await getNoResultsText(selects[0]), await getNoResultsText(selects[1]));
 
         assert.equal(await getNoMoreOptionsText(selects[0]), selects[0].getAttribute('data-vl-no-more-options'));
         assert.equal(await getNoMoreOptionsText(selects[1]), selects[1].DEFAULT_NO_MORE_OPTIONS);
