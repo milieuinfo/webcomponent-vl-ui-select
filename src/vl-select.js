@@ -114,7 +114,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
     this._changeTranslation('select.search_placeholder_value', value);
   }
 
-  set __searchNoResultTransation(value) {
+  set __searchNoResultTranslation(value) {
     this._changeTranslation('select.no_results', value);
   }
 
@@ -257,7 +257,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
 
   _setTranslations() {
     this.__searchPlaceholderTranslation = this.__searchPlaceholder || this.DEFAULT_SEARCH_PLACEHOLDER;
-    this.__searchNoResultTransation = this.__searchNoResults || this.DEFAULT_SEARCH_NO_RESULT;
+    this.__searchNoResultTranslation = this.__searchNoResults || this.DEFAULT_SEARCH_NO_RESULT;
     this.__noMoreOptionsTranslation = this.__noMoreOptions || this.DEFAULT_NO_MORE_OPTIONS;
   }
 
