@@ -335,6 +335,11 @@
         });
       });
 
+      test('data-vl-required attribuut wordt als required op de select gezet', () => {
+        const select = fixture('vl-select-form-fixture').querySelector('select');
+        assert.equal(select.getAttribute('required'), 'true');
+      });
+
       test('na het manueel dressen van een select wordt het error en success attribuut correct verwerkt', (done) => {
         const select = fixture('vl-select-form-fixture').querySelector('select');
         select.addEventListener(select.readyEvent, () => {
@@ -401,14 +406,6 @@
             assert.isTrue(select._wrapperElement.parentNode.hasAttribute('data-vl-validate-error-parent'));
             done();
           });
-        });
-      });
-
-      test('na een dress wordt het hidden select element op disabled gezet om een focus te voorkomen bij de native formulier validatie', (done) => {
-        const select = fixture('vl-select-auto-dress-fixture');
-        awaitUntil(() => select._dressed).then(() => {
-          assert.isTrue(select.disabled);
-          done();
         });
       });
 

@@ -44,7 +44,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   static get _observedAttributes() {
-    return vlFormValidation._observedAttributes().concat(['error', 'success']);
+    return vlFormValidation._observedAttributes().concat(['error', 'success', 'required']);
   }
 
   static get _observedChildClassAttributes() {
@@ -52,6 +52,10 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   connectedCallback() {
+	debugger;
+    if (this.dataset.vlRequired) {
+      this.setAttribute('required', 'true');
+    }
     this.classList.add('vl-select');
     if (this._hasDressedAttribute) {
       this.dress();
@@ -280,7 +284,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
           await this.ready();
           this._copySlotAttribute();
           this.__wrap();
-          this.disabled = true;
           this._dressFormValidation();
           this.dispatchEvent(new CustomEvent(this.readyEvent));
         })();
