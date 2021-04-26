@@ -471,7 +471,7 @@
             sendKey(select, 'P');
             await awaitUntil(() => select._wrapperElement.querySelector('.has-no-results') != null);
             resolve(select._wrapperElement.querySelector('.has-no-results').innerText);
-            sendKey(select, '');
+            setTimeout(() => sendKey(select, ''));
           });
           select.focus();
         });
@@ -489,6 +489,7 @@
       };
 
       const sendKey = (select, key) => {
+        select._wrapperElement.querySelector('input').focus();
         select._wrapperElement.querySelector('input').value = key;
         select._wrapperElement.querySelector('input').dispatchEvent(new KeyboardEvent('keyup', {'bubbles': true, 'keyCode': key.charCodeAt(0) || 46} ));
       };
