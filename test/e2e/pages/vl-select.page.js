@@ -55,6 +55,10 @@ class VlSelectPage extends Page {
     return this._getSelect('#select-dynamic');
   }
 
+  async getDynamicGroupingSelect() {
+    return this._getSelect('#select-dynamic-grouping');
+  }
+
   async getDresUndressSelect() {
     return this._getSelect('#select-dress-undress-methode');
   }
@@ -73,6 +77,10 @@ class VlSelectPage extends Page {
 
   async activeerDynamischeData() {
     return (await this.driver.findElement(By.css('#activate-data-button'))).click();
+  }
+
+  async activeerDynamischeDataGrouping() {
+    return (await this.driver.findElement(By.css('#activate-data-grouping-button'))).click();
   }
 
   async toggleSuccess() {

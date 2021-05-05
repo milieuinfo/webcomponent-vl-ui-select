@@ -142,6 +142,21 @@ describe('vl-select', async () => {
     await assert.eventually.isTrue(select.hasValue('two'));
   });
 
+  it.only('als gebruiker kan ik een select dynamisch activeren met gegroepeerde opties', async () => {
+    const select = await vlSelectPage.getDynamicGroupingSelect();
+    await assert.eventually.isFalse(select.isDressed());
+    await assert.eventually.isFalse(select.hasValue('one'));
+    await assert.eventually.isFalse(select.hasValue('two'));
+    
+    await vlSelectPage.activeerDynamischeDataGrouping();
+    
+    const selectMetData = await vlSelectPage.getDynamicGroupingSelect();
+    await assert.eventually.isTrue(selectMetData.isDressed());
+    await assert.eventually.isNotEmpty(selectMetData.values());
+    await assert.eventually.isTrue(selectMetData.hasValue('one'));
+    await assert.eventually.isTrue(selectMetData.hasValue('two'));
+  });
+
   it('als gebruiker kan ik een select via een knop dressen en undressen', async () => {
     const select = await vlSelectPage.getDresUndressSelect();
     await assert.eventually.isFalse(select.isDressed());

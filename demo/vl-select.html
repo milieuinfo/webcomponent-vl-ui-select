@@ -227,6 +227,43 @@
             </script>
         </vl-demo>
 
+        <vl-demo data-vl-title="Select dynamische data met groepering">
+            <select id="select-dynamic-grouping" is="vl-select">
+                <option placeholder>Selecteer item</option>
+            </select>
+
+            <button id="activate-data-grouping-button" is="vl-button" onclick="laadDynamischGrouping()" type="button" slot="actions">
+				Activeer dynamische data met grouping
+			</button>
+
+            <script type="text/javascript">
+                laadDynamischGrouping = () => {
+                  document.getElementById('select-dynamic-grouping').dress({
+                    callbackFn: (select) => {
+                      return [
+                        {
+                          id: 1,
+                          label: 'Group 1',
+                          choices: [
+                            {value: 'one', label: 'Label one'},
+                            {value: 'two', label: 'Label two'},
+                          ]
+                        },
+                        {
+                          id: 2,
+                          label: 'Group 2',
+                          choices: [
+                            {value: 'three', label: 'Label three'},
+                            {value: 'four', label: 'Label four'},
+                          ]
+                        }
+                      ];
+                    },
+                  });
+                };
+            </script>
+        </vl-demo>
+
         <vl-demo data-vl-title="Select dress en undress methode">
             <select id="select-dress-undress-methode" is="vl-select">
                 <option placeholder value="">Kies een land</option>
