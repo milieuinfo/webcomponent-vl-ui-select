@@ -173,7 +173,7 @@ describe('vl-select', async () => {
     await assert.eventually.equal(vlSelectPage.getSearchValue(), 'foobar');
   });
 
-  it.only('validatie van required dressed select werkt', async () => {
+  it('validatie van required dressed select werkt', async () => {
     const select = await vlSelectPage.getRequiredDressedSelect();
     await assert.eventually.isFalse(vlSelectPage.checkRequiredDressedSelectFormValidity());
     await vlSelectPage.activeerDynamischeDataRequiredDressedSelect();
