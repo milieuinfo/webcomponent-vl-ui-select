@@ -1,4 +1,3 @@
-
 const {assert, getDriver} = require('vl-ui-core').Test.Setup;
 const VlSelectPage = require('./pages/vl-select.page');
 
@@ -146,13 +145,13 @@ describe('vl-select', async () => {
     const select = await vlSelectPage.getDynamicGroupingSelect();
     await assert.eventually.isFalse(select.isDressed());
     assert.equal((await select.groups()).length, 0);
-    
+
     await vlSelectPage.activeerDynamischeDataGrouping();
 
     const selectMetData = await vlSelectPage.getDynamicGroupingSelect();
     await selectMetData.open();
     await assert.eventually.isTrue(selectMetData.isDressed());
-    
+
     const groups = await selectMetData.groups();
     assert.equal(groups.length, 2);
     await assert.eventually.equal(groups[0].getLabel(), 'Group 1');

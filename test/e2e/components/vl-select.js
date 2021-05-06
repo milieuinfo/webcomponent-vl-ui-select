@@ -33,22 +33,25 @@ class VlSelect extends VlElement {
       const selectListItemElements = await selectList.findElements(By.css('.vl-select__group, .vl-select__item'));
       const selectListItemTypes = await Promise.all(selectListItemElements.map((selectListItem) => selectListItem.getAttribute('class')));
       const selectListItems = selectListItemElements.map((selectListItemElement, index) => {
-	    return {element: selectListItemElement, isGroup: selectListItemTypes[index].indexOf('vl-select__group') !== -1};
+        return {
+          element: selectListItemElement,
+          isGroup: selectListItemTypes[index].indexOf('vl-select__group') !== -1,
+        };
       });
       return selectListItems.reduce((result, item) => {
-	    if (item.isGroup) {
-		  result.push(new OptionGroup(item.element, true));
-	    } else {
-		  result[result.length - 1].addOption(item.element);
-	    }
+        if (item.isGroup) {
+          result.push(new OptionGroup(item.element, true));
+        } else {
+          result[result.length - 1].addOption(item.element);
+        }
         return result;
       }, []);
     } else {
       const optGroupElements = await this.findElements(By.css('optgroup'));
-	  const optGroupElementPromises = optGroupElements.map(async (optGroupElement) => {
-		const options = await optGroupElement.findElements(By.css('option'));
-	    return new OptionGroup(optGroupElement, false, options);	
-	  });
+      const optGroupElementPromises = optGroupElements.map(async (optGroupElement) => {
+        const options = await optGroupElement.findElements(By.css('option'));
+        return new OptionGroup(optGroupElement, false, options);
+      });
       return Promise.all(optGroupElementPromises);
     }
   }
@@ -57,10 +60,10 @@ class VlSelect extends VlElement {
     if (await this.isDressed()) {
       const selectList = await this._getSelectList();
       const selectItems = await selectList.findElements(By.css('.vl-select__item'));
-      return selectItems.map((item) => new Option(item, true))
+      return selectItems.map((item) => new Option(item, true));
     } else {
       const selectItems = await this.findElements(By.css('option'));
-      return selectItems.map((item) => new Option(item, false))
+      return selectItems.map((item) => new Option(item, false));
     }
   }
 
@@ -189,43 +192,43 @@ class VlSelect extends VlElement {
 
 class OptionGroup {
   constructor(groupItem, dressed, options) {
-	this.groupItem = groupItem;
-	this._options = options || [];
-	this.dressed = dressed;
+    this.groupItem = groupItem;
+    this._options = options || [];
+    this.dressed = dressed;
   }
-	
+
   addOption(item) {
-    this._options.push(item)
+    this._options.push(item);
   }
 
   async getLabel() {
-	if (this.dressed) {
-	  const heading = await this.groupItem.findElement(By.css('.vl-select__heading'));
+    if (this.dressed) {
+      const heading = await this.groupItem.findElement(By.css('.vl-select__heading'));
       const textContent = await heading.getAttribute('textContent');
-	  return textContent.trim();
-	} else {
-	  return this.groupItem.getAttribute('label');	
-	}
+      return textContent.trim();
+    } else {
+      return this.groupItem.getAttribute('label');
+    }
   }
-  
+
   get options() {
     return this._options.map((option) => {
-	  return new Option(option, this.dressed);
-    });	
+      return new Option(option, this.dressed);
+    });
   }
 }
 
 class Option {
   constructor(optionItem, dressed) {
     this.optionItem = optionItem;
-    this.dressed = dressed;	
-  }	
-
-  click() {
-    return this.optionItem.click();	
+    this.dressed = dressed;
   }
 
-  async  getValue() {
+  click() {
+    return this.optionItem.click();
+  }
+
+  async getValue() {
     if (this.dressed) {
       return this.optionItem.getAttribute('data-value');
     } else {
