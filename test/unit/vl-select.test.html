@@ -335,9 +335,22 @@
         });
       });
 
-      test('data-vl-required attribuut wordt als required op de select gezet', () => {
+      test('data-required en required attribuut worden in sync gehouden', () => {
         const select = fixture('vl-select-form-fixture').querySelector('select');
-        assert.equal(select.getAttribute('required'), 'true');
+        assert.isTrue(select.hasAttribute('data-required'));
+        assert.isTrue(select.hasAttribute('required'));
+        select.removeAttribute('data-required');
+        assert.isFalse(select.hasAttribute('data-required'));
+        assert.isFalse(select.hasAttribute('required'));
+        select.setAttribute('data-required');
+        assert.isTrue(select.hasAttribute('data-required'));
+        assert.isTrue(select.hasAttribute('required'));
+        select.removeAttribute('required');
+        assert.isFalse(select.hasAttribute('data-required'));
+        assert.isFalse(select.hasAttribute('required'));
+        select.setAttribute('required', '');
+        assert.isTrue(select.hasAttribute('data-required'));
+        assert.isTrue(select.hasAttribute('required'));
       });
 
       test('na het manueel dressen van een select wordt het error en success attribuut correct verwerkt', (done) => {

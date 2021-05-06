@@ -44,7 +44,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   static get _observedAttributes() {
-    return vlFormValidation._observedAttributes().concat(['error', 'success']);
+    return vlFormValidation._observedAttributes().concat(['error', 'success', 'data-required']);
   }
 
   static get _observedChildClassAttributes() {
@@ -52,15 +52,30 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   connectedCallback() {
-    if (this.dataset.required) {
-      this.setAttribute('required', 'true');
-    }
     this.classList.add('vl-select');
     if (this._hasDressedAttribute) {
       this.dress();
     } else {
       this._dressFormValidation();
       this._setValidationParentAttribute();
+    }
+  }
+
+  _dataRequiredChangedCallback(oldValue, newValue) {
+    if (newValue && !oldValue) {
+      this.setAttribute('required', '');
+    }
+    if (!newValue && oldValue) {
+      this.removeAttribute('required');
+    }
+  }
+
+  _requiredChangedCallback(oldValue, newValue) {
+    if (newValue && !oldValue) {
+      this.setAttribute('data-required', '');
+    }
+    if (!newValue && oldValue) {
+      this.removeAttribute('data-required');
     }
   }
 
