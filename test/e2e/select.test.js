@@ -172,4 +172,13 @@ describe('vl-select', async () => {
     await select.search('foobar');
     await assert.eventually.equal(vlSelectPage.getSearchValue(), 'foobar');
   });
+
+  it.only('validatie van required dressed select werkt', async () => {
+    const select = await vlSelectPage.getRequiredDressedSelect();
+    await assert.eventually.isFalse(vlSelectPage.checkRequiredDressedSelectFormValidity());
+    await vlSelectPage.activeerDynamischeDataRequiredDressedSelect();
+    await assert.eventually.isFalse(vlSelectPage.checkRequiredDressedSelectFormValidity());
+    await select.selectByValue('one');
+    await assert.eventually.isTrue(vlSelectPage.checkRequiredDressedSelectFormValidity());
+  });
 });

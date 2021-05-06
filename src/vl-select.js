@@ -44,7 +44,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   static get _observedAttributes() {
-    return vlFormValidation._observedAttributes().concat(['error', 'success', 'required']);
+    return vlFormValidation._observedAttributes().concat(['error', 'success']);
   }
 
   static get _observedChildClassAttributes() {
@@ -52,8 +52,7 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   connectedCallback() {
-	debugger;
-    if (this.dataset.vlRequired) {
+    if (this.dataset.required) {
       this.setAttribute('required', 'true');
     }
     this.classList.add('vl-select');
