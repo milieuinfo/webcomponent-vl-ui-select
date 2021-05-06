@@ -59,6 +59,10 @@ class VlSelectPage extends Page {
     return this._getSelect('#select-dynamic-grouping');
   }
 
+  async getSelectUndressedGrouping() {
+    return this._getSelect('#select-undressed-grouping');
+  }
+
   async getDresUndressSelect() {
     return this._getSelect('#select-dress-undress-methode');
   }

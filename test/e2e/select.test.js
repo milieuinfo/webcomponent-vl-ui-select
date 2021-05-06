@@ -142,19 +142,47 @@ describe('vl-select', async () => {
     await assert.eventually.isTrue(select.hasValue('two'));
   });
 
-  it.only('als gebruiker kan ik een select dynamisch activeren met gegroepeerde opties', async () => {
+  it('als gebruiker kan ik een select dynamisch activeren met gegroepeerde opties', async () => {
     const select = await vlSelectPage.getDynamicGroupingSelect();
     await assert.eventually.isFalse(select.isDressed());
-    await assert.eventually.isFalse(select.hasValue('one'));
-    await assert.eventually.isFalse(select.hasValue('two'));
+    assert.equal((await select.groups()).length, 0);
     
     await vlSelectPage.activeerDynamischeDataGrouping();
-    
+
     const selectMetData = await vlSelectPage.getDynamicGroupingSelect();
+    await selectMetData.open();
     await assert.eventually.isTrue(selectMetData.isDressed());
-    await assert.eventually.isNotEmpty(selectMetData.values());
-    await assert.eventually.isTrue(selectMetData.hasValue('one'));
-    await assert.eventually.isTrue(selectMetData.hasValue('two'));
+    
+    const groups = await selectMetData.groups();
+    assert.equal(groups.length, 2);
+    await assert.eventually.equal(groups[0].label, 'Group 1');
+    await assert.equal(groups[0].options.length, 2);
+    await assert.eventually.equal(groups[0].options[0].label, 'Label one');
+    await assert.eventually.equal(groups[0].options[0].value, 'one');
+
+    await assert.eventually.equal(groups[1].label, 'Group 2');
+    assert.equal(groups[1].options.length, 2);
+
+    await selectMetData.selectByValue('one');
+    await assert.eventually.equal(selectMetData.getSelectedValue(), 'one');
+  });
+
+  it('als gebruiker kan ik een de groepen van een undressed select opvragen', async () => {
+    const select = await vlSelectPage.getSelectUndressedGrouping();
+    await assert.eventually.isFalse(select.isDressed());
+
+    const groups = await select.groups();
+    assert.equal(groups.length, 2);
+    await assert.eventually.equal(groups[0].label, 'Group 1');
+    await assert.equal(groups[0].options.length, 2);
+    await assert.eventually.equal(groups[0].options[0].label, 'Label one');
+    await assert.eventually.equal(groups[0].options[0].value, 'one');
+
+    await assert.eventually.equal(groups[1].label, 'Group 2');
+    assert.equal(groups[1].options.length, 2);
+
+    await select.selectByValue('one');
+    await assert.eventually.equal(select.getSelectedValue(), 'one');
   });
 
   it('als gebruiker kan ik een select via een knop dressen en undressen', async () => {
