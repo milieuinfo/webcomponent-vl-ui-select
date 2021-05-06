@@ -155,12 +155,12 @@ describe('vl-select', async () => {
     
     const groups = await selectMetData.groups();
     assert.equal(groups.length, 2);
-    await assert.eventually.equal(groups[0].label, 'Group 1');
+    await assert.eventually.equal(groups[0].getLabel(), 'Group 1');
     await assert.equal(groups[0].options.length, 2);
-    await assert.eventually.equal(groups[0].options[0].label, 'Label one');
-    await assert.eventually.equal(groups[0].options[0].value, 'one');
+    await assert.eventually.equal(groups[0].options[0].getLabel(), 'Label one');
+    await assert.eventually.equal(groups[0].options[0].getValue(), 'one');
 
-    await assert.eventually.equal(groups[1].label, 'Group 2');
+    await assert.eventually.equal(groups[1].getLabel(), 'Group 2');
     assert.equal(groups[1].options.length, 2);
 
     await selectMetData.selectByValue('one');
@@ -173,12 +173,12 @@ describe('vl-select', async () => {
 
     const groups = await select.groups();
     assert.equal(groups.length, 2);
-    await assert.eventually.equal(groups[0].label, 'Group 1');
+    await assert.eventually.equal(groups[0].getLabel(), 'Group 1');
     await assert.equal(groups[0].options.length, 2);
-    await assert.eventually.equal(groups[0].options[0].label, 'Label one');
-    await assert.eventually.equal(groups[0].options[0].value, 'one');
+    await assert.eventually.equal(groups[0].options[0].getLabel(), 'Label one');
+    await assert.eventually.equal(groups[0].options[0].getValue(), 'one');
 
-    await assert.eventually.equal(groups[1].label, 'Group 2');
+    await assert.eventually.equal(groups[1].getLabel(), 'Group 2');
     assert.equal(groups[1].options.length, 2);
 
     await select.selectByValue('one');

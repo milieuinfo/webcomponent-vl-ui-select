@@ -66,12 +66,12 @@ class VlSelect extends VlElement {
 
   async values() {
     const options = await this._getOptions();
-    return Promise.all(options.map((option) => option.value));
+    return Promise.all(options.map((option) => option.getValue()));
   }
 
   async texts() {
     const options = await this._getOptions();
-    return Promise.all(options.map((option) => option.label));
+    return Promise.all(options.map((option) => option.getLabel()));
   }
 
   async hasValue(value) {
@@ -90,7 +90,7 @@ class VlSelect extends VlElement {
     }
     const options = await this._getOptions();
     const map = await Promise.all(options.map(async (option) => {
-      const value = await option.value;
+      const value = await option.getValue();
       return {option: option, value: value};
     }));
 
@@ -104,7 +104,7 @@ class VlSelect extends VlElement {
     }
     const options = await this._getOptions();
     const map = await Promise.all(options.map(async (option) => {
-      const textContent = await option.label;
+      const textContent = await option.getLabel();
       return {option: option, visibleText: textContent};
     }));
     const option = await map.filter((m) => m.visibleText === visibleText)[0];
@@ -198,13 +198,11 @@ class OptionGroup {
     this._options.push(item)
   }
 
-  get label() {
+  async getLabel() {
 	if (this.dressed) {
-	  return this.groupItem.findElement(By.css('.vl-select__heading')).then((heading) => {
-        return heading.getAttribute('textContent').then((textContent) => {
-	      return textContent.trim();
-        });	
-	  });
+	  const heading = await this.groupItem.findElement(By.css('.vl-select__heading'));
+      const textContent = await heading.getAttribute('textContent');
+	  return textContent.trim();
 	} else {
 	  return this.groupItem.getAttribute('label');	
 	}
@@ -227,7 +225,7 @@ class Option {
     return this.optionItem.click();	
   }
 
-  get value() {
+  async  getValue() {
     if (this.dressed) {
       return this.optionItem.getAttribute('data-value');
     } else {
@@ -235,10 +233,9 @@ class Option {
     }
   }
 
-  get label() {
-    return this.optionItem.getAttribute('textContent').then((textContent) => {
-      return textContent.trim();
-    });	
+  async getLabel() {
+    const textContent = await this.optionItem.getAttribute('textContent');
+    return textContent.trim();
   }
 }
 
