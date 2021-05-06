@@ -8,6 +8,7 @@
     <script type="module" src="/node_modules/vl-ui-action-group/dist/vl-action-group.js"></script>
     <script type="module" src="/node_modules/vl-ui-button/dist/vl-button.js"></script>
     <script type="module" src="/node_modules/vl-ui-form-grid/dist/vl-form-grid.js"></script>
+    <script type="module" src="/node_modules/vl-ui-form/dist/vl-form.js"></script>
     <script type="module" src="/node_modules/vl-ui-modal/dist/vl-modal.js"></script>
     <script type="module" src="/node_modules/vl-ui-upload/dist/vl-upload.js"></script>
 
@@ -313,6 +314,31 @@
             </select>
             <button is="vl-button" onclick="document.getElementById('select-dressed-focus').focus();" slot="actions">Focus</button>
         </vl-demo>
+
+        <vl-demo data-vl-title="Required dressed">
+          <form is="vl-form" id="select-dressed-required-form">
+            <select id="select-dressed-required" is="vl-select" data-vl-block data-vl-error-placeholder="select-dressed-required-error" data-vl-required="true"></select>
+          </form>
+
+          <div slot="actions">
+            <button id="activate-data-button-required-dressed" is="vl-button" onclick="laadDynamischDressedRequired()" type="button">Activeer dynamische data</button>
+          </div>
+
+          <script type="text/javascript">
+                laadDynamischDressedRequired = () => {
+                  document.getElementById('select-dressed-required').dress({
+                    callbackFn: (select) => {
+                      return [
+                        {value: 'one', label: 'Label one'},
+                        {value: 'two', label: 'Label two'},
+                        {value: 'three', label: 'Label three'},
+                      ];
+                    },
+                  });
+                };
+          </script>
+        </vl-demo>
+
     </vl-demo-page>
 </body>
 
