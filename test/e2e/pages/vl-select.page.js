@@ -79,11 +79,11 @@ class VlSelectPage extends Page {
     return (await this.driver.findElement(By.css('#search-value'))).getText();
   }
 
-  async activeerDynamischeData() {
+  async activateDynamicData() {
     return (await this.driver.findElement(By.css('#activate-data-button'))).click();
   }
 
-  async activeerDynamischeDataGrouping() {
+  async activateDynamicDataGrouping() {
     return (await this.driver.findElement(By.css('#activate-data-grouping-button'))).click();
   }
 

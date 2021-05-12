@@ -1,5 +1,6 @@
 const {VlElement} = require('vl-ui-core').Test;
 const {By} = require('vl-ui-core').Test.Setup;
+const VlSelectOptionGroup = require('./vl-select-option-group');
 
 class VlSelect extends VlElement {
   async open() {
@@ -31,6 +32,10 @@ class VlSelect extends VlElement {
     if (await this.isDressed()) {
       const selectList = await this._getSelectList();
       const selectListItemElements = await selectList.findElements(By.css('.vl-select__group, .vl-select__item'));
+      for (const item of selectListItemElements) {
+        const label = await item.getAttribute('textContent');
+        console.log(label);
+      }
       const selectListItemTypes = await Promise.all(selectListItemElements.map((selectListItem) => selectListItem.getAttribute('class')));
       const selectListItems = selectListItemElements.map((selectListItemElement, index) => {
         return {
@@ -38,19 +43,20 @@ class VlSelect extends VlElement {
           isGroup: selectListItemTypes[index].indexOf('vl-select__group') !== -1,
         };
       });
-      return selectListItems.reduce((result, item) => {
+      const groupsMetItems = selectListItems.reduce((result, item) => {
         if (item.isGroup) {
-          result.push(new OptionGroup(item.element, true));
+          result.push({groupItem: item.element, options: []});
         } else {
-          result[result.length - 1].addOption(item.element);
+          result[result.length - 1].options.push(item.element);
         }
         return result;
       }, []);
+      return groupsMetItems.map((groupMetItem) => new VlSelectOptionGroup(groupMetItem.groupItem, true, groupMetItem.options));
     } else {
       const optGroupElements = await this.findElements(By.css('optgroup'));
       const optGroupElementPromises = optGroupElements.map(async (optGroupElement) => {
         const options = await optGroupElement.findElements(By.css('option'));
-        return new OptionGroup(optGroupElement, false, options);
+        return new VlSelectOptionGroup(optGroupElement, false, options);
       });
       return Promise.all(optGroupElementPromises);
     }
@@ -178,34 +184,6 @@ class VlSelect extends VlElement {
       await this.open();
     }
     return option.click();
-  }
-}
-
-class OptionGroup {
-  constructor(groupItem, dressed, options) {
-    this.groupItem = groupItem;
-    this._options = options || [];
-    this.dressed = dressed;
-  }
-
-  addOption(item) {
-    this._options.push(item);
-  }
-
-  async getLabel() {
-    if (this.dressed) {
-      const heading = await this.groupItem.findElement(By.css('.vl-select__heading'));
-      const textContent = await heading.getAttribute('textContent');
-      return textContent.trim();
-    } else {
-      return this.groupItem.getAttribute('label');
-    }
-  }
-
-  get options() {
-    return this._options.map((option) => {
-      return new Option(option, this.dressed);
-    });
   }
 }
 

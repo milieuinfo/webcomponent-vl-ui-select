@@ -133,7 +133,7 @@ describe('vl-select', async () => {
     await assert.eventually.isFalse(select.isDressed());
     await assert.eventually.isFalse(select.hasValue('one'));
     await assert.eventually.isFalse(select.hasValue('two'));
-    await vlSelectPage.activeerDynamischeData();
+    await vlSelectPage.activateDynamicData();
     select = await vlSelectPage.getDynamicSelect();
     await assert.eventually.isTrue(select.isDressed());
     await assert.eventually.isNotEmpty(select.values());
@@ -141,44 +141,57 @@ describe('vl-select', async () => {
     await assert.eventually.isTrue(select.hasValue('two'));
   });
 
-  it('als gebruiker kan ik een select dynamisch activeren met gegroepeerde opties', async () => {
+  it('Als gebruiker kan ik interageren met een dressed select met dynamisch aangeleverde groepen', async () => {
     const select = await vlSelectPage.getDynamicGroupingSelect();
     await assert.eventually.isFalse(select.isDressed());
     assert.equal((await select.groups()).length, 0);
 
-    await vlSelectPage.activeerDynamischeDataGrouping();
+    await vlSelectPage.activateDynamicDataGrouping();
 
     const selectMetData = await vlSelectPage.getDynamicGroupingSelect();
-    await selectMetData.open();
     await assert.eventually.isTrue(selectMetData.isDressed());
 
     const groups = await selectMetData.groups();
     assert.equal(groups.length, 2);
+
+    // dressed variant sorteert de choices 'by label' dus 'Label four' komt voor 'Label three'
     await assert.eventually.equal(groups[0].getLabel(), 'Group 1');
     await assert.equal(groups[0].options.length, 2);
     await assert.eventually.equal(groups[0].options[0].getLabel(), 'Label one');
     await assert.eventually.equal(groups[0].options[0].getValue(), 'one');
-
+    await assert.eventually.equal(groups[0].options[1].getLabel(), 'Label two');
+    await assert.eventually.equal(groups[0].options[1].getValue(), 'two');
     await assert.eventually.equal(groups[1].getLabel(), 'Group 2');
     assert.equal(groups[1].options.length, 2);
+    await assert.eventually.equal(groups[1].options[0].getLabel(), 'Label four');
+    await assert.eventually.equal(groups[1].options[0].getValue(), 'four');
+    await assert.eventually.equal(groups[1].options[1].getLabel(), 'Label three');
+    await assert.eventually.equal(groups[1].options[1].getValue(), 'three');
 
     await selectMetData.selectByValue('one');
     await assert.eventually.equal(selectMetData.getSelectedValue(), 'one');
   });
 
-  it('als gebruiker kan ik een de groepen van een undressed select opvragen', async () => {
+  it('Als gebruiker kan ik interageren met een undressed select met groepen', async () => {
     const select = await vlSelectPage.getSelectUndressedGrouping();
     await assert.eventually.isFalse(select.isDressed());
 
     const groups = await select.groups();
     assert.equal(groups.length, 2);
+
+    // undressed variant sorteert de choices zoals ze voorkomen in de HTML dus 'Label three' komt hier voor 'Label four'
     await assert.eventually.equal(groups[0].getLabel(), 'Group 1');
     await assert.equal(groups[0].options.length, 2);
     await assert.eventually.equal(groups[0].options[0].getLabel(), 'Label one');
     await assert.eventually.equal(groups[0].options[0].getValue(), 'one');
-
+    await assert.eventually.equal(groups[0].options[1].getLabel(), 'Label two');
+    await assert.eventually.equal(groups[0].options[1].getValue(), 'two');
     await assert.eventually.equal(groups[1].getLabel(), 'Group 2');
     assert.equal(groups[1].options.length, 2);
+    await assert.eventually.equal(groups[1].options[0].getLabel(), 'Label three');
+    await assert.eventually.equal(groups[1].options[0].getValue(), 'three');
+    await assert.eventually.equal(groups[1].options[1].getLabel(), 'Label four');
+    await assert.eventually.equal(groups[1].options[1].getValue(), 'four');
 
     await select.selectByValue('one');
     await assert.eventually.equal(select.getSelectedValue(), 'one');
