@@ -141,7 +141,7 @@ describe('vl-select', async () => {
     await assert.eventually.isTrue(select.hasValue('two'));
   });
 
-  it('Als gebruiker kan ik interageren met een dressed select met dynamisch aangeleverde groepen', async () => {
+  it.only('Als gebruiker kan ik interageren met een dressed select met dynamisch aangeleverde groepen', async () => {
     const select = await vlSelectPage.getDynamicGroupingSelect();
     await assert.eventually.isFalse(select.isDressed());
     assert.equal((await select.groups()).length, 0);
