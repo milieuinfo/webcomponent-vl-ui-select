@@ -63,10 +63,6 @@ class VlSelectPage extends Page {
     return this._getSelect('#select-enable-disable-methode');
   }
 
-  async getRequiredDressedSelect() {
-    return this._getSelect('#select-dressed-required');
-  }
-
   async getSetMethodeSelect() {
     return this._getSelect('#select-set-get-methode');
   }
@@ -109,15 +105,6 @@ class VlSelectPage extends Page {
 
   async load() {
     return super.load(Config.baseUrl + '/demo/vl-select.html');
-  }
-
-  async checkRequiredDressedSelectFormValidity() {
-    const form = await this.driver.findElement(By.css('#select-dressed-required-form'));
-    return this.driver.executeScript('return arguments[0].checkValidity()', form);
-  }
-
-  async activeerDynamischeDataRequiredDressedSelect() {
-    return (await this.driver.findElement(By.css('#activate-data-button-required-dressed'))).click();
   }
 }
 

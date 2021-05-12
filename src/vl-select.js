@@ -62,19 +62,19 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   _dataRequiredChangedCallback(oldValue, newValue) {
-    if (newValue && !oldValue) {
+    if (newValue != null && oldValue == null) {
       this.setAttribute('required', '');
     }
-    if (!newValue && oldValue) {
+    if (newValue == null && oldValue != null) {
       this.removeAttribute('required');
     }
   }
 
   _requiredChangedCallback(oldValue, newValue) {
-    if (newValue && !oldValue) {
+    if (newValue != null && oldValue == null) {
       this.setAttribute('data-required', '');
     }
-    if (!newValue && oldValue) {
+    if (newValue == null && oldValue != null) {
       this.removeAttribute('data-required');
     }
   }

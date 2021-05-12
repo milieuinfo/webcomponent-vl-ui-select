@@ -342,7 +342,7 @@
         select.removeAttribute('data-required');
         assert.isFalse(select.hasAttribute('data-required'));
         assert.isFalse(select.hasAttribute('required'));
-        select.setAttribute('data-required');
+        select.setAttribute('data-required', '');
         assert.isTrue(select.hasAttribute('data-required'));
         assert.isTrue(select.hasAttribute('required'));
         select.removeAttribute('required');
@@ -465,6 +465,21 @@
         assert.equal(await getNoMoreOptionsText(selects[0]), selects[0].getAttribute('data-vl-no-more-options'));
         assert.equal(await getNoMoreOptionsText(selects[1]), selects[1].DEFAULT_NO_MORE_OPTIONS);
         assert.notEqual(await getNoMoreOptionsText(selects[0]), await getNoMoreOptionsText(selects[1]));
+      });
+
+      test('een dressed required select is alleen valid als hij een waarde heeft', (done) => {
+        const form = fixture('vl-select-form-fixture');
+        const select = form.querySelector('select');
+        assert.isFalse(select.checkValidity());
+        select.addEventListener(select.readyEvent, () => {
+          assert.isFalse(select.checkValidity());
+          select.value = 'my_value';
+          assert.isTrue(select.checkValidity());
+          done();
+        });
+        select.dress({
+          callbackFn: () => [{value: 'my_value', label: 'label'}],
+        });
       });
 
       const getPlaceholderText = (select) => {
