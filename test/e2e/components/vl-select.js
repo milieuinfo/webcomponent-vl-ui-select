@@ -92,26 +92,17 @@ class VlSelect extends VlElement {
       return Promise.reject(new Error('Value ' + value + ' niet gevonden in select!'));
     }
     const options = await this._getOptions();
-    const map = await Promise.all(options.map(async (option) => {
-      const value = await option.getValue();
-      return {option: option, value: value};
-    }));
-
-    const option = await map.filter((m) => m.value === value)[0];
-    return this._clickOption(option.option);
+    const values = await this.values();
+    return this._clickOption(options[values.findIndex((v) => v === value)]);
   }
 
-  async selectByText(visibleText) {
-    if (await !this.hasText(visibleText)) {
-      return Promise.reject(new Error('Text ' + visibleText + ' niet gevonden in select!'));
+  async selectByText(text) {
+    if (await !this.hasText(text)) {
+      return Promise.reject(new Error('Text ' + text + ' niet gevonden in select!'));
     }
     const options = await this._getOptions();
-    const map = await Promise.all(options.map(async (option) => {
-      const textContent = await option.getLabel();
-      return {option: option, visibleText: textContent};
-    }));
-    const option = await map.filter((m) => m.visibleText === visibleText)[0];
-    return this._clickOption(option.option);
+    const labels = await this.texts();
+    return this._clickOption(options[labels.findIndex((label) => label === text)]);
   }
 
   async selectByIndex(index) {
@@ -119,17 +110,17 @@ class VlSelect extends VlElement {
     if (values.length < index - 1) {
       return Promise.reject(new Error('Er zijn maar ' + values.length + ' values in de dropdown'));
     }
-    const selectItems = await this._getOptions();
-    return this._clickOption(selectItems[index]);
+    const options = await this._getOptions();
+    return this._clickOption(options[index]);
   }
 
-  async search(searchText) {
-    if (this.hasValue(searchText) === false) {
-      return Promise.reject(new Error('Waarde ' + searchText + ' niet gevonden in de dropdown!'));
+  async search(text) {
+    if (this.hasValue(text) === false) {
+      return Promise.reject(new Error('Waarde ' + text + ' niet gevonden in de dropdown!'));
     }
     await this.open();
     const input = await this._getInput();
-    await input.sendKeys(searchText);
+    await input.sendKeys(text);
   }
 
   async deleteSelectedValue() {
