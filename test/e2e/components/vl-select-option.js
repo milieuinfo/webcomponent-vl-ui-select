@@ -1,5 +1,5 @@
 class VlSelectOption {
-  constructor(optionItem, dressed) {
+  constructor(optionItem = {}, dressed = false) {
     this.optionItem = optionItem;
     this.dressed = dressed;
   }

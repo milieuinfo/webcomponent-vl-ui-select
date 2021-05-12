@@ -2,9 +2,9 @@ const {By} = require('vl-ui-core').Test.Setup;
 const VlSelectOption = require('./vl-select-option');
 
 class VlSelectOptionGroup {
-  constructor(groupItem, dressed, options) {
+  constructor(groupItem = {}, dressed = false, options = []) {
     this.groupItem = groupItem;
-    this._options = options || [];
+    this._options = options;
     this.dressed = dressed;
   }
 

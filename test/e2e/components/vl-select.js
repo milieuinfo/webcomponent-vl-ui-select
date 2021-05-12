@@ -31,18 +31,19 @@ class VlSelect extends VlElement {
   async groups() {
     if (await this.isDressed()) {
       const selectList = await this._getSelectList();
-      const selectListItems = await selectList.findElements(By.css('.vl-select__group, .vl-select__item'));
-      const groupsMetItems = await selectListItems.reduce(async (result, item) => {
-        const groups = await result;
-        const isGroup = (await item.getAttribute('class')).indexOf('vl-select__group') !== -1;
-        if (isGroup) {
-          groups.push({groupItem: item, options: []});
-        } else {
-          groups[groups.length - 1].options.push(item);
+      const elements = await Promise.all((await selectList.findElements(By.css('.vl-select__group, .vl-select__item'))).map((element) => new VlElement(this.driver, element)));
+      const selectGroups = await elements.reduce(async (groups, element) => {
+        groups = await groups;
+        if (await element.hasClass('vl-select__group')) {
+          groups.push(element);
         }
         return groups;
       }, []);
-      return groupsMetItems.map((groupMetItem) => new VlSelectOptionGroup(groupMetItem.groupItem, true, groupMetItem.options));
+      return selectGroups.map((group, index) => {
+        const from = elements.indexOf(group) + 1;
+        const to = index+1 === selectGroups.length ? elements.length : elements.indexOf(selectGroups[index+1]);
+        return new VlSelectOptionGroup(group, true, elements.slice(from, to));
+      });
     } else {
       const optGroupElements = await this.findElements(By.css('optgroup'));
       const optGroupElementPromises = optGroupElements.map(async (optGroupElement) => {
