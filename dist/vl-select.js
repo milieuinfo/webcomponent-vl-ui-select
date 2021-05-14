@@ -52,9 +52,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
   }
 
   connectedCallback() {
-    if (this.dataset.required) {
-      this.setAttribute('required', 'true');
-    }
     this.classList.add('vl-select');
     if (this._hasDressedAttribute) {
       this.dress();
