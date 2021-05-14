@@ -280,7 +280,6 @@ export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelect
           await this.ready();
           this._copySlotAttribute();
           this.__wrap();
-          this.disabled = true;
           this._dressFormValidation();
           this.dispatchEvent(new CustomEvent(this.readyEvent));
         })();
