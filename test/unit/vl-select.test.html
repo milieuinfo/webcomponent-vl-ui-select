@@ -8,6 +8,7 @@
   <script src="../../node_modules/sinon/pkg/sinon.js"></script>
 
   <script type="module" src="../../src/vl-select.js"></script>
+  <script type="module" src="../../node_modules/vl-ui-form/dist/vl-form-all.js"></script>
 </head>
 
 <body>
@@ -44,7 +45,7 @@
 
   <test-fixture id="vl-select-form-fixture">
     <template>
-      <form>
+      <form is="vl-form" data-vl-validate>
         <select id="select" is="vl-select" data-vl-required data-vl-error-message="Verplicht!" data-vl-error-placeholder="select-error" data-vl-validation-type="select">
         </select>
         <p error data-vl-error-id="select-error"></p>
@@ -54,7 +55,7 @@
 
   <test-fixture id="vl-select-auto-dress-form-fixture">
     <template>
-      <form>
+      <form is="vl-form" data-vl-validate>
         <select id="select" is="vl-select" data-vl-select />
       </form>
     </template>
