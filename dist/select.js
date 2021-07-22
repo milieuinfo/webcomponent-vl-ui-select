@@ -51,7 +51,7 @@ global.select = factory();
   }
 
   function activeElement(element) {
-    return element.shadowRoot ? activeElement(element.shadowRoot.activeElement) : element;
+    return element.shadowRoot && element.shadowRoot.activeElement ? activeElement(element.shadowRoot.activeElement) : element;
   }
 
   var choices_min = createCommonjsModule(function (module, exports) {
