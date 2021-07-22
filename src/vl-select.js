@@ -1,46 +1,49 @@
-import { awaitScript, awaitUntil, define, NativeVlElement } from '/node_modules/vl-ui-core/vl-core.js';
+import {nativeVlElement, awaitUntil, define} from '/node_modules/vl-ui-core/dist/vl-core.js';
+import {vlFormValidation, vlFormValidationElement} from '/node_modules/vl-ui-form-validation/dist/vl-form-validation-all.js';
+import '/lib/select.js';
 
 Promise.all([
-  awaitScript('util', '/node_modules/@govflanders/vl-ui-util/dist/js/util.min.js'),
-  awaitScript('core', '/node_modules/@govflanders/vl-ui-core/dist/js/core.min.js'),
-  awaitScript('select', '../dist/select.js'),
-  awaitUntil(() => window.vl && window.vl.select)]
-).then(() => define('vl-select', VlSelect, { extends: 'select' }));
+  vlFormValidation.ready(),
+]).then(() => define('vl-select', VlSelect, {extends: 'select'}));
 
 /**
 * VlSelect
 * @class
 * @classdesc Gebruik de select component om gebruikers toe te laten een selectie te maken uit een lijst met voorgedefinieerde opties. Het is aangeraden om enkel deze component te gebruiken als er 5 of meer opties zijn. Bij minder opties, kan er gebruik gemaakt worden van de radio component.
 *
-* @extends NativeVlElement
-* 
-* @property {boolean} block - Attribuut wordt gebruikt om ervoor te zorgen dat de textarea getoond wordt als een block element en bijgevolg de breedte van de parent zal aannemen.
-* @property {boolean} error - Attribuut wordt gebruikt om aan te duiden dat het select element verplicht is of ongeldige tekst bevat.
-* @property {boolean} success - Attribuut wordt gebruikt om aan te duiden dat het select element correct werd ingevuld.
-* @property {boolean} disabled - Attribuut wordt gebruikt om te voorkomen dat de gebruiker iets kan kiezen uit het select element.
+* @extends HTMLSelectElement
+* @mixes nativeVlElement
+*
+* @property {boolean} data-vl-block - Attribuut wordt gebruikt om ervoor te zorgen dat de textarea getoond wordt als een block element en bijgevolg de breedte van de parent zal aannemen.
+* @property {boolean} data-vl-error - Attribuut wordt gebruikt om aan te duiden dat het select element verplicht is of ongeldige tekst bevat.
+* @property {boolean} data-vl-success - Attribuut wordt gebruikt om aan te duiden dat het select element correct werd ingevuld.
 * @property {boolean} data-vl-select - Attribuut zorgt ervoor dat de zoek functionaliteit geïnitialiseerd wordt.
 * @property {boolean} data-vl-select-search - Attribuut om de zoek functionaliteit te activeren of deactiveren.
 * @property {boolean} data-vl-select-search-empty-text - Attribuut bepaalt de tekst die getoond wordt wanneer er geen resultaten gevonden zijn.
 * @property {boolean} data-vl-select-search-result-limit - Attribuut om het aantal resultaten te limiteren.
 * @property {boolean} data-vl-select-search-no-result-limit - Attribuut om het aantal resultaten te limiteren.
 * @property {boolean} data-vl-select-deletable - Attribuut om te activeren of deactiveren dat het geselecteerde kan verwijderd worden.
+* @property {string} data-vl-search-placeholder - Attribuut bepaalt de placeholder van het zoek adres input element.
+* @property {string} data-vl-search-no-results-text - Attribuut bepaalt de tekst wanneer er geen zoekresultaten meer zijn.
+* @property {string} data-vl-no-more-options - Attribuut bepaalt de tekst wanneer er geen keuzes meer mogelijk zijn.
 *
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/releases/latest|Release notes}
 * @see {@link https://www.github.com/milieuinfo/webcomponent-vl-ui-select/issues|Issues}
 * @see {@link https://webcomponenten.omgeving.vlaanderen.be/demo/vl-select.html|Demo}
 */
-export class VlSelect extends NativeVlElement(HTMLSelectElement) {
+export class VlSelect extends vlFormValidationElement(nativeVlElement(HTMLSelectElement)) {
   /**
    * Geeft de ready event naam.
-   * 
-   * @returns {string}
+   *
+   * @return {string}
    */
+
   static get readyEvent() {
     return 'VlSelectReady';
   }
 
   static get _observedAttributes() {
-    return ['error', 'success'];
+    return vlFormValidation._observedAttributes().concat(['error', 'success']);
   }
 
   static get _observedChildClassAttributes() {
@@ -49,30 +52,45 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
   connectedCallback() {
     this.classList.add('vl-select');
-    if (this._dataVlSelectAttribute != null) {
+    if (this._hasDressedAttribute) {
       this.dress();
+    } else {
+      this._dressFormValidation();
+      this._setValidationParentAttribute();
     }
   }
 
   /**
    * Geeft de ready event naam.
-   * 
-   * @returns {string}
+   *
+   * @return {string}
    */
   get readyEvent() {
     return VlSelect.readyEvent;
+  }
+
+  get DEFAULT_SEARCH_PLACEHOLDER() {
+    return 'Zoek item';
+  }
+
+  get DEFAULT_SEARCH_NO_RESULT() {
+    return 'Geen resultaten gevonden';
+  }
+
+  get DEFAULT_NO_MORE_OPTIONS() {
+    return 'Geen resterende opties gevonden';
   }
 
   get _classPrefix() {
     return 'vl-select--';
   }
 
-  get _stylePath() {
-    return '../style.css';
-  }
-
   get _dressed() {
     return !!this.getAttribute(VlSelect._dressedAttributeName);
+  }
+
+  get _hasDressedAttribute() {
+    return this._dataVlSelectAttribute != null;
   }
 
   get _dataVlSelectAttribute() {
@@ -91,20 +109,31 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     this.__stateChangedCallback(newValue, 'error');
   }
 
+  set __searchPlaceholderTranslation(value) {
+    this._changeTranslation('select.search_placeholder_value', value);
+  }
+
+  set __searchNoResultTranslation(value) {
+    this._changeTranslation('select.no_results', value);
+  }
+
+  set __noMoreOptionsTranslation(value) {
+    this._changeTranslation('select.no_more_options', value);
+  }
+
   __stateChangedCallback(newValue, type) {
     if (newValue != null) {
       (async () => {
-        if (this._dataVlSelectAttribute != null) {
+        if (this._hasDressedAttribute || this._dressed) {
           await awaitUntil(() => this._dressed);
-          this.__wrap();
-          this._wrapperElement.parentNode.classList.add('vl-select--' + type);
+          this._wrapperElement.parentNode.classList.add('vl-input-field--' + type);
         } else {
           this.classList.add('vl-select--' + type);
         }
       })();
     } else {
-      if (this._dataVlSelectAttribute != null) {
-        this.__unwrap();
+      if (this._hasDressedAttribute || this._dressed) {
+        this._wrapperElement.parentNode.classList.remove('vl-input-field--' + type);
       } else {
         this.classList.remove('vl-select--' + type);
       }
@@ -118,22 +147,20 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    */
   __wrap() {
     const wrapper = document.createElement('div');
+    this._setValidationParentAttribute(wrapper);
     this._wrapperElement.parentNode.insertBefore(wrapper, this._wrapperElement);
     wrapper.appendChild(this._wrapperElement);
   }
 
-  __unwrap() {
-    const wrapper = this._wrapperElement;
-    const parent = wrapper.parentNode;
-    parent.parentNode.insertBefore(wrapper, parent);
-    parent.remove();
-  }
-
   /**
-   * Override van de __changeAttribute om rekening te houden dat de select
-   * component geinitialiseerd kan worden met de 'dress()' functie.
+   * Override van de __changeAttribute om rekening te houden dat de select component geinitialiseerd kan worden met de 'dress()' functie.
    *  - wanneer de component geinitialiseerd is, moet de CSS class op de parent van de js-vl-select div komen
    *  - wanneer de component native is, moet de CSS class op de select zelf komen
+   * @param {HTMLElement} element
+   * @param {String} oldValue
+   * @param {String} newValue
+   * @param {String} attribute
+   * @param {String} classPrefix
    * @private
    */
   __changeAttribute(element, oldValue, newValue, attribute, classPrefix) {
@@ -142,9 +169,8 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   }
 
   /**
-   * Afhankelijk of de component dressed is, moet de CSS class op een ander
-   * element toegevoegd worden.
-   * @param element
+   * Afhankelijk of de component dressed is, moet de CSS class op een ander element toegevoegd worden.
+   * @param {HTMLElement} element
    * @return {HTMLElement|*} element waar de CSS class toegevoegd moet worden.
    * @private
    */
@@ -157,7 +183,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
 
   /**
    * Zet de mogelijkheden die gekozen kunnen worden.
-   * 
+   *
    * @param {Object[]} choices met value en label attribuut.
    */
   set choices(choices) {
@@ -176,16 +202,20 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   /**
    * Zet het geselecteerd option element op basis van de option value.
    *
-   * @param {string} de option value van het option element dat gekozen moet worden.
+   * @param {string} value - de option value van het option element dat gekozen moet worden.
    */
   set value(value) {
-    vl.select.setValueByChoice(this, value);
+    if (this._dressed) {
+      vl.select.setValueByChoice(this, value);
+    } else {
+      super.value = value;
+    }
   }
 
   /**
    * Geeft de waarde van het eerst geselecteerde option element indien deze er is, anders een lege string.
    *
-   * @returns {void}
+   * @return {void}
    */
   get value() {
     return this.selectedOptions[0] ? this.selectedOptions[0].value : '';
@@ -195,7 +225,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    * Geef de `Choices` instantie.
    *
    * @see https://www.npmjs.com/package/choices.js
-   * @returns {Choices} de `Choices` instantie of `null` als de component nog niet geïnitialiseerd is door `dress()`
+   * @return {Choices} de `Choices` instantie of `null` als de component nog niet geïnitialiseerd is door `dress()`
    */
   get _choices() {
     return vl.select.selectInstances.find((instance) => {
@@ -212,20 +242,44 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
     return this._element.closest('.js-vl-select');
   }
 
+  get __searchPlaceholder() {
+    return this.getAttribute('data-vl-search-placeholder');
+  }
+
+  get __searchNoResults() {
+    return this.getAttribute('data-vl-search-no-results-text');
+  }
+
+  get __noMoreOptions() {
+    return this.getAttribute('data-vl-no-more-options');
+  }
+
+  _setTranslations() {
+    this.__searchPlaceholderTranslation = this.__searchPlaceholder || this.DEFAULT_SEARCH_PLACEHOLDER;
+    this.__searchNoResultTranslation = this.__searchNoResults || this.DEFAULT_SEARCH_NO_RESULT;
+    this.__noMoreOptionsTranslation = this.__noMoreOptions || this.DEFAULT_NO_MORE_OPTIONS;
+  }
+
   /**
    * Initialiseer de `Choices` config.
    *
    * @see https://www.npmjs.com/package/choices.js
-   * @param params object with callbackFn: function(select) with return value the items for `setChoices`
+   * @param {Object} params - object with callbackFn: function(select) with return value the items for `setChoices`
    * @fires VlSelect#VlSelectReady ready event wordt verstuurd wanneer veilige interactie met de webcomponent mogelijk is.
    */
+
   dress(params) {
     setTimeout(() => {
+      this._setTranslations();
+
       if (!this._dressed) {
         vl.select.dress(this, params);
 
         (async () => {
           await this.ready();
+          this._copySlotAttribute();
+          this.__wrap();
+          this._dressFormValidation();
           this.dispatchEvent(new CustomEvent(this.readyEvent));
         })();
       }
@@ -235,7 +289,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
   /**
    * Geeft een promise die 'resolved' wanneer de select initialisatie klaar is.
    *
-   * @returns {Promise} De promise
+   * @return {Promise} De promise
    */
   async ready() {
     await awaitUntil(() => this._dressed === true);
@@ -252,7 +306,7 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
         vl.select.undress(this._choices);
         vl.select.selectInstances.splice(vl.select.selectInstances.indexOf(this._choices));
       } catch (exception) {
-        console.error("er liep iets fout bij de undress functie, controleer dat het vl-select element een id bevat! Foutmelding: " + exception);
+        console.error('er liep iets fout bij de undress functie, controleer dat het vl-select element een id bevat! Foutmelding: ' + exception);
       }
     }
   }
@@ -290,5 +344,37 @@ export class VlSelect extends NativeVlElement(HTMLSelectElement) {
    */
   hideDropdown() {
     vl.select.hideDropdown(this);
+  }
+
+  /**
+   * Geeft focus aan het element.
+   */
+  focus() {
+    if (this._dressed) {
+      setTimeout(() => {
+        this._wrapperElement.focus();
+        this._wrapperElement.click();
+      });
+    } else {
+      super.focus();
+    }
+  }
+
+  _copySlotAttribute() {
+    const attribute = this.getAttribute('slot');
+    this.removeAttribute('slot');
+    if (attribute) {
+      this._wrapperElement.setAttribute('slot', attribute);
+    }
+  }
+
+  _dressFormValidation() {
+    const dress = this.dress;
+    super._dressFormValidation();
+    this.dress = dress;
+  }
+
+  _setValidationParentAttribute(element) {
+    (element || this).setAttribute('data-vl-validate-error-parent', '');
   }
 }

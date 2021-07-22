@@ -9,15 +9,15 @@
 @import "vl-ui-core/src/scss/core";
 
 // ==========================================================================
+// Dependencies
+// ==========================================================================
+@import "vl-ui-input-field/src/scss/input-field";
+
+// ==========================================================================
 // Components
 // ==========================================================================
 @import "vl-ui-select/src/scss/select";
 @import "vl-ui-select/src/scss/js-select";
-
-// ==========================================================================
-// Dependencies
-// ==========================================================================
-@import "vl-ui-input-field/src/scss/input-field";
 
 // ==========================================================================
 // Util
@@ -30,4 +30,11 @@
 
 .js-vl-select.is-open, .vl-select__list--dropdown.is-active {
     z-index: 101;
+}
+
+.js-vl-select.vl-search__input > .vl-select__inner {
+    border: none;
+    &:hover {
+        box-shadow: none;
+    }
 }
